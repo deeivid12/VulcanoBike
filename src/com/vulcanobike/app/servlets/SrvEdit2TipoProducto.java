@@ -1,6 +1,8 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,31 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.Marca;
+import com.vulcanobike.app.entities.TipoProducto;
 
 /**
- * Servlet implementation class srvTipoProducto
+ * Servlet implementation class SrvEdit2TipoProducto
  */
-@WebServlet("/srvFormMarca")
-public class srvFormMarca extends HttpServlet {
+@WebServlet("/SrvEdit2TipoProducto")
+public class SrvEdit2TipoProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static Controlador ctrl = new Controlador();
-	
-	
+	Controlador ctrl = srvFormTipoProducto.getCtrl();
        
-    public static Controlador getCtrl() {
-		return ctrl;
-	}
-
-	public static void setCtrl(Controlador ctrl) {
-		srvFormMarca.ctrl = ctrl;
-	}
-
-	/**
+    /**
      * @see HttpServlet#HttpServlet()
      */
-    public srvFormMarca() {
+    public SrvEdit2TipoProducto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,17 +43,13 @@ public class srvFormMarca extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
-		
-		Marca marca = new Marca();
-		marca.setNombre(request.getParameter("nombre"));
-		marca.setDescripcion(request.getParameter("descripcion"));
-		marca.setOrigen(request.getParameter("origen"));
-		
-		System.out.println("ORIGEENNNNN: " + marca.getOrigen());
-		
-		ctrl.addMarca(marca);
-		response.sendRedirect("srvListarMarca"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO
-		
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		TipoProducto tProducto = new TipoProducto();
+		tProducto.setNombre(request.getParameter("nombre"));
+		tProducto.setDescripcion(request.getParameter("descripcion"));
+		ctrl.updateTipoProducto(tProducto);
+		response.sendRedirect("srvListarTipoProducto");
 	}
 
 }

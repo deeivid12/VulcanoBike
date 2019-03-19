@@ -1,8 +1,8 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
-import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,21 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.Marca;
+import com.vulcanobike.app.entities.TipoProducto;
 
 /**
- * Servlet implementation class srvListadoTipoProducto
+ * Servlet implementation class SrvSaveTipoProducto
  */
-@WebServlet("/srvListarMarca")
-public class srvListarMarca extends HttpServlet {
+@WebServlet("/SrvEditTipoProducto")
+public class SrvEditTipoProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-	Controlador ctrl = srvFormMarca.getCtrl(); //ESTE DESPUES VA A SER UNO SOLO, QUE SE VA A INVOCAR EN LA PRIMER PANTALLA. LOGIN
        
+	Controlador ctrl = srvFormTipoProducto.getCtrl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public srvListarMarca() {
+    public SrvEditTipoProducto() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,7 +34,16 @@ public class srvListarMarca extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
+		String id = request.getParameter("id"); //despues cambiar nombre por id y hacer conversion a integer!!
+		System.out.println("NOMBRE PASADO POR GET!!: " + id);
+		
+		TipoProducto tp = ctrl.findOneById(id);
+		System.out.println("TIPOPRODUCTO ENCONTRADO!!: " + tp.getNombre());
+
+		
+		request.setAttribute("tpEncontrado", tp);
+		RequestDispatcher view = getServletContext().getRequestDispatcher("/Editar.jsp");
+		view.forward(request, response);
 	}
 
 	/**
@@ -43,11 +51,7 @@ public class srvListarMarca extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		
-		List<Marca> catalogoMarca = ctrl.getAllMarca();
-		request.setAttribute("catMarca", catalogoMarca);
-		request.getRequestDispatcher("listarMarca.jsp").forward(request, response);
+		doGet(request, response);
 	}
 
 }

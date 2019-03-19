@@ -2,7 +2,7 @@ package com.vulcanobike.app.entities;
 
 import java.util.List;
 
-public class AplicacionBicicleta {
+public class Aplicacion {
 	
 	private int id;
 	private String nombre;

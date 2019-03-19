@@ -13,24 +13,22 @@
 </head>
 <body>
 
-	<h2>Listado de Tipos de Productos</h2>
+	<h2>Listado de Aplicaciones</h2>
+	
+	<input type="hidden" name="accion" value="listar"></input>
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Nombre</th>
 				<th>Descripción</th>
-				<th></th>
-				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${catTipoProducto}" var="tp">
+			<c:forEach items="${catAplicacion}" var="a">
 				<tr>
-					<td>${tp.nombre}</td>
-					<td>${tp.descripcion}</td>
-					<td><a href="SrvEditTipoProducto?id=${tp.nombre}">Editar</a></td>
-					<td>Eliminar</td>
+					<td>${a.nombre}</td>
+					<td>${a.descripcion}</td>
 				</tr>
 			</c:forEach>
 		</tbody>

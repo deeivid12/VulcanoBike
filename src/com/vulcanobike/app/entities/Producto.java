@@ -10,7 +10,7 @@ public class Producto {
 	private TipoProducto tipoProducto;
 	private Marca marca;
 	private Rodado rodado;
-	private AplicacionBicicleta aplicacionBicicleta;
+	private Aplicacion aplicacionBicicleta;
 	
 	public int getId() {
 		return id;
@@ -60,10 +60,10 @@ public class Producto {
 	public void setRodado(Rodado rodado) {
 		this.rodado = rodado;
 	}
-	public AplicacionBicicleta getAplicacionBicicleta() {
+	public Aplicacion getAplicacionBicicleta() {
 		return aplicacionBicicleta;
 	}
-	public void setAplicacionBicicleta(AplicacionBicicleta aplicacionBicicleta) {
+	public void setAplicacionBicicleta(Aplicacion aplicacionBicicleta) {
 		this.aplicacionBicicleta = aplicacionBicicleta;
 	}
 	

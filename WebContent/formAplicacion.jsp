@@ -16,10 +16,10 @@
 		<p></p>
 
 
-		<h2>Marca</h2>
+		<h2>Aplicacion</h2>
 		<p></p>
 
-		<form action="srvMarca" method="post" accion="guardar">
+		<form action="SrvAplicacion" method="post">
 		
 			<input type="hidden" name="accion" value="guardar"></input>
 
@@ -39,13 +39,7 @@
 				</div>
 			</div>
 			
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">Origen</label>
-				<div class="col-sm-4">
-					<input type="text" name="origen" required="true"
-						class="form-control" />
-				</div>
-			</div>
+		
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label"></label>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>   
+<%@ page import ="com.vulcanobike.app.entities.TipoProducto" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,21 +15,23 @@
 </head>
 <body>
 
-	<div class="container">
-		<p></p>
-
-
-		<h2>Marca</h2>
-		<p></p>
-
-		<form action="srvMarca" method="post" accion="guardar">
+<div class="container">
 		
-			<input type="hidden" name="accion" value="guardar"></input>
+		<% TipoProducto tp = (TipoProducto)request.getAttribute("tpEncontrado"); %> 
+
+
+		<h2>Editar Tipo Producto</h2>
+		<h2><%= tp.getNombre() %></h2>
+		
+		
+		 
+
+		<form action="SrvEdit2TipoProducto" method="post">
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>
 				<div class="col-sm-4">
-					<input type="text" name="nombre" required="true"
+					<input type="text" name="nombre" required="true" value="<%= tp.getNombre() %>"
 						class="form-control" />
 				</div>
 			</div>
@@ -34,15 +39,7 @@
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Descripcion</label>
 				<div class="col-sm-4">
-					<input type="text" name="descripcion" required="true"
-						class="form-control" />
-				</div>
-			</div>
-			
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">Origen</label>
-				<div class="col-sm-4">
-					<input type="text" name="origen" required="true"
+					<input type="text" name="descripcion" required="true" value="<%= tp.getDescripcion() %>"
 						class="form-control" />
 				</div>
 			</div>
@@ -50,13 +47,11 @@
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label"></label>
 				<div class="col-sm-5 text-center">
-					<input type="submit" value="Confirmar" class="btn btn-primary" />
+					<input type="submit" value="Guardar" class="btn btn-primary" />
 				</div>
 			</div>
 		</form>
-	</div>
-
-
+		</div>
 
 
 </body>

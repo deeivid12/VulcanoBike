@@ -56,28 +56,13 @@ public class srvFormTipoProducto extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
+		
 		//GUARDAR TIPO PRODUCTO
+		
 		TipoProducto tProducto = new TipoProducto();
 		tProducto.setNombre(request.getParameter("nombre"));
 		tProducto.setDescripcion(request.getParameter("descripcion"));
 		ctrl.addTipoProducto(tProducto);
-		
-
-		
-		//LISTAR TIPO PRODUCTO
-		response.setContentType("text/html");
-		TipoProducto tpActual = new TipoProducto();
-		List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-		request.setAttribute("catTipoProducto", catalogoTipoProducto);
-		//RequestDispatcher view = getServletContext().getRequestDispatcher("/listarTipoProducto.jsp");
-		//view.forward(request,response);
-				
-		
-		
-		
-		//request.setAttribute("nombre", tProducto.getNombre());
-		//request.setAttribute("descripcion", tProducto.getDescripcion());
-		//request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
 		response.sendRedirect("srvListarTipoProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO
 		
 	}

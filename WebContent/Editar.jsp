@@ -21,12 +21,13 @@
 
 
 		<h2>Editar Tipo Producto</h2>
-		<h2><%= tp.getNombre() %></h2>
 		
 		
 		 
 
-		<form action="SrvEdit2TipoProducto" method="post">
+		<form action="SrvTipoProducto" method="post">
+		
+		<input type="hidden" name="accion" value="editar"></input>
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>

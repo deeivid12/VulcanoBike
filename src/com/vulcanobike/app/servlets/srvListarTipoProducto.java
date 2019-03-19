@@ -52,7 +52,7 @@ public class srvListarTipoProducto extends HttpServlet {
 			tpActual.setDescripcion(tp.getDescripcion());
 		}
 		
-		System.out.println("AAAAAAAAA " + tpActual.getNombre());
+		
 		request.setAttribute("nombre", tpActual.getNombre());
 		request.setAttribute("descripcion", tpActual.getDescripcion());
 		request.setAttribute("catTipoProducto", catalogoTipoProducto);

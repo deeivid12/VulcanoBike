@@ -47,6 +47,15 @@ public class Controlador {
 			}
 		}
 	}
+	
+	public void deleteTipoProducto(String nombre) {//DESPUES CAMBIAR POR INT ID, PORQUE AHORA SE HACE POR NOMBRE!
+		int indice=0;
+		for(TipoProducto tp : catalogoTipoProducto) {
+			if(tp.getNombre().equals(nombre)) break;
+			else indice=indice+1;
+		}
+		catalogoTipoProducto.remove(indice);
+	}
 
 	
 	//MARCA

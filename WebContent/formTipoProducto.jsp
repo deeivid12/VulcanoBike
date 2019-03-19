@@ -20,7 +20,9 @@
 		<h2>Tipo Producto</h2>
 		<p></p>
 
-		<form action="srvFormTipoProducto" method="post">
+		<form action="SrvTipoProducto" method="post">
+		
+		<input type="hidden" name="accion" value="alta"></input>
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>

@@ -19,7 +19,7 @@ import com.vulcanobike.app.entities.TipoProducto;
 public class srvListarTipoProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	Controlador ctrl = srvFormTipoProducto.getCtrl();
+	Controlador ctrl = SrvTipoProducto.getCtrl();
        
     /**
      * @see HttpServlet#HttpServlet()

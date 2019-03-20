@@ -14,6 +14,15 @@
 </head>
 
 <body>
+	
+	<table class="table">
+		<tbody>
+			<tr>
+				<td><a href="/VulcanoBike/formTipoProducto.jsp" class="editar">Alta</a></td>
+				<td><a href="/VulcanoBike" class="editar">Inicio</a></td>
+			</tr>
+		</tbody>
+	</table>	
 
 	<h2>Listado de Tipos de Productos</h2>
 	

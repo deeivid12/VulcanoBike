@@ -48,28 +48,6 @@
 			</div>
 		</form>
 		
-		<h2>Listado de Tipos de Productos</h2>
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>Nombre</th>
-				<th>Descripción</th>
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${catTipoProducto}" var="tp">
-				<tr>
-					<td>${tp.nombre}</td>
-					<td>${tp.descripcion}</td>
-					<td><a href="SrvEditTipoProducto?id=${tp.nombre}">Editar</a></td>
-					<td>Eliminar</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
 	</div>
 
 

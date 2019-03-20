@@ -20,8 +20,19 @@ import com.vulcanobike.app.entities.TipoProducto;
 public class SrvTipoProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	Controlador ctrl = srvFormTipoProducto.getCtrl();
-    /**
+	private static Controlador ctrl = new Controlador();
+	
+	
+    
+    public static Controlador getCtrl() {
+		return ctrl;
+	}
+
+	public static void setCtrl(Controlador ctrl) {
+		SrvTipoProducto.ctrl = ctrl;
+	}
+
+	/**
      * @see HttpServlet#HttpServlet()
      */
     public SrvTipoProducto() {
@@ -39,6 +50,7 @@ public class SrvTipoProducto extends HttpServlet {
 		String id = request.getParameter("id"); //despues cambiar nombre por id y hacer conversion a integer!!
 		String accion = request.getParameter("accion");
 		
+		//ABM EDITAR
 		if(accion.equals("editar")) {
 					
 			TipoProducto tp = ctrl.findOneById(id);
@@ -48,6 +60,7 @@ public class SrvTipoProducto extends HttpServlet {
 			
 		}
 		
+		//ABM ELIMINAR
 		if(accion.equals("eliminar")) {
 			ctrl.deleteTipoProducto(id);
 			response.sendRedirect("srvListarTipoProducto");
@@ -65,6 +78,8 @@ public class SrvTipoProducto extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();//para mostrar mensaje
 		String accion = request.getParameter("accion");
+		
+		//ABM EDITAR
 		if(accion.equals("editar")) {
 			
 			TipoProducto tProducto = new TipoProducto();
@@ -75,6 +90,7 @@ public class SrvTipoProducto extends HttpServlet {
 			
 		}
 		
+		//ABM ALTA
 		if(accion.equals("alta")) {
 			
 			//GUARDAR TIPO PRODUCTO

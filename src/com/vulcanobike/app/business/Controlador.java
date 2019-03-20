@@ -30,7 +30,7 @@ public class Controlador {
 		catalogoTipoProducto.add(tProducto);
 	}
 	
-	public TipoProducto findOneById(String nombre) { //DESPUES CAMBIAR POR ID!!
+	public TipoProducto findOneTipoProducto(String nombre) { //DESPUES CAMBIAR POR ID!!
 		TipoProducto tProducto = null;
 		for(TipoProducto tp : catalogoTipoProducto) {
 			if(tp.getNombre().equals(nombre)) tProducto=tp;

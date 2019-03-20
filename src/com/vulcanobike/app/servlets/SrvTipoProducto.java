@@ -53,9 +53,9 @@ public class SrvTipoProducto extends HttpServlet {
 		//ABM EDITAR
 		if(accion.equals("editar")) {
 					
-			TipoProducto tp = ctrl.findOneById(id);
+			TipoProducto tp = ctrl.findOneTipoProducto(id);
 			request.setAttribute("tpEncontrado", tp);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/Editar.jsp");
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/editarTipoProducto.jsp");
 			view.forward(request, response);
 			
 		}

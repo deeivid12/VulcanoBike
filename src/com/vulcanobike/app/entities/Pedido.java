@@ -1,6 +1,8 @@
 package com.vulcanobike.app.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Pedido {
 	
@@ -8,6 +10,7 @@ public class Pedido {
 	private Date fechaEmision;
 	private float importe;
 	private Cliente cliente;
+	private List<ItemPedido> items = new ArrayList<ItemPedido>();
 	
 	
 	public int getId() {
@@ -34,6 +37,14 @@ public class Pedido {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	public List<ItemPedido> getItems() {
+		return items;
+	}
+	public void setItems(List<ItemPedido> items) {
+		this.items = items;
+	}
+	
+	
 	
 	
 }

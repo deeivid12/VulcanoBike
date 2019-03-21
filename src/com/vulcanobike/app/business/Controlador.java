@@ -3,9 +3,15 @@ package com.vulcanobike.app.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vulcanobike.app.data.DataItemPedido;
+import com.vulcanobike.app.data.DataPedido;
+import com.vulcanobike.app.data.DataProducto;
 import com.vulcanobike.app.data.DataTipoProducto;
 import com.vulcanobike.app.entities.Aplicacion;
+import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Marca;
+import com.vulcanobike.app.entities.Pedido;
+import com.vulcanobike.app.entities.Producto;
 import com.vulcanobike.app.entities.TipoProducto;
 
 public class Controlador {
@@ -15,6 +21,9 @@ public class Controlador {
 	private List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
 	
 	private DataTipoProducto dataTipoProducto = new DataTipoProducto();
+	private DataProducto dataProducto = new DataProducto();
+	private DataPedido dataPedido = new DataPedido();
+	private DataItemPedido dataItemPedido = new DataItemPedido();
 
 	//TIPOPRODUCTO
 	public List<TipoProducto> getCatalogoTipoProducto() {
@@ -111,6 +120,30 @@ public class Controlador {
 	
 	public void addAplicacion(Aplicacion aplicacion) {
 		catalogoAplicacion.add(aplicacion);
+	}
+	
+	
+	//PRODUCTO
+	public List<Producto> getAllProducto(){
+		return dataProducto.GetAll();
+	}
+	
+	
+	public Producto GetOneProducto(Integer id) {
+		Producto Producto = dataProducto.GetOne(id);
+		return Producto;
+	}
+	
+	
+	//PEDIDO
+	public int AddPedido(Pedido pedido) {
+		return dataPedido.Insert(pedido);
+	}
+	
+	
+	//ITEMPEDIDO
+	public void AddItemPedido(ItemPedido iPedido) {
+		dataItemPedido.Insert(iPedido);
 	}
 
 }

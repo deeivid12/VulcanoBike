@@ -2,21 +2,31 @@ package com.vulcanobike.app.entities;
 
 public class ItemPedido {
 	
-	private Pedido pedido;
+	//private Pedido pedido;
+	private int idPedido;
 	private Producto producto;
 	private int cantidad;
-	private double importe;
+	private float importe;
 	
 	
-	public Pedido getPedido() {
+	/*public Pedido getPedido() {
 		return pedido;
 	}
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+	}*/
+	
+	public int getIdPedido() {
+		return idPedido;
 	}
+	public void setIdPedido(int idPedido) {
+		this.idPedido = idPedido;
+	}	
+	
 	public Producto getProducto() {
 		return producto;
 	}
+	
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
@@ -26,10 +36,10 @@ public class ItemPedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public double getImporte() {
+	public float getImporte() {
 		return importe;
 	}
-	public void setImporte(double importe) {
+	public void setImporte(float importe) {
 		this.importe = importe;
 	}
 	

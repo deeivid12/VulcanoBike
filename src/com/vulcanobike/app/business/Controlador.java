@@ -3,6 +3,7 @@ package com.vulcanobike.app.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vulcanobike.app.data.DataTipoProducto;
 import com.vulcanobike.app.entities.Aplicacion;
 import com.vulcanobike.app.entities.Marca;
 import com.vulcanobike.app.entities.TipoProducto;
@@ -12,6 +13,8 @@ public class Controlador {
 	private List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
 	private List<Marca> catalogoMarca = new ArrayList<Marca>();
 	private List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
+	
+	private DataTipoProducto dataTipoProducto = new DataTipoProducto();
 
 	//TIPOPRODUCTO
 	public List<TipoProducto> getCatalogoTipoProducto() {
@@ -22,23 +25,34 @@ public class Controlador {
 		this.catalogoTipoProducto = catalogoTipoProducto;
 	}
 	
-	public List<TipoProducto> getAllTipoProducto(){
+	/*public List<TipoProducto> getAllTipoProducto(){
 		return catalogoTipoProducto;
+	}*/
+	
+	public List<TipoProducto> getAllTipoProducto(){
+		return dataTipoProducto.GetAll();
 	}
 	
 	public void addTipoProducto(TipoProducto tProducto) {
-		catalogoTipoProducto.add(tProducto);
+		dataTipoProducto.Insert(tProducto);
+		//catalogoTipoProducto.add(tProducto);
 	}
 	
-	public TipoProducto findOneTipoProducto(String nombre) { //DESPUES CAMBIAR POR ID!!
+	/*public TipoProducto findOneTipoProducto(String nombre) { //DESPUES CAMBIAR POR ID!!
 		TipoProducto tProducto = null;
 		for(TipoProducto tp : catalogoTipoProducto) {
 			if(tp.getNombre().equals(nombre)) tProducto=tp;
 		}
 		return tProducto;
+	}*/
+	
+	
+	public TipoProducto findOneTipoProducto(Integer id) {
+		TipoProducto tProducto = dataTipoProducto.GetOne(id);
+		return tProducto;
 	}
 	
-	public void updateTipoProducto(TipoProducto tipoProducto) {
+	/* public void updateTipoProducto(TipoProducto tipoProducto) {
 		
 		for(TipoProducto tp : catalogoTipoProducto) {
 			if(tp.getNombre().equals(tipoProducto.getNombre())){
@@ -46,15 +60,21 @@ public class Controlador {
 				tp.setDescripcion(tipoProducto.getDescripcion());
 			}
 		}
+	}*/
+	
+	
+	public void updateTipoProducto(TipoProducto tipoProducto) {
+		dataTipoProducto.Update(tipoProducto);
 	}
 	
-	public void deleteTipoProducto(String nombre) {//DESPUES CAMBIAR POR INT ID, PORQUE AHORA SE HACE POR NOMBRE!
-		int indice=0;
+	public void deleteTipoProducto(int id) {//DESPUES CAMBIAR POR INT ID, PORQUE AHORA SE HACE POR NOMBRE!
+		/*int indice=0;
 		for(TipoProducto tp : catalogoTipoProducto) {
 			if(tp.getNombre().equals(nombre)) break;
 			else indice=indice+1;
 		}
-		catalogoTipoProducto.remove(indice);
+		catalogoTipoProducto.remove(indice);*/
+		dataTipoProducto.Delete(id);
 	}
 
 	

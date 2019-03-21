@@ -103,6 +103,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
+							<th>Id</th>
 							<th>Nombre</th>
 							<th>Descripcion</th>
 							<th></th>
@@ -112,13 +113,14 @@
 					<tbody>
 						<c:forEach items="${catTipoProducto}" var="tp">
 							<tr>
+								<td>${tp.id}</td>
 								<td>${tp.nombre}</td>
 								<td>${tp.descripcion}</td>
-								<td><a href="SrvTipoProducto?id=${tp.nombre}&accion=editar"
+								<td><a href="SrvTipoProducto?id=${tp.id}&accion=editar"
 									class="editar">Editar</a></td>
 								<td><a
-									href="SrvTipoProducto?id=${tp.nombre}&accion=eliminar"
-									class="eliminar">Eliminar</a></td>
+									href="SrvTipoProducto?id=${tp.id}&accion=eliminar"
+									class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>

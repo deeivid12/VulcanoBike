@@ -29,6 +29,11 @@
 		
 		<input type="hidden" name="accion" value="editar"></input>
 
+			
+			<input type="hidden" name="id" value="<%= tp.getId() %>"
+					class="form-control" />
+				
+			
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>
 				<div class="col-sm-4">

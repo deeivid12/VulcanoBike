@@ -44,15 +44,14 @@ public class SrvTipoProducto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		
-		String id = request.getParameter("id"); //despues cambiar nombre por id y hacer conversion a integer!!
 		String accion = request.getParameter("accion");
+		
 		
 		//ABM EDITAR
 		if(accion.equals("editar")) {
 					
+			int id = Integer.parseInt(request.getParameter("id"));
 			TipoProducto tp = ctrl.findOneTipoProducto(id);
 			request.setAttribute("tpEncontrado", tp);
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/editarTipoProducto.jsp");
@@ -62,6 +61,8 @@ public class SrvTipoProducto extends HttpServlet {
 		
 		//ABM ELIMINAR
 		if(accion.equals("eliminar")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
 			ctrl.deleteTipoProducto(id);
 			response.sendRedirect("srvListarTipoProducto");
 		}
@@ -72,23 +73,24 @@ public class SrvTipoProducto extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
 		
 		response.setContentType("text/html");
 		PrintWriter out=response.getWriter();//para mostrar mensaje
 		String accion = request.getParameter("accion");
+
 		
 		//ABM EDITAR
 		if(accion.equals("editar")) {
 			
 			TipoProducto tProducto = new TipoProducto();
+			Integer id = Integer.parseInt(request.getParameter("id"));
+			tProducto.setId(id);
 			tProducto.setNombre(request.getParameter("nombre"));
 			tProducto.setDescripcion(request.getParameter("descripcion"));
 			ctrl.updateTipoProducto(tProducto);
 			response.sendRedirect("srvListarTipoProducto");
-			
 		}
+		
 		
 		//ABM ALTA
 		if(accion.equals("alta")) {
@@ -99,8 +101,7 @@ public class SrvTipoProducto extends HttpServlet {
 			tProducto.setNombre(request.getParameter("nombre"));
 			tProducto.setDescripcion(request.getParameter("descripcion"));
 			ctrl.addTipoProducto(tProducto);
-			response.sendRedirect("srvListarTipoProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO
-			
+			response.sendRedirect("srvListarTipoProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
 		}
 		
 		

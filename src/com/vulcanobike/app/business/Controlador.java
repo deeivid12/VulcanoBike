@@ -7,12 +7,14 @@ import com.vulcanobike.app.data.DataItemPedido;
 import com.vulcanobike.app.data.DataPedido;
 import com.vulcanobike.app.data.DataProducto;
 import com.vulcanobike.app.data.DataTipoProducto;
+import com.vulcanobike.app.data.DataUsuario;
 import com.vulcanobike.app.entities.Aplicacion;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Marca;
 import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Producto;
 import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Usuario;
 
 public class Controlador {
 	
@@ -24,6 +26,24 @@ public class Controlador {
 	private DataProducto dataProducto = new DataProducto();
 	private DataPedido dataPedido = new DataPedido();
 	private DataItemPedido dataItemPedido = new DataItemPedido();
+	private DataUsuario dataUsuario = new DataUsuario();
+	
+	//LOGIN
+	public Usuario login(String user, String pass) {
+		return dataUsuario.login(user, pass);
+	}
+	
+	public void registro(Usuario usuario) {
+		dataUsuario.Insert(usuario);
+	}
+	
+	public Usuario getOneUsuarioByUser(String user) {//para buscar por correo o por user
+		return dataUsuario.GetOneByUser(user);
+	}
+	
+	public Usuario getOneUsuarioByEmail(String email) {//para buscar por correo o por user
+		return dataUsuario.GetOneByEmail(email);
+	}
 
 	//TIPOPRODUCTO
 	public List<TipoProducto> getCatalogoTipoProducto() {

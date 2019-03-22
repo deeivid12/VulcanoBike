@@ -5,7 +5,7 @@ public class Producto {
 	private int id;
 	private String nombre;
 	private String descripcion;
-	private double precio;
+	private float precio;
 	private int stock;
 	private TipoProducto tipoProducto;
 	private Marca marca;
@@ -31,10 +31,10 @@ public class Producto {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public double getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(double precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	public int getStock() {

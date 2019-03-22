@@ -67,7 +67,7 @@ public class SrvCarrito extends HttpServlet {
 			ItemPedido itemP = new ItemPedido();
 			itemP.setProducto(p);
 			itemP.setCantidad(cant);
-			itemP.setImporte(150); //hardcodeado
+			itemP.setImporte(p.getPrecio()*cant);
 			
 			//verifico si hay repeticion de items
 			for(ItemPedido ip : items) {
@@ -101,7 +101,13 @@ public class SrvCarrito extends HttpServlet {
 				
 				if(items != null) {
 					
-					//items = (List<ItemPedido>) sesion.getAttribute("items");
+					//calculo importe total para mostrar en carrito
+					float importeTotal = 0;
+					for(ItemPedido ip : items) { //calculo importe de pedido!
+						importeTotal = importeTotal + ip.getImporte();
+					}
+					
+					request.setAttribute("importe", importeTotal);
 					request.setAttribute("items", items);
 					
 				}
@@ -118,14 +124,18 @@ public class SrvCarrito extends HttpServlet {
 			
 			HttpSession sesion= request.getSession(false);
 			Pedido pedido = new Pedido();
-			pedido.setImporte(1000); //hardcodeado
-			pedido.setItems(items);// IMPORTANTE. CUANDO SE ELIMINEN ITEMS, TRAER LOS ITEMS QUE ESTAN EN SESION!!
+			float importePedido = 0;
+			pedido.setItems(items);
+			for(ItemPedido ip : pedido.getItems()) { //calculo importe de pedido!
+				importePedido = importePedido + ip.getImporte();
+			}
+			pedido.setImporte(importePedido); 
 			int id = ctrl.AddPedido(pedido);//se guarda el id del pedido			
 			ctrl.AddItemPedido(items, id);//guardo itemsPedido en pedido generado
 			
-			sesion.setAttribute("items", null);;//ELIMINO ITEMS DE SESION
+			//sesion.setAttribute("items", null);;//ELIMINO ITEMS DE SESION
 			items.clear();
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/finPedido.jsp");
 			view.forward(request, response);
 			
 		}
@@ -135,12 +145,20 @@ public class SrvCarrito extends HttpServlet {
 			int id = Integer.parseInt(request.getParameter("id"));
 			int indice = 0;
 			
-			//consulto indice de producto a eliminar de carrito
+			//consulto indice de producto a eliminar de carrito y devuelvo cantidad a stock!
 			for(ItemPedido ip : items) {
-				if(ip.getProducto().getId() == id) break;
+				if(ip.getProducto().getId() == id) {
+					
+					//actualizar stock actual de producto
+					ip.getProducto().setStock(ip.getProducto().getStock()+ip.getCantidad());
+					ctrl.UpdateProducto(ip.getProducto());
+					break;
+				}
 				else indice=indice+1;
 			}
 			items.remove(indice);//elimino producto de carrito
+			
+			
 			
 			
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");

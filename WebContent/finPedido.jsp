@@ -1,6 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,10 +75,6 @@ footer a {
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-<%float importe = (float)request.getAttribute("importe"); %>
-
-
-
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -126,60 +119,15 @@ footer a {
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Carrito</h1>
+        <h1 class="jumbotron-heading">Compra Exitosa</h1>
      </div>
 </section>
 
-<div class="container mb-4">
-    <div class="row">
-        <div class="col-12">
-            <div class="table-responsive">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col" class="text-center">Cantidad</th>
-                            <th scope="col" class="text-center">Precio</th>
-                            <th scope="col" class="text-right">Subtotal</th>
-                            <th> </th>
-                        </tr>
-                    </thead>
-                   <tbody> 
-                    <c:forEach items="${items}" var="i">
-                        <tr>
-                            <td>${i.producto.nombre}</td>
-                            <td>${i.producto.descripcion}</td>
-                            <td class="text-center">${i.cantidad}</td>
-                            <td class="text-center">${i.producto.precio}</td>
-                            <td class="text-right">$${i.importe}</td>
-                            <td class="text-right"><a href="SrvCarrito?id=${i.producto.id}&accion=eliminar" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </a> </td>
-                        </tr>
-                    </c:forEach>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center"><strong>Total</strong></td>
-                            <td class="text-right"><strong>$<%=importe %></strong></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col mb-2">
-            <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <a href="SrvListarProducto" class="btn btn-block btn-light">Continuar comprando</a>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <a href="SrvCarrito?accion=fin" class="ver btn btn-lg btn-block btn-success">Finalizar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="container">
+        <h4 class="jumbotron-heading">Gracias por su compra.</h4>
+     </div>
+
+
 
 
 <script type="text/javascript">

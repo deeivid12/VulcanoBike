@@ -57,8 +57,6 @@
 							<th>Precio</th>
 							<th>Stock</th>
 							<th></th>
-							<th></th>
-							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -69,13 +67,8 @@
 								<td>${p.descripcion}</td>
 								<td>${p.precio}</td>
 								<td>${p.stock}</td>
-								<td><a href="SrvCarrito?id=${p.id}&accion=add"
-									class="add">Add Carrito</a></td>
-								<td><a href="SrvTipoProducto?id=${p.id}&accion=editar"
-									class="editar">Editar</a></td>
-								<td><a
-									href="SrvTipoProducto?id=${p.id}&accion=eliminar"
-									class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
+								<td><a href="SrvCarrito?id=${p.id}&accion=info"
+									class="info">Info</a></td>
 							</tr>
 							</c:forEach>
 							<tr>

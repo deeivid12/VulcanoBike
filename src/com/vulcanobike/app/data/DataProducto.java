@@ -26,6 +26,7 @@ public class DataProducto {
 				p.setDescripcion(rs.getString("descripcion"));
 				p.setPrecio(rs.getFloat("precio"));
 				p.setStock(rs.getInt("stock"));
+				p.setImagen(rs.getString("imagen"));
 				//AGREGAR LOS QUE FALTAN!
 				list.add(p);
 			}
@@ -56,6 +57,7 @@ public class DataProducto {
 				p.setDescripcion(rs.getString("descripcion"));
 				p.setPrecio(rs.getFloat("precio"));
 				p.setStock(rs.getInt("stock"));
+				p.setImagen(rs.getString("imagen"));
 			}
 		} catch(SQLException e){
 			e.printStackTrace();
@@ -66,6 +68,32 @@ public class DataProducto {
 			if(rs!=null) rs = null;
 		}
 		return p;
+	}
+	
+	
+	public void Update(Producto p){
+		ResultSet rs = null; PreparedStatement stmt = null;
+		String sql="UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=? WHERE id=?";
+		try{
+			Connection conn = FactoryConexion.getInstancia().getConn();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, p.getNombre()); 
+			stmt.setString(2, p.getDescripcion());
+			stmt.setDouble(3, p.getPrecio());
+			stmt.setInt(4, p.getStock());
+			stmt.setInt(5, p.getId());
+			stmt.execute();
+			
+		} catch(SQLException e){
+			e.printStackTrace();
+
+		}
+		finally{
+		
+			FactoryConexion.getInstancia().releaseConn();
+			if(stmt != null) stmt = null;
+			if(rs!=null) rs = null;
+		}
 	}
 	
 }

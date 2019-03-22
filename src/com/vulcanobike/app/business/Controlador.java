@@ -134,6 +134,10 @@ public class Controlador {
 		return Producto;
 	}
 	
+	public void UpdateProducto(Producto producto) {
+		dataProducto.Update(producto);
+	}
+	
 	
 	//PEDIDO
 	public int AddPedido(Pedido pedido) {
@@ -142,8 +146,12 @@ public class Controlador {
 	
 	
 	//ITEMPEDIDO
-	public void AddItemPedido(ItemPedido iPedido) {
-		dataItemPedido.Insert(iPedido);
+	public void AddItemPedido(List<ItemPedido> itemsPedido, int idPedido) {
+		
+		for(ItemPedido ip : itemsPedido) {
+			ip.setIdPedido(idPedido);
+			dataItemPedido.Insert(ip);
+		}
 	}
 
 }

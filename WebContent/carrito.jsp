@@ -63,6 +63,7 @@
 							<th>Descripcion</th>
 							<th>Cantidad</th>
 							<th>Precio</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -72,6 +73,7 @@
 								<td>${i.producto.descripcion}</td>
 								<td>${i.cantidad}</td>
 								<td>${i.importe}</td>
+								<td><a href="SrvCarrito?id=${i.producto.id}&accion=eliminar">Eliminar</a></td>
 							</tr>
 							</c:forEach>
 							<tr>

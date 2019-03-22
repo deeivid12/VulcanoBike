@@ -11,6 +11,7 @@ public class Producto {
 	private Marca marca;
 	private Rodado rodado;
 	private Aplicacion aplicacionBicicleta;
+	private String imagen;
 	
 	public int getId() {
 		return id;
@@ -66,6 +67,14 @@ public class Producto {
 	public void setAplicacionBicicleta(Aplicacion aplicacionBicicleta) {
 		this.aplicacionBicicleta = aplicacionBicicleta;
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 	
 
 

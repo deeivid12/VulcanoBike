@@ -64,7 +64,8 @@ public class SrvListarProducto extends HttpServlet {
 		
 		
 		request.setAttribute("catProducto", catalogoProducto);
-		request.getRequestDispatcher("listarProductos.jsp").forward(request, response);
+		//request.getRequestDispatcher("listarProductos.jsp").forward(request, response);
+		request.getRequestDispatcher("homeCarrito.jsp").forward(request, response);
 	}
 		
 

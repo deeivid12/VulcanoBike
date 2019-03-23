@@ -45,18 +45,24 @@ public class srvListarTipoProducto extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		
-		TipoProducto tpActual = new TipoProducto();
-		List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-		for(TipoProducto tp : catalogoTipoProducto) {
-			tpActual.setNombre(tp.getNombre());
-			tpActual.setDescripcion(tp.getDescripcion());
+		try {
+			TipoProducto tpActual = new TipoProducto();
+			List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
+			for(TipoProducto tp : catalogoTipoProducto) {
+				tpActual.setNombre(tp.getNombre());
+				tpActual.setDescripcion(tp.getDescripcion());
+			}
+			
+			
+			request.setAttribute("nombre", tpActual.getNombre());
+			request.setAttribute("descripcion", tpActual.getDescripcion());
+			request.setAttribute("catTipoProducto", catalogoTipoProducto);
+			request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
+		} catch (Exception e) {
+			
+			//setear un atributo con el mensaje de error, setear el status distinto de 200 y hacer redirect o forward a una pagina de erro
+			//opcionalmente volver a la misma pagina y con jsp preguntar si esta el mensaje de error y mostrarlo (y borrar la variable)
 		}
-		
-		
-		request.setAttribute("nombre", tpActual.getNombre());
-		request.setAttribute("descripcion", tpActual.getDescripcion());
-		request.setAttribute("catTipoProducto", catalogoTipoProducto);
-		request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
 	}
 
 }

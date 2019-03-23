@@ -7,7 +7,7 @@ import com.vulcanobike.app.entities.TipoProducto;
 
 public class DataTipoProducto {
 	
-	public ArrayList<TipoProducto> GetAll(){
+	public ArrayList<TipoProducto> GetAll() throws Exception{
 		ArrayList<TipoProducto> list = new ArrayList<TipoProducto>();
 		TipoProducto tp = null; ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="select * from tipo_producto";
@@ -25,6 +25,7 @@ public class DataTipoProducto {
 			}
 		} catch(SQLException e){
 			e.printStackTrace();
+			throw new Exception("Error al recuperar datos",e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();

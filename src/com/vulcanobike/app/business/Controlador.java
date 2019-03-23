@@ -58,7 +58,7 @@ public class Controlador {
 		return catalogoTipoProducto;
 	}*/
 	
-	public List<TipoProducto> getAllTipoProducto(){
+	public List<TipoProducto> getAllTipoProducto() throws Exception{
 		return dataTipoProducto.GetAll();
 	}
 	
@@ -162,6 +162,14 @@ public class Controlador {
 	//PEDIDO
 	public int AddPedido(Pedido pedido) {
 		return dataPedido.Insert(pedido);
+	}
+	
+	public float calcularImportePedido(List<ItemPedido> items) {
+		float importePedido = 0;
+		for(ItemPedido ip : items) { //calculo importe de pedido!
+			importePedido = importePedido + ip.getImporte();
+		}
+		return importePedido;
 	}
 	
 	

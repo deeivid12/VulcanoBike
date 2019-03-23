@@ -125,11 +125,12 @@ public class SrvCarrito extends HttpServlet {
 			HttpSession sesion= request.getSession(false);
 			Pedido pedido = new Pedido();
 			float importePedido = 0;
+			
 			pedido.setItems(items);
-			for(ItemPedido ip : pedido.getItems()) { //calculo importe de pedido!
-				importePedido = importePedido + ip.getImporte();
-			}
-			pedido.setImporte(importePedido); 
+			//for(ItemPedido ip : pedido.getItems()) { //calculo importe de pedido!
+			//	importePedido = importePedido + ip.getImporte();
+			//}
+			pedido.setImporte(ctrl.calcularImportePedido(items)); 
 			int id = ctrl.AddPedido(pedido);//se guarda el id del pedido			
 			ctrl.AddItemPedido(items, id);//guardo itemsPedido en pedido generado
 			
@@ -157,6 +158,8 @@ public class SrvCarrito extends HttpServlet {
 				else indice=indice+1;
 			}
 			items.remove(indice);//elimino producto de carrito
+			request.setAttribute("importe", ctrl.calcularImportePedido(items));
+			request.setAttribute("items", items);
 			
 			
 			
@@ -175,5 +178,6 @@ public class SrvCarrito extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
 
 }

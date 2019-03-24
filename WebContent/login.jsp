@@ -190,7 +190,7 @@ footer a {
                     <form action="SrvUsuario" method="POST">
                     	<input type="hidden" name="accion" value="login"></input>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Usuario *" name="usuario" />
+                            <input type="text" class="form-control" placeholder="Usuario *" name="usuario" autofocus="true"/>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" placeholder="Password *" name="password" />

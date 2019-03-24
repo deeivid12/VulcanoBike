@@ -1,6 +1,8 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +33,8 @@ public class SrvUsuario extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -48,18 +51,30 @@ public class SrvUsuario extends HttpServlet {
 		if(accion.equals("login")) {
 			String user = request.getParameter("usuario");
 			String pass = request.getParameter("password");
-			System.out.println("ACCION LOGIN!");
+			
 			usuario = ctrl.login(user, pass);
+			request.getSession().setAttribute("userSession", usuario); //envio usuario a sesion
 			if(usuario!=null) {
-				System.out.println("NOMBRE USUARIO!!: " + usuario.getNombre());
-				request.getSession().setAttribute("userSession", user);
-				request.getRequestDispatcher("SrvListarProducto").forward(request, response);
+				if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) {
+					request.getRequestDispatcher("srvListarTipoProducto").forward(request, response);
+				}
+				if(usuario.getTipoUsuario().equals(TiposUsuario.Usuario)) {
+					request.getRequestDispatcher("SrvListarProducto").forward(request, response);
+				}
+				
 			}
 			else {
 				System.out.println("ERRORRRRRR");
 				request.setAttribute("messageError", "Usuario y/o Contraseña incorrecto");
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			}
+			
+		}
+		
+		//LOGOFF
+		if(accion.equals("logoff")) {
+			request.getSession().setAttribute("userSession", null);
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		}
 		

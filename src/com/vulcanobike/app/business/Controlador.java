@@ -149,19 +149,31 @@ public class Controlador {
 	}
 	
 	
-	public Producto GetOneProducto(Integer id) {
+	public Producto getOneProducto(Integer id) {
 		Producto Producto = dataProducto.GetOne(id);
 		return Producto;
 	}
 	
-	public void UpdateProducto(Producto producto) {
+	public void updateProducto(Producto producto) {
 		dataProducto.Update(producto);
 	}
 	
 	
 	//PEDIDO
-	public int AddPedido(Pedido pedido) {
-		return dataPedido.Insert(pedido);
+	public void addPedido(Pedido pedido) {
+		int idPedido = dataPedido.Insert(pedido); //guardo pedido y obtengo id autogenerado
+		addItemPedido(pedido.getItems(), idPedido); //guardo items con el id de pedido correspondiente
+	}
+	
+	public List<Pedido> getAllPedido() throws Exception {
+		List<Pedido> pedidos = dataPedido.GetAll();
+		//for(Pedido p:pedidos) {
+			//Usuario u = dataUsuario.GetOneById(p.getUsuario().getId());
+			//List<ItemPedido> items = dataItemPedido.GetAllByIdPedido(p.getId());
+			//p.setUsuario(u);
+			//p.setItems(items);
+		//	}
+		return pedidos;
 	}
 	
 	public float calcularImportePedido(List<ItemPedido> items) {
@@ -172,11 +184,22 @@ public class Controlador {
 		return importePedido;
 	}
 	
+	public String generadorMensaje(Pedido pedido) {
 
+		String cuerpo = "Resumen de su compra: \n\n";
+		for(ItemPedido ip:pedido.getItems()) {
+
+			String lineaProducto = ip.getProducto().getNombre() + " x" + ip.getCantidad() + " = $" + ip.getImporte() + "\n";
+			cuerpo = cuerpo + lineaProducto;
+		}
+		
+		cuerpo = cuerpo + "Total = $" + pedido.getImporte();
+		return cuerpo;
+	}
 	
 	
 	//ITEMPEDIDO
-	public void AddItemPedido(List<ItemPedido> itemsPedido, int idPedido) {
+	public void addItemPedido(List<ItemPedido> itemsPedido, int idPedido) {
 		
 		for(ItemPedido ip : itemsPedido) {
 			ip.setIdPedido(idPedido);

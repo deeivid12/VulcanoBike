@@ -125,6 +125,7 @@ footer a {
 
 	<div class="container">
         <h4 class="jumbotron-heading">Gracias por su compra.</h4>
+        <h6 class="jumbotron-heading">El resumen de su compra ha sido enviado a su correo electronico.</h6>
      </div>
 
 

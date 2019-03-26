@@ -17,6 +17,8 @@ import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Producto;
 import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Usuario;
+import com.vulcanobike.app.util.Emailer;
 
 /**
  * Servlet implementation class SrvCarrito
@@ -42,139 +44,160 @@ public class SrvCarrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String accion = request.getParameter("accion");
+		Usuario uActual = (Usuario)request.getSession().getAttribute("userSession");
 		
-		//INFO PRODUCTO
-		if(accion.equals("info")) {
+		if(uActual != null) {
 			
-			int id = Integer.parseInt(request.getParameter("id"));
-			Producto p = ctrl.GetOneProducto(id);
-			request.setAttribute("pEncontrado", p);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/verProducto.jsp");
-			view.forward(request, response);
-		}
-		
-		//ADD CARRITO
-		if(accion.equals("add")) {
-					
-			//HttpSession sesion= request.getSession(true);
-			int id = Integer.parseInt(request.getParameter("id"));
-			int cant = Integer.parseInt(request.getParameter("cant"));
-			boolean itemRepetido = false;
+			String accion = request.getParameter("accion");
 			
-			//armo item para guardar
-			Producto p = ctrl.GetOneProducto(id);
-			ItemPedido itemP = new ItemPedido();
-			itemP.setProducto(p);
-			itemP.setCantidad(cant);
-			itemP.setImporte(p.getPrecio()*cant);
-			
-
+			//INFO PRODUCTO
+			if(accion.equals("info")) {
 				
-			//verifico si hay repeticion de items
-			for(ItemPedido ip : items) {
-					if(ip.getProducto().getId() == itemP.getProducto().getId()) {
-						ip.setCantidad(ip.getCantidad()+itemP.getCantidad());
-						itemRepetido = true;
-				}
-			}
-			if(!itemRepetido) items.add(itemP);
-
-			
-			//actualizar stock actual de producto
-			if((p.getStock()-cant)<=0) p.setStock(0);
-			else p.setStock(p.getStock()-cant);
-			ctrl.UpdateProducto(p);
-			
-			//envio items a sesion
-			//sesion.setAttribute("items", items);
-			
-
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
-			view.forward(request, response);
-			
-		}
-		
-		
-		if(accion.equals("ver")) {
-			
-			HttpSession sesion= request.getSession(true);
-			if(sesion != null) {
-				
-				if(items != null) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				Producto p = ctrl.getOneProducto(id);
+				if(p.getStock() > 0) {
 					
-					//calculo importe total para mostrar en carrito
-					float importeTotal = 0;
-					importeTotal = ctrl.calcularImportePedido(items);
+					request.setAttribute("pEncontrado", p);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/verProducto.jsp");
+					view.forward(request, response);
 					
-					request.setAttribute("importe", importeTotal);
-					request.setAttribute("items", items);
+				} else {
+					
+					System.out.println("STOCK NO DISPONIBLE.");
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					view.forward(request, response);
 					
 				}
 				
 			}
 			
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
-			view.forward(request, response);
-			
-		}
-		
-		
-		if(accion.equals("fin")) {
-			
-			if(!items.isEmpty()) { //valido que pedido tenga items
+			//ADD CARRITO
+			if(accion.equals("add")) {
+						
+				//HttpSession sesion= request.getSession(true);
+				int id = Integer.parseInt(request.getParameter("id"));
+				int cant = Integer.parseInt(request.getParameter("cant"));
+				boolean itemRepetido = false;
 				
-				//HttpSession sesion= request.getSession(false);
-				Pedido pedido = new Pedido();
-				float importePedido = 0;
+				//armo item para guardar
+				Producto p = ctrl.getOneProducto(id);
+				ItemPedido itemP = new ItemPedido();
+				itemP.setProducto(p);
+				itemP.setCantidad(cant);
+				itemP.setImporte(p.getPrecio()*cant);
 				
-				pedido.setItems(items);
-				//for(ItemPedido ip : pedido.getItems()) { //calculo importe de pedido!
-				//	importePedido = importePedido + ip.getImporte();
-				//}
-				pedido.setImporte(ctrl.calcularImportePedido(items)); 
-				int id = ctrl.AddPedido(pedido);//se guarda el id del pedido			
-				ctrl.AddItemPedido(items, id);//guardo itemsPedido en pedido generado
+
+					
+				//verifico si hay repeticion de items
+				for(ItemPedido ip : items) {
+						if(ip.getProducto().getId() == itemP.getProducto().getId()) {
+							ip.setCantidad(ip.getCantidad()+itemP.getCantidad());
+							itemRepetido = true;
+					}
+				}
+				if(!itemRepetido) items.add(itemP);
+
 				
-				//sesion.setAttribute("items", null);;//ELIMINO ITEMS DE SESION
-				items.clear();
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/finPedido.jsp");
+				//actualizar stock actual de producto
+				if((p.getStock()-cant)<=0) p.setStock(0);
+				else p.setStock(p.getStock()-cant);
+				ctrl.updateProducto(p);
+				
+				//envio items a sesion
+				//sesion.setAttribute("items", items);
+				
+
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
 				view.forward(request, response);
 				
 			}
-			else {
-				System.out.println("ERROR. CARRITO NO CONTIENE ITEMS!"); //MOSTRAR PANTALLA DE ERROR
-			}
 			
 			
-		}
-		
-		if(accion.equals("eliminar")) {
-			
-			int id = Integer.parseInt(request.getParameter("id"));
-			int indice = 0;
-			
-			//consulto indice de producto a eliminar de carrito y devuelvo cantidad a stock!
-			for(ItemPedido ip : items) {
-				if(ip.getProducto().getId() == id) {
+			if(accion.equals("ver")) {
+				
+				//HttpSession sesion= request.getSession(true);
+				//if(sesion != null) {
 					
-					//actualizar stock actual de producto
-					ip.getProducto().setStock(ip.getProducto().getStock()+ip.getCantidad());
-					ctrl.UpdateProducto(ip.getProducto());
-					break;
-				}
-				else indice=indice+1;
+					if(items != null) {
+						
+						//calculo importe total para mostrar en carrito
+						float importeTotal = 0;
+						importeTotal = ctrl.calcularImportePedido(items);
+						
+						request.setAttribute("importe", importeTotal);
+						request.setAttribute("items", items);
+						
+					}
+					
+				//}
+				
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
+				view.forward(request, response);
+				
 			}
-			items.remove(indice);//elimino producto de carrito
-			request.setAttribute("importe", ctrl.calcularImportePedido(items));
-			request.setAttribute("items", items);
 			
 			
+			if(accion.equals("fin")) {
+				
+				if(!items.isEmpty()) { //valido que pedido tenga items
+					
+					//HttpSession sesion= request.getSession(false);
+					
+					Pedido pedido = new Pedido();
+					pedido.setUsuario(uActual);
+					pedido.setItems(items);
+					pedido.setImporte(ctrl.calcularImportePedido(items)); 
+					ctrl.addPedido(pedido);				
+					
+					//Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));
+					
+					//sesion.setAttribute("items", null);;//ELIMINO ITEMS DE SESION
+					items.clear();
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/finPedido.jsp");
+					view.forward(request, response);
+					
+				}
+				else {
+					System.out.println("ERROR. CARRITO NO CONTIENE ITEMS!"); //MOSTRAR PANTALLA DE ERROR
+				}
+				
+				
+			}
 			
+			if(accion.equals("eliminar")) {
+				
+				int id = Integer.parseInt(request.getParameter("id"));
+				int indice = 0;
+				
+				//consulto indice de producto a eliminar de carrito y devuelvo cantidad a stock!
+				for(ItemPedido ip : items) {
+					if(ip.getProducto().getId() == id) {
+						
+						//actualizar stock actual de producto
+						ip.getProducto().setStock(ip.getProducto().getStock()+ip.getCantidad());
+						ctrl.updateProducto(ip.getProducto());
+						break;
+					}
+					else indice=indice+1;
+				}
+				items.remove(indice);//elimino producto de carrito
+				request.setAttribute("importe", ctrl.calcularImportePedido(items));
+				request.setAttribute("items", items);
+				
+				
+				
+				
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
+				view.forward(request, response);
+			}
 			
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
+		} else {
+			System.out.println("NO ESTA LOGUEADO PARA VER PRODUCTOS!");
+			RequestDispatcher view = getServletContext().getRequestDispatcher("/login.jsp");
 			view.forward(request, response);
 		}
+		
+		
 			
 		
 	}

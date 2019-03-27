@@ -21,7 +21,7 @@
 
 		<form action="SrvAplicacion" method="post">
 		
-			<input type="hidden" name="accion" value="guardar"></input>
+			<input type="hidden" name="accion" value="alta"></input>
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>

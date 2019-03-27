@@ -16,12 +16,22 @@
 	<h2>Listado de Aplicaciones</h2>
 	
 	<input type="hidden" name="accion" value="listar"></input>
+	
+	<div class="row">
+					<div class="col">
+						<a class="btn btn-secondary"
+							href="/VulcanoBike/formAplicacion.jsp" role="button">Agregar</a>
+					</div>
+
+				</div>
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Nombre</th>
 				<th>Descripción</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +39,10 @@
 				<tr>
 					<td>${a.nombre}</td>
 					<td>${a.descripcion}</td>
+					<td><a href="SrvAplicacion?id=${a.id}&accion=editar"
+									class="editar">Editar</a></td>
+					<td><a href="SrvAplicacion?id=${a.id}&accion=eliminar"
+									class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

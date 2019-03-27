@@ -54,8 +54,8 @@ String accion = request.getParameter("accion");
 					
 			try {
 				int id = Integer.parseInt(request.getParameter("id"));
-				//Aplicacion a = ctrl.getOneAplicacion(id);
-				//request.setAttribute("aEncontrado", a);
+				Aplicacion a = ctrl.getOneAplicacion(id);
+				request.setAttribute("aEncontrado", a);
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarAplicacion.jsp");
 				view.forward(request, response);
 			} catch (Exception e) {
@@ -72,8 +72,8 @@ String accion = request.getParameter("accion");
 			
 			try {
 				int id = Integer.parseInt(request.getParameter("id"));
-				//ctrl.deleteAplicacion(id);
-				response.sendRedirect("srvListarAplicacion");
+				ctrl.deleteAplicacion(id);
+				response.sendRedirect("SrvListarAplicacion");
 
 			} catch (Exception e) {
 				
@@ -104,8 +104,8 @@ String accion = request.getParameter("accion");
 				aplicacion.setId(id);
 				aplicacion.setNombre(request.getParameter("nombre"));
 				aplicacion.setDescripcion(request.getParameter("descripcion"));
-				//ctrl.updateAplicacion(aplicacion);
-				//response.sendRedirect("srvListarAplicacion");
+				ctrl.updateAplicacion(aplicacion);
+				response.sendRedirect("SrvListarAplicacion");
 			} catch (Exception e) {
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					
@@ -123,8 +123,8 @@ String accion = request.getParameter("accion");
 				Aplicacion aplicacion = new Aplicacion();
 				aplicacion.setNombre(request.getParameter("nombre"));
 				aplicacion.setDescripcion(request.getParameter("descripcion"));
-				//ctrl.addAplicacion(aplicacion);
-				response.sendRedirect("srvListarAplicacion"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
+				ctrl.addAplicacion(aplicacion);
+				response.sendRedirect("SrvListarAplicacion"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
 			} catch (Exception e) {
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					

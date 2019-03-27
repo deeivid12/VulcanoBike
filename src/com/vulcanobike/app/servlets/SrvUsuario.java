@@ -56,7 +56,7 @@ public class SrvUsuario extends HttpServlet {
 			request.getSession().setAttribute("userSession", usuario); //envio usuario a sesion
 			if(usuario!=null) {
 				if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) {
-					request.getRequestDispatcher("srvListarTipoProducto").forward(request, response);
+					request.getRequestDispatcher("").forward(request, response);
 				}
 				if(usuario.getTipoUsuario().equals(TiposUsuario.Usuario)) {
 					request.getRequestDispatcher("SrvListarProducto").forward(request, response);

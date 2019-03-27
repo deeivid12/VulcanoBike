@@ -32,6 +32,7 @@ public class Controlador {
 	private DataUsuario dataUsuario = new DataUsuario();
 	private DataAplicacion dataAplicacion = new DataAplicacion();
 	private DataRodado dataRodado = new DataRodado();
+
 	
 	//LOGIN
 	public Usuario login(String user, String pass) {
@@ -125,18 +126,27 @@ public class Controlador {
 	}
 	
 	
-	//APLICACION
-	public List<Aplicacion> getCatalogoAplicacion() {
-		return catalogoAplicacion;
+	//APLICACION	
+	
+	public void addAplicacion(Aplicacion aplicacion) throws Exception {
+		dataAplicacion.Insert(aplicacion);
 	}
-
-	public void setCatalogoAplicacion(List<Aplicacion> catalogoAplicacion) {
-		this.catalogoAplicacion = catalogoAplicacion;
+	
+	public List<Aplicacion> getAllAplicacion() throws Exception{
+		return dataAplicacion.GetAll();
+	}
+	
+	public Aplicacion getOneAplicacion(int id) throws Exception {
+		return dataAplicacion.GetOne(id);
 	}
 	
 	
-	public void addAplicacion(Aplicacion aplicacion) {
-		catalogoAplicacion.add(aplicacion);
+	public void updateAplicacion(Aplicacion aplicacion) throws Exception {
+		dataAplicacion.Update(aplicacion);
+	}
+	
+	public void deleteAplicacion(int id) throws Exception {
+		dataAplicacion.Delete(id);
 	}
 	
 	
@@ -205,11 +215,6 @@ public class Controlador {
 		}
 	}
 	
-	//APLICACION
-	
-	public List<Aplicacion> getAllAplicacion() throws Exception{
-		return dataAplicacion.GetAll();
-	}
 
 	
 	//RODADO

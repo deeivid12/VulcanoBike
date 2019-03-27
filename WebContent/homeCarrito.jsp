@@ -2,6 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
+<%@ page import="com.vulcanobike.app.entities.ItemPedido"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +26,9 @@
 
 <body>
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+<%List<ItemPedido> itemsPedido = (List<ItemPedido>)request.getAttribute("items"); %>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -48,7 +53,9 @@
           <li class="nav-item">
             <a class="btn btn-success btn-sm ml-3 mr-3 ver" href="SrvCarrito?accion=ver" style="margin-top:0.25rem">
                                                            <i class="fa fa-shopping-cart"></i>Carrito
-                                                          <span class="badge badge-light"></span>
+                                                           <%if (itemsPedido != null){ %>
+                                                           <span class="badge badge-light"><%=itemsPedido.size() %></span>
+                                                           <%} %>
            </a>
           </li>
           
@@ -90,7 +97,7 @@
     <div class="row">
 
       <div class="col-lg-3">
-
+      
         <h1 class="my-4">Productos</h1>
         <h5 class="my-4">Tipo Producto</h5>
         <div class="list-group">
@@ -124,7 +131,9 @@
       <!-- /.col-lg-3 -->
 
       <div class="col-lg-9">
-
+		<%if(request.getAttribute("error") != null){%> 	
+		<h5 class="text-danger"><%=request.getAttribute("error")%></h5>
+		<%} %>	
          <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>

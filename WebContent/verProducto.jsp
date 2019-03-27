@@ -106,7 +106,13 @@ $(document).ready(function() {
           </div>
           <div class="card-body">
             <p>Stock Actual: <%=p.getStock()%> </p>
-            <p>Cantidad: <input type="number" name="cant" id="cant" class="form-control" min=1 max="<%=p.getStock() %>"></input> </p>
+            <p>Cantidad:  <select class="form-control" id="cant" name="cant">
+								   <%for(int i=1;i<=p.getStock();i++){ %>
+								    <option><%=i %></option>
+								    <%} %>
+								    
+						  </select> 
+			</p>
             <hr>
             <a href="#" class="btn btn-success addCarrito">Agregar a Carrito</a>           
           </div>

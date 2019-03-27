@@ -16,7 +16,6 @@ import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Producto;
-import com.vulcanobike.app.entities.TipoProducto;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.util.Emailer;
 
@@ -63,7 +62,7 @@ public class SrvCarrito extends HttpServlet {
 					
 				} else {
 					
-					System.out.println("STOCK NO DISPONIBLE.");
+					request.setAttribute("error", "Sin stock disponible.");
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
 					view.forward(request, response);
 					
@@ -74,7 +73,6 @@ public class SrvCarrito extends HttpServlet {
 			//ADD CARRITO
 			if(accion.equals("add")) {
 						
-				//HttpSession sesion= request.getSession(true);
 				int id = Integer.parseInt(request.getParameter("id"));
 				int cant = Integer.parseInt(request.getParameter("cant"));
 				boolean itemRepetido = false;
@@ -103,10 +101,8 @@ public class SrvCarrito extends HttpServlet {
 				else p.setStock(p.getStock()-cant);
 				ctrl.updateProducto(p);
 				
-				//envio items a sesion
-				//sesion.setAttribute("items", items);
-				
-
+			
+				request.setAttribute("items", items);
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
 				view.forward(request, response);
 				
@@ -115,21 +111,17 @@ public class SrvCarrito extends HttpServlet {
 			
 			if(accion.equals("ver")) {
 				
-				//HttpSession sesion= request.getSession(true);
-				//if(sesion != null) {
 					
-					if(items != null) {
+				if(items != null) {
 						
-						//calculo importe total para mostrar en carrito
-						float importeTotal = 0;
-						importeTotal = ctrl.calcularImportePedido(items);
+					//calculo importe total para mostrar en carrito
+					float importeTotal = 0;
+					importeTotal = ctrl.calcularImportePedido(items);
 						
-						request.setAttribute("importe", importeTotal);
-						request.setAttribute("items", items);
+					request.setAttribute("importe", importeTotal);
+					request.setAttribute("items", items);
 						
 					}
-					
-				//}
 				
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
 				view.forward(request, response);
@@ -141,8 +133,6 @@ public class SrvCarrito extends HttpServlet {
 				
 				if(!items.isEmpty()) { //valido que pedido tenga items
 					
-					//HttpSession sesion= request.getSession(false);
-					
 					Pedido pedido = new Pedido();
 					pedido.setUsuario(uActual);
 					pedido.setItems(items);
@@ -151,14 +141,15 @@ public class SrvCarrito extends HttpServlet {
 					
 					//Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));
 					
-					//sesion.setAttribute("items", null);;//ELIMINO ITEMS DE SESION
+
 					items.clear();
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/finPedido.jsp");
 					view.forward(request, response);
 					
 				}
 				else {
-					System.out.println("ERROR. CARRITO NO CONTIENE ITEMS!"); //MOSTRAR PANTALLA DE ERROR
+					request.setAttribute("error", "Carrito vacio. Por favor, agregue uno o mas productos a su compra.");
+					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}
 				
 				
@@ -192,7 +183,6 @@ public class SrvCarrito extends HttpServlet {
 			}
 			
 		} else {
-			System.out.println("NO ESTA LOGUEADO PARA VER PRODUCTOS!");
 			RequestDispatcher view = getServletContext().getRequestDispatcher("/login.jsp");
 			view.forward(request, response);
 		}

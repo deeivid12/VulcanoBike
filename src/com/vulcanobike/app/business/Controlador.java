@@ -62,7 +62,7 @@ public class Controlador {
 		return dataTipoProducto.GetAll();
 	}
 	
-	public void addTipoProducto(TipoProducto tProducto) {
+	public void addTipoProducto(TipoProducto tProducto) throws Exception{
 		dataTipoProducto.Insert(tProducto);
 		//catalogoTipoProducto.add(tProducto);
 	}
@@ -76,7 +76,7 @@ public class Controlador {
 	}*/
 	
 	
-	public TipoProducto findOneTipoProducto(Integer id) {
+	public TipoProducto findOneTipoProducto(Integer id) throws Exception{
 		TipoProducto tProducto = dataTipoProducto.GetOne(id);
 		return tProducto;
 	}
@@ -92,17 +92,12 @@ public class Controlador {
 	}*/
 	
 	
-	public void updateTipoProducto(TipoProducto tipoProducto) {
+	public void updateTipoProducto(TipoProducto tipoProducto) throws Exception{
 		dataTipoProducto.Update(tipoProducto);
 	}
 	
-	public void deleteTipoProducto(int id) {//DESPUES CAMBIAR POR INT ID, PORQUE AHORA SE HACE POR NOMBRE!
-		/*int indice=0;
-		for(TipoProducto tp : catalogoTipoProducto) {
-			if(tp.getNombre().equals(nombre)) break;
-			else indice=indice+1;
-		}
-		catalogoTipoProducto.remove(indice);*/
+	public void deleteTipoProducto(int id) throws Exception{
+	
 		dataTipoProducto.Delete(id);
 	}
 

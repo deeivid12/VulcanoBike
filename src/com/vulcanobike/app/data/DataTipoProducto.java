@@ -18,14 +18,13 @@ public class DataTipoProducto {
 			while(rs.next() && rs!=null){
 				tp = new TipoProducto();
 				tp.setId(rs.getInt("id"));
-				System.out.println("IDDDDDD: " + tp.getId());
 				tp.setNombre(rs.getString("nombre"));
 				tp.setDescripcion(rs.getString("descripcion"));
 				list.add(tp);
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
-			throw new Exception("Error al recuperar datos",e);
+			//e.printStackTrace();
+			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -35,7 +34,7 @@ public class DataTipoProducto {
 		return list;
 	}
 	
-	public TipoProducto GetOne(Integer id){
+	public TipoProducto GetOne(Integer id) throws Exception{
 		TipoProducto tp = null; ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="select * from tipo_producto where id=?";
 		try{
@@ -50,7 +49,8 @@ public class DataTipoProducto {
 				tp.setDescripcion(rs.getString("descripcion"));
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al recuperar datos.", e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -61,7 +61,7 @@ public class DataTipoProducto {
 	}
 	
 	
-	public void Insert(TipoProducto tp){
+	public void Insert(TipoProducto tp) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="insert into tipo_producto (nombre, descripcion) values (?,?)";		
 		try{
@@ -73,7 +73,8 @@ public class DataTipoProducto {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al registrar datos.", e);
 		} 
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -83,7 +84,7 @@ public class DataTipoProducto {
 	}
 	
 	
-	public void Update(TipoProducto tp){
+	public void Update(TipoProducto tp) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="UPDATE tipo_producto SET nombre=?, descripcion=? WHERE id=?";
 		try{
@@ -95,7 +96,8 @@ public class DataTipoProducto {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al actualizar datos.", e);
 
 		}
 		finally{
@@ -107,7 +109,7 @@ public class DataTipoProducto {
 	}
 	
 	
-	public void Delete(int id){
+	public void Delete(int id) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="DELETE from tipo_producto where id=?";
 		try{
@@ -117,7 +119,8 @@ public class DataTipoProducto {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al eliminar datos.", e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();

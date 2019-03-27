@@ -51,20 +51,36 @@ public class SrvTipoProducto extends HttpServlet {
 		//ABM EDITAR
 		if(accion.equals("editar")) {
 					
-			int id = Integer.parseInt(request.getParameter("id"));
-			TipoProducto tp = ctrl.findOneTipoProducto(id);
-			request.setAttribute("tpEncontrado", tp);
-			RequestDispatcher view = getServletContext().getRequestDispatcher("/editarTipoProducto.jsp");
-			view.forward(request, response);
+			try {
+				int id = Integer.parseInt(request.getParameter("id"));
+				TipoProducto tp = ctrl.findOneTipoProducto(id);
+				request.setAttribute("tpEncontrado", tp);
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarTipoProducto.jsp");
+				view.forward(request, response);
+			} catch (Exception e) {
+				//e.printStackTrace();
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			} 
 			
 		}
 		
 		//ABM ELIMINAR
 		if(accion.equals("eliminar")) {
 			
-			int id = Integer.parseInt(request.getParameter("id"));
-			ctrl.deleteTipoProducto(id);
-			response.sendRedirect("srvListarTipoProducto");
+			try {
+				int id = Integer.parseInt(request.getParameter("id"));
+				ctrl.deleteTipoProducto(id);
+				response.sendRedirect("srvListarTipoProducto");
+
+			} catch (Exception e) {
+				
+				//e.printStackTrace();
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
 		}
 		
 	}
@@ -82,13 +98,19 @@ public class SrvTipoProducto extends HttpServlet {
 		//ABM EDITAR
 		if(accion.equals("editar")) {
 			
-			TipoProducto tProducto = new TipoProducto();
-			Integer id = Integer.parseInt(request.getParameter("id"));
-			tProducto.setId(id);
-			tProducto.setNombre(request.getParameter("nombre"));
-			tProducto.setDescripcion(request.getParameter("descripcion"));
-			ctrl.updateTipoProducto(tProducto);
-			response.sendRedirect("srvListarTipoProducto");
+			try {
+				TipoProducto tProducto = new TipoProducto();
+				Integer id = Integer.parseInt(request.getParameter("id"));
+				tProducto.setId(id);
+				tProducto.setNombre(request.getParameter("nombre"));
+				tProducto.setDescripcion(request.getParameter("descripcion"));
+				ctrl.updateTipoProducto(tProducto);
+				response.sendRedirect("srvListarTipoProducto");
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
 		}
 		
 		
@@ -97,11 +119,17 @@ public class SrvTipoProducto extends HttpServlet {
 			
 			//GUARDAR TIPO PRODUCTO
 			
-			TipoProducto tProducto = new TipoProducto();
-			tProducto.setNombre(request.getParameter("nombre"));
-			tProducto.setDescripcion(request.getParameter("descripcion"));
-			ctrl.addTipoProducto(tProducto);
-			response.sendRedirect("srvListarTipoProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
+			try {
+				TipoProducto tProducto = new TipoProducto();
+				tProducto.setNombre(request.getParameter("nombre"));
+				tProducto.setDescripcion(request.getParameter("descripcion"));
+				ctrl.addTipoProducto(tProducto);
+				response.sendRedirect("srvListarTipoProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
 		}
 		
 		

@@ -3,9 +3,11 @@ package com.vulcanobike.app.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vulcanobike.app.data.DataAplicacion;
 import com.vulcanobike.app.data.DataItemPedido;
 import com.vulcanobike.app.data.DataPedido;
 import com.vulcanobike.app.data.DataProducto;
+import com.vulcanobike.app.data.DataRodado;
 import com.vulcanobike.app.data.DataTipoProducto;
 import com.vulcanobike.app.data.DataUsuario;
 import com.vulcanobike.app.entities.Aplicacion;
@@ -13,6 +15,7 @@ import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Marca;
 import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Producto;
+import com.vulcanobike.app.entities.Rodado;
 import com.vulcanobike.app.entities.TipoProducto;
 import com.vulcanobike.app.entities.Usuario;
 
@@ -27,6 +30,8 @@ public class Controlador {
 	private DataPedido dataPedido = new DataPedido();
 	private DataItemPedido dataItemPedido = new DataItemPedido();
 	private DataUsuario dataUsuario = new DataUsuario();
+	private DataAplicacion dataAplicacion = new DataAplicacion();
+	private DataRodado dataRodado = new DataRodado();
 	
 	//LOGIN
 	public Usuario login(String user, String pass) {
@@ -129,9 +134,6 @@ public class Controlador {
 		this.catalogoAplicacion = catalogoAplicacion;
 	}
 	
-	public List<Aplicacion> getAllAplicacion(){
-		return catalogoAplicacion;
-	}
 	
 	public void addAplicacion(Aplicacion aplicacion) {
 		catalogoAplicacion.add(aplicacion);
@@ -140,7 +142,8 @@ public class Controlador {
 	
 	//PRODUCTO
 	public List<Producto> getAllProducto(){
-		return dataProducto.GetAll();
+
+		return  dataProducto.GetAll();
 	}
 	
 	
@@ -201,5 +204,17 @@ public class Controlador {
 			dataItemPedido.Insert(ip);
 		}
 	}
+	
+	//APLICACION
+	
+	public List<Aplicacion> getAllAplicacion() throws Exception{
+		return dataAplicacion.GetAll();
+	}
 
+	
+	//RODADO
+	
+	public List<Rodado> getAllRodado() throws Exception{
+		return dataRodado.GetAll();
+	}
 }

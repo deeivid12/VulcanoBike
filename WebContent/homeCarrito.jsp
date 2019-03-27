@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <%@ page import="com.vulcanobike.app.entities.ItemPedido"%>
+<%@ page import="com.vulcanobike.app.entities.TipoProducto"%>
+<%@ page import="com.vulcanobike.app.entities.Aplicacion"%>
+<%@ page import="com.vulcanobike.app.entities.Rodado"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +31,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 
-<%List<ItemPedido> itemsPedido = (List<ItemPedido>)request.getAttribute("items"); %>
+<%List<ItemPedido> itemsPedido = (List<ItemPedido>)request.getSession().getAttribute("items"); %>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -98,33 +101,42 @@
 
       <div class="col-lg-3">
       
+      <%List<TipoProducto> tps = (List<TipoProducto>)request.getAttribute("catTipoProducto"); %>
+      <%List<Aplicacion> aplicaciones = (List<Aplicacion>)request.getAttribute("catAplicacion");  %>
+      <%List<Rodado> rodados = (List<Rodado>)request.getAttribute("catRodado");  %>
+      
         <h1 class="my-4">Productos</h1>
         <h5 class="my-4">Tipo Producto</h5>
         <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
-        </div>
+        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+       <%if(tps != null){
+    	   for(TipoProducto tp:tps){%>
+          <a href="SrvListarProducto?filtro=<%= tp.getNombre() %>" class="list-group-item"><%=tp.getNombre() %></a>
+         <%}} %>
+         </div>
         
          <h5 class="my-4">Aplicacion</h5>
-         <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
-        </div>
+        <div class="list-group">
+        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+       <%if(aplicaciones != null){
+    	   for(Aplicacion a:aplicaciones){%>
+          <a href="SrvListarProducto?filtro=<%= a.getNombre() %>" class="list-group-item"><%=a.getNombre() %></a>
+         <%}} %>
+         </div>
         
         <h5 class="my-4">Rodado</h5>
          <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
-          <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
-        </div>
+        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+       <%if(rodados != null){
+    	   for(Rodado r:rodados){%>
+          <a href="SrvListarProducto?filtro=<%= r.getNombre() %>" class="list-group-item"><%=r.getNombre() %></a>
+         <%}} %>
+         </div>
         
         <h5 class="my-4">Marca</h5>
          <div class="list-group">
-          <a href="#" class="list-group-item">Category 1</a>
+          <a href="SrvListarTipoProducto" class="list-group-item">Todo</a>
           <a href="#" class="list-group-item">Category 2</a>
-          <a href="#" class="list-group-item">Category 3</a>
         </div>
 
       </div>

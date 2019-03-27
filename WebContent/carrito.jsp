@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,15 +109,31 @@ footer a {
                                                           <span class="badge badge-light"></span>
            </a>
           </li>
+                     <%Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+          
            <li class="nav-item dropdown">
+           
+           <%if (usuario != null){ %>
+           
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Mi Cuenta
+                <%=usuario.getUser()  %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Iniciar Sesion</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
+                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+                  <%} %>
+           <%if (usuario == null){ %>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mi Cuenta</a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
+                <a class="dropdown-item" href="registro.jsp">Registrarse</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
+              </div> 
+              <%} %>
+               
+               
+                  
               </div>
             </li>
         </ul>

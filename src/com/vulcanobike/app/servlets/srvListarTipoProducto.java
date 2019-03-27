@@ -84,7 +84,7 @@ public class srvListarTipoProducto extends HttpServlet {
 			else { //en caso de no ser usuario administrador
 				String error = "No tiene permisos suficientes para ver esta pagina.";
 				request.setAttribute("error", error);
-				request.getRequestDispatcher("error.jsp").forward(request, response); //habria que enviar a pagina de error!
+				request.getRequestDispatcher("error.jsp").forward(request, response); 
 			}
 		} 
 		else { //en caso de no estar logueado

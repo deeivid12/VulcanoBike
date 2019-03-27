@@ -73,7 +73,7 @@ public class SrvUsuario extends HttpServlet {
 		
 		//LOGOFF
 		if(accion.equals("logoff")) {
-			request.getSession().setAttribute("userSession", null);
+			request.getSession().invalidate();
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			
 		}

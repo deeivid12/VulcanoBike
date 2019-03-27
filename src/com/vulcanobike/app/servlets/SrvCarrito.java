@@ -28,7 +28,9 @@ public class SrvCarrito extends HttpServlet {
 	
 	
 	Controlador ctrl = new Controlador();
-	List<ItemPedido> items = new ArrayList<ItemPedido>();
+	//List<ItemPedido> items = new ArrayList<ItemPedido>();
+	
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -44,6 +46,7 @@ public class SrvCarrito extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Usuario uActual = (Usuario)request.getSession().getAttribute("userSession");
+		List<ItemPedido> itemsSesion = (List<ItemPedido>)request.getSession().getAttribute("items");
 		
 		if(uActual != null) {
 			
@@ -77,6 +80,7 @@ public class SrvCarrito extends HttpServlet {
 				int cant = Integer.parseInt(request.getParameter("cant"));
 				boolean itemRepetido = false;
 				
+				
 				//armo item para guardar
 				Producto p = ctrl.getOneProducto(id);
 				ItemPedido itemP = new ItemPedido();
@@ -84,65 +88,89 @@ public class SrvCarrito extends HttpServlet {
 				itemP.setCantidad(cant);
 				itemP.setImporte(p.getPrecio()*cant);
 				
+				if(itemsSesion == null) {
+					
+					//actualizar stock actual de producto
+					if((p.getStock()-cant)<=0) p.setStock(0);
+					else p.setStock(p.getStock()-cant);
+					ctrl.updateProducto(p);
+					
+					itemsSesion = new ArrayList<ItemPedido>();
+					itemsSesion.add(itemP);
+					request.getSession().setAttribute("items", itemsSesion);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					view.forward(request, response);
+					
+				} else {
+					
+					//verifico si hay repeticion de items
+					for(ItemPedido ip : itemsSesion) {
+							if(ip.getProducto().getId() == itemP.getProducto().getId()) {
+								ip.setCantidad(ip.getCantidad()+itemP.getCantidad());
+								itemRepetido = true;
+						}
+					}
+					if(!itemRepetido) itemsSesion.add(itemP);
 
 					
-				//verifico si hay repeticion de items
-				for(ItemPedido ip : items) {
-						if(ip.getProducto().getId() == itemP.getProducto().getId()) {
-							ip.setCantidad(ip.getCantidad()+itemP.getCantidad());
-							itemRepetido = true;
-					}
+					//actualizar stock actual de producto
+					if((p.getStock()-cant)<=0) p.setStock(0);
+					else p.setStock(p.getStock()-cant);
+					ctrl.updateProducto(p);
+					
+				
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					view.forward(request, response);
+					
+					
 				}
-				if(!itemRepetido) items.add(itemP);
+				
+				
+				
 
-				
-				//actualizar stock actual de producto
-				if((p.getStock()-cant)<=0) p.setStock(0);
-				else p.setStock(p.getStock()-cant);
-				ctrl.updateProducto(p);
-				
-			
-				request.setAttribute("items", items);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
-				view.forward(request, response);
+					
 				
 			}
 			
 			
 			if(accion.equals("ver")) {
 				
-					
-				if(items != null) {
+
+				if(itemsSesion != null)	{
 						
 					//calculo importe total para mostrar en carrito
 					float importeTotal = 0;
-					importeTotal = ctrl.calcularImportePedido(items);
+					importeTotal = ctrl.calcularImportePedido(itemsSesion);
 						
 					request.setAttribute("importe", importeTotal);
-					request.setAttribute("items", items);
+					
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
+					view.forward(request, response);
 						
+					} else {
+						request.setAttribute("error", "Carrito vacio. Por favor, agregue uno o mas productos a su compra.");
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/error.jsp");
+						view.forward(request, response);
 					}
-				
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/carrito.jsp");
-				view.forward(request, response);
 				
 			}
 			
 			
 			if(accion.equals("fin")) {
 				
-				if(!items.isEmpty()) { //valido que pedido tenga items
+				
+				if(!itemsSesion.isEmpty()) { //valido que pedido tenga items
 					
 					Pedido pedido = new Pedido();
 					pedido.setUsuario(uActual);
-					pedido.setItems(items);
-					pedido.setImporte(ctrl.calcularImportePedido(items)); 
+					pedido.setItems(itemsSesion);
+					pedido.setImporte(ctrl.calcularImportePedido(itemsSesion)); 
 					ctrl.addPedido(pedido);				
 					
 					//Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));
 					
 
-					items.clear();
+					itemsSesion.clear();
 					RequestDispatcher view = getServletContext().getRequestDispatcher("/finPedido.jsp");
 					view.forward(request, response);
 					
@@ -161,7 +189,7 @@ public class SrvCarrito extends HttpServlet {
 				int indice = 0;
 				
 				//consulto indice de producto a eliminar de carrito y devuelvo cantidad a stock!
-				for(ItemPedido ip : items) {
+				for(ItemPedido ip : itemsSesion) {
 					if(ip.getProducto().getId() == id) {
 						
 						//actualizar stock actual de producto
@@ -171,9 +199,8 @@ public class SrvCarrito extends HttpServlet {
 					}
 					else indice=indice+1;
 				}
-				items.remove(indice);//elimino producto de carrito
-				request.setAttribute("importe", ctrl.calcularImportePedido(items));
-				request.setAttribute("items", items);
+				itemsSesion.remove(indice);//elimino producto de carrito
+				request.setAttribute("importe", ctrl.calcularImportePedido(itemsSesion));
 				
 				
 				

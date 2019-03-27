@@ -6,28 +6,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.vulcanobike.app.entities.Aplicacion;
 import com.vulcanobike.app.entities.Producto;
+import com.vulcanobike.app.entities.Rodado;
 import com.vulcanobike.app.entities.TipoProducto;
 
 public class DataProducto {
 
 	public ArrayList<Producto> GetAll(){
 		ArrayList<Producto> list = new ArrayList<Producto>();
-		Producto p = null; ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="select * from productos";
+		Producto p = null; ResultSet rs = null; PreparedStatement stmt = null; TipoProducto tp = null;
+		Aplicacion a = null; Rodado r = null;
+		String sql="select * from productos inner join tipo_producto on productos.id_tipo_producto = tipo_producto.id"
+				+ "							inner join aplicaciones on productos.id_aplicacion = aplicaciones.id"
+				+ "							inner join rodados on productos.id_rodado = rodados.id";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next() && rs!=null){
 				p = new Producto();
+				tp = new TipoProducto();
+				a = new Aplicacion();
+				r = new Rodado();
 				p.setId(rs.getInt("id"));
 				p.setNombre(rs.getString("nombre"));
 				p.setDescripcion(rs.getString("descripcion"));
 				p.setPrecio(rs.getFloat("precio"));
 				p.setStock(rs.getInt("stock"));
 				p.setImagen(rs.getString("imagen"));
-				//AGREGAR LOS QUE FALTAN!
+				tp.setId(rs.getInt("tipo_producto.id"));
+				tp.setNombre(rs.getString("tipo_producto.nombre"));
+				tp.setDescripcion(rs.getString("tipo_producto.descripcion"));
+				a.setId(rs.getInt("aplicaciones.id"));
+				a.setNombre(rs.getString("aplicaciones.nombre"));
+				a.setDescripcion(rs.getString("aplicaciones.descripcion"));
+				r.setId(rs.getInt("rodados.id"));
+				r.setNombre(rs.getString("rodados.nombre"));
+				r.setDescripcion(rs.getString("rodados.descripcion"));
+				p.setTipoProducto(tp);
+				p.setAplicacionBicicleta(a);
+				p.setRodado(r);
 				list.add(p);
 			}
 		} catch(SQLException e){
@@ -58,6 +77,7 @@ public class DataProducto {
 				p.setPrecio(rs.getFloat("precio"));
 				p.setStock(rs.getInt("stock"));
 				p.setImagen(rs.getString("imagen"));
+				//completar lo que falta
 			}
 		} catch(SQLException e){
 			e.printStackTrace();

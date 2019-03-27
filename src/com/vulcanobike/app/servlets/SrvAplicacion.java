@@ -3,6 +3,7 @@ package com.vulcanobike.app.servlets;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.Aplicacion;
+import com.vulcanobike.app.entities.TipoProducto;
 
 /**
  * Servlet implementation class SrvAplicacionBicicleta
@@ -43,8 +45,46 @@ public class SrvAplicacion extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+String accion = request.getParameter("accion");
+		
+		
+		//ABM EDITAR
+		if(accion.equals("editar")) {
+					
+			try {
+				int id = Integer.parseInt(request.getParameter("id"));
+				//Aplicacion a = ctrl.getOneAplicacion(id);
+				//request.setAttribute("aEncontrado", a);
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarAplicacion.jsp");
+				view.forward(request, response);
+			} catch (Exception e) {
+				//e.printStackTrace();
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			} 
+			
+		}
+		
+		//ABM ELIMINAR
+		if(accion.equals("eliminar")) {
+			
+			try {
+				int id = Integer.parseInt(request.getParameter("id"));
+				//ctrl.deleteAplicacion(id);
+				response.sendRedirect("srvListarAplicacion");
+
+			} catch (Exception e) {
+				
+				//e.printStackTrace();
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
+		}
+		
+		
 	}
 
 	/**
@@ -52,21 +92,45 @@ public class SrvAplicacion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String accion = request.getParameter("accion");//Obtengo accion correspondiente a peticion
-		if(accion.equals("guardar")) {
+String accion = request.getParameter("accion");
+
+		
+		//ABM EDITAR
+		if(accion.equals("editar")) {
 			
-			Aplicacion aplicacion = new Aplicacion();
-			aplicacion.setNombre(request.getParameter("nombre"));
-			aplicacion.setDescripcion(request.getParameter("descripcion"));
-			ctrl.addAplicacion(aplicacion);
-			accion = "listar"; //CAMBIO ACCION PARA QUE ACTO SEGUIDO LISTE TODAS LAS MARCAS!
-			
-		} if(accion.equals("listar")) {
-			List<Aplicacion> catalogoAplicacion = ctrl.getAllAplicacion();
-			request.setAttribute("catAplicacion", catalogoAplicacion);
-			request.getRequestDispatcher("listarAplicacion.jsp").forward(request, response);
+			try {
+				Aplicacion aplicacion = new Aplicacion();
+				Integer id = Integer.parseInt(request.getParameter("id"));
+				aplicacion.setId(id);
+				aplicacion.setNombre(request.getParameter("nombre"));
+				aplicacion.setDescripcion(request.getParameter("descripcion"));
+				//ctrl.updateAplicacion(aplicacion);
+				//response.sendRedirect("srvListarAplicacion");
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
 		}
 		
-	}
+		
+		//ABM ALTA
+		if(accion.equals("alta")) {
+			
+			//GUARDAR APLICACION
+			
+			try {
+				Aplicacion aplicacion = new Aplicacion();
+				aplicacion.setNombre(request.getParameter("nombre"));
+				aplicacion.setDescripcion(request.getParameter("descripcion"));
+				//ctrl.addAplicacion(aplicacion);
+				response.sendRedirect("srvListarAplicacion"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());					
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+			}
+		}
 
+	}
 }

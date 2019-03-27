@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.vulcanobike.app.business.Controlador;
+import com.vulcanobike.app.entities.Aplicacion;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Producto;
+import com.vulcanobike.app.entities.Rodado;
+import com.vulcanobike.app.entities.TipoProducto;
 
 
 /**
@@ -37,9 +40,47 @@ public class SrvListarProducto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
+
+		String filtro = (String)request.getParameter("filtro");
+		
+		if(filtro != null) {
+			
+			List<Producto> catalogoProducto = new ArrayList<Producto>();
+			List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
+			List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
+			List<Rodado> catalogoRodado = new ArrayList<Rodado>();
+			List<Producto> productosFiltrados = new ArrayList<Producto>();
+			
+			
+			catalogoProducto = ctrl.getAllProducto();
+			try {
+				catalogoTipoProducto = ctrl.getAllTipoProducto();
+				catalogoAplicacion = ctrl.getAllAplicacion();
+				catalogoRodado = ctrl.getAllRodado();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			for(Producto p:catalogoProducto) {
+				if(p.getTipoProducto().getNombre().equals(filtro)) productosFiltrados.add(p);
+				if(p.getAplicacionBicicleta().getNombre().equals(filtro)) productosFiltrados.add(p);
+				if(p.getRodado().getNombre().equals(filtro)) productosFiltrados.add(p);
+				//hacer lo mismo para el resto de caracteristicas
+			}
+			
+			request.setAttribute("catProducto", productosFiltrados);
+			request.setAttribute("catTipoProducto", catalogoTipoProducto);
+			request.setAttribute("catAplicacion", catalogoAplicacion);
+			request.setAttribute("catRodado", catalogoRodado);
+			request.getRequestDispatcher("homeCarrito.jsp").forward(request, response);
+			
+		}else {
+			doPost(request, response);
+		}
+		
+		
+		
 	}
 
 	/**
@@ -47,25 +88,26 @@ public class SrvListarProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Producto> catalogoProducto = ctrl.getAllProducto();
-		List<ItemPedido> items = new ArrayList<ItemPedido>();
 		
-		HttpSession sesion= (HttpSession) request.getSession();
-		
-		if(sesion != null) {
-			items = (List<ItemPedido>) sesion.getAttribute("items");
-			if(items != null) {
-				for(ItemPedido ip : items) {
-					System.out.println("ITEMSSSSS: " + ip.getProducto().getNombre());
-			}
-			
-			}
+		List<Producto> catalogoProducto = new ArrayList<Producto>();
+		List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
+		List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
+		List<Rodado> catalogoRodado = new ArrayList<Rodado>();
+		catalogoProducto = ctrl.getAllProducto();
+		try {
+			catalogoTipoProducto = ctrl.getAllTipoProducto();
+			catalogoAplicacion = ctrl.getAllAplicacion();
+			catalogoRodado = ctrl.getAllRodado();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
 		request.setAttribute("catProducto", catalogoProducto);
-		//request.getRequestDispatcher("listarProductos.jsp").forward(request, response);
+		request.setAttribute("catTipoProducto", catalogoTipoProducto);
+		request.setAttribute("catAplicacion", catalogoAplicacion);
+		request.setAttribute("catRodado", catalogoRodado);
 		request.getRequestDispatcher("homeCarrito.jsp").forward(request, response);
+		
 	}
 		
 

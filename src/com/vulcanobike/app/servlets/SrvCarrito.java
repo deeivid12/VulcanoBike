@@ -167,7 +167,7 @@ public class SrvCarrito extends HttpServlet {
 					pedido.setImporte(ctrl.calcularImportePedido(itemsSesion)); 
 					ctrl.addPedido(pedido);				
 					
-					//Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));
+					Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));
 					
 
 					itemsSesion.clear();

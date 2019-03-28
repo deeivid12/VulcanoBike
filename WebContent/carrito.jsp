@@ -6,15 +6,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+
     <title>VulcanoBike - Software de eCommerce</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
         /*
-** Style Simple Ecommerce Theme for Bootstrap 4
-** Created by T-PHP https://t-php.fr/43-theme-ecommerce-bootstrap-4.html
-*/
+
 .bloc_left_price {
     color: #c01508;
     text-align: center;
@@ -98,7 +96,7 @@ footer a {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -199,6 +197,11 @@ footer a {
 </div>
 
 
+
+
 <script type="text/javascript">
 
 </script>
+
+</body>
+</html>

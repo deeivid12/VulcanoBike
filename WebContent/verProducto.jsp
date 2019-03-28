@@ -13,7 +13,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Shop Item - Start Bootstrap Template</title>
+  <title>VulcanoBike - Software de eCommerce</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +28,8 @@
 
 
 <body>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	<%
 					Producto p = (Producto) request.getAttribute("pEncontrado");
@@ -65,7 +67,7 @@ $(document).ready(function() {
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -169,7 +171,7 @@ $(document).ready(function() {
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white"></p>
     </div>
     <!-- /.container -->
   </footer>

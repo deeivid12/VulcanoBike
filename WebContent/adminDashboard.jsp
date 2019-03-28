@@ -1,39 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    pageEncoding="ISO-8859-1"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<title>VulcanoBike - Software de eCommerce</title>
+  <title>VulcanoBike - Software de eCommerce</title>
 
-<!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom styles for this template -->
-<link href="css/simple-sidebar.css" rel="stylesheet">
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-	 <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+ <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
 
   <div class="d-flex" id="wrapper">
 
@@ -86,65 +75,28 @@
         </div>
       </nav>
 
-			<div class="container-fluid">
-				<h1 class="mt-4">Tipos de Productos</h1>
+      <div class="container-fluid">
+        <h1 class="mt-4">VulcanoBike eCommerce</h1>
+        <p>Software para gestion de eCommerce.</p>
+        <p>TP Java Final</p>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
 
+  </div>
+  <!-- /#wrapper -->
 
-				<div class="row">
-					<div class="col">
-						<a class="btn btn-secondary"
-							href="formTipoProducto.jsp" role="button">Agregar</a>
-					</div>
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-				</div>
-
-
-
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Nombre</th>
-							<th>Descripcion</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${catTipoProducto}" var="tp">
-							<tr>
-								<td>${tp.id}</td>
-								<td>${tp.nombre}</td>
-								<td>${tp.descripcion}</td>
-								<td><a href="SrvTipoProducto?id=${tp.id}&accion=editar"
-									class="editar">Editar</a></td>
-								<td><a
-									href="SrvTipoProducto?id=${tp.id}&accion=eliminar"
-									class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<!-- /#page-content-wrapper -->
-
-	</div>
-	<!-- /#wrapper -->
-
-	<!-- Bootstrap core JavaScript -->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-	<!-- Menu Toggle Script -->
-	<script>
-		$("#menu-toggle").click(function(e) {
-			e.preventDefault();
-			$("#wrapper").toggleClass("toggled");
-		});
-	</script>
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
 
 </body>
-
 </html>

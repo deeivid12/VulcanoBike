@@ -3,7 +3,7 @@ package com.vulcanobike.app.data;
 import java.sql.*;
 
 public class FactoryConexion {
-	
+
 	private String dbDriver="com.mysql.cj.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";

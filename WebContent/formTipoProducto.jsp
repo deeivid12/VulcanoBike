@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
   pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,18 +30,21 @@
 
 <body>
 
+ <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+
   <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">VulcanoBike </div>
       <div class="list-group list-group-flush">
-        <a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipo Producto</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Marca</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Rodado</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Aplicacion</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Producto</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Cliente</a>
+        <a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
+        <a href="SrvListarMarca" class="list-group-item list-group-item-action bg-light">Marcas</a>
+        <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
+        <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
+        <a href="SrvListarProducto" class="list-group-item list-group-item-action bg-light">Productos</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Pedidos</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -61,19 +65,20 @@
               <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
             </li>
+            
+           <%if(usuario != null){%> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Mi Cuenta
+                <%=usuario.getUser() %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Iniciar Sesion</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
             </li>
+            <%} %>
+            
+            
           </ul>
         </div>
       </nav>

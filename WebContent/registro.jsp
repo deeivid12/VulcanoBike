@@ -152,7 +152,7 @@ footer a {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -168,8 +168,8 @@ footer a {
                 Mi Cuenta
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Iniciar Sesion</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
+                <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
+                <a class="dropdown-item" href="registro.jsp">Registrarse</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>

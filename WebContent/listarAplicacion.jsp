@@ -20,7 +20,7 @@
 	<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="/VulcanoBike/formAplicacion.jsp" role="button">Agregar</a>
+							href="formAplicacion.jsp" role="button">Agregar</a>
 					</div>
 
 				</div>

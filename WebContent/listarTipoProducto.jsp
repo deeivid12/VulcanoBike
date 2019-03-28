@@ -92,7 +92,7 @@
 				<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="/VulcanoBike/formTipoProducto.jsp" role="button">Agregar</a>
+							href="formTipoProducto.jsp" role="button">Agregar</a>
 					</div>
 
 				</div>

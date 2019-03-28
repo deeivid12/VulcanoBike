@@ -11,6 +11,16 @@ public class FactoryConexion {
 	private String pass="mysql2019";
 	private String db="VulcanoBike_db";
 	
+	/*
+	private String dbDriver="com.mysql.cj.jdbc.Driver";
+	private String port="3306";
+	private String db="vulcanobike_db";
+	private String dbType="mysql";
+	private String user="root";
+	private String pass="NDIdze41672";
+	private String host="node30284-vulcanobike.jelastic.saveincloud.net";
+	*/
+	
 	private Connection conn;
 	private int cantCon;
 	
@@ -39,6 +49,7 @@ public class FactoryConexion {
 		try {
 			if(conn==null || conn.isClosed()){
 				conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+pass+"&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+				//conn = DriverManager.getConnection("jdbc:"+dbType+"://"+host+":"+port+"/"+db, user, pass);
 				cantCon++;
 			}
 		} catch (SQLException e) {

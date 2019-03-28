@@ -16,10 +16,10 @@
 		<p></p>
 
 
-		<h2>Marca</h2>
+		<h2>Rodado</h2>
 		<p></p>
 
-		<form action="SrvMarca" method="post">
+		<form action="SrvRodado" method="post">
 		
 			<input type="hidden" name="accion" value="alta"></input>
 
@@ -39,13 +39,7 @@
 				</div>
 			</div>
 			
-			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">Origen</label>
-				<div class="col-sm-4">
-					<input type="text" name="origen" required="true"
-						class="form-control" />
-				</div>
-			</div>
+		
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label"></label>

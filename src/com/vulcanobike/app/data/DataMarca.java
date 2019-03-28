@@ -6,25 +6,25 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.vulcanobike.app.entities.Rodado;
+import com.vulcanobike.app.entities.Marca;
 
-public class DataRodado {
+public class DataMarca {
 	
-	
-	public ArrayList<Rodado> GetAll() throws Exception{
-		ArrayList<Rodado> list = new ArrayList<Rodado>();
-		Rodado r = null; ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="select * from rodados";
+	public ArrayList<Marca> GetAll() throws Exception{
+		ArrayList<Marca> list = new ArrayList<Marca>();
+		Marca m = null; ResultSet rs = null; PreparedStatement stmt = null;
+		String sql="select * from marcas";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
 			while(rs.next() && rs!=null){
-				r = new Rodado();
-				r.setId(rs.getInt("id"));
-				r.setNombre(rs.getString("nombre"));
-				r.setDescripcion(rs.getString("descripcion"));
-				list.add(r);
+				m = new Marca();
+				m.setId(rs.getInt("id"));
+				m.setNombre(rs.getString("nombre"));
+				m.setDescripcion(rs.getString("descripcion"));
+				m.setOrigen(rs.getString("origen"));
+				list.add(m);
 			}
 		} catch(SQLException e){
 			//e.printStackTrace();
@@ -40,19 +40,20 @@ public class DataRodado {
 	}
 	
 	
-	public Rodado GetOne(Integer id) throws Exception{
-		Rodado r = null; ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="select * from rodados where id=?";
+	public Marca GetOne(Integer id) throws Exception{
+		Marca m = null; ResultSet rs = null; PreparedStatement stmt = null;
+		String sql="select * from marcas where id=?";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, id);
 			rs = stmt.executeQuery();
 			while(rs.next() && rs!=null){
-				r = new Rodado();
-				r.setId(rs.getInt("id"));
-				r.setNombre(rs.getString("nombre"));
-				r.setDescripcion(rs.getString("descripcion"));
+				m = new Marca();
+				m.setId(rs.getInt("id"));
+				m.setNombre(rs.getString("nombre"));
+				m.setDescripcion(rs.getString("descripcion"));
+				m.setOrigen(rs.getString("origen"));
 			}
 		} catch(SQLException e){
 			//e.printStackTrace();
@@ -63,19 +64,20 @@ public class DataRodado {
 			if(stmt != null) stmt = null;
 			if(rs!=null) rs = null;
 		}
-		return r;
+		return m;
 	}
 	
 	
-	public void Insert(Rodado r) throws Exception{
+	public void Insert(Marca m) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="insert into rodados (nombre, descripcion) values (?,?)";		
+		String sql="insert into marcas (nombre, descripcion, origen) values (?,?, ?)";		
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
 			
-			stmt.setString(1, r.getNombre()); 
-			stmt.setString(2, r.getDescripcion());
+			stmt.setString(1, m.getNombre()); 
+			stmt.setString(2, m.getDescripcion());
+			stmt.setString(3, m.getOrigen());
 			stmt.execute();
 			
 		} catch(SQLException e){
@@ -90,15 +92,16 @@ public class DataRodado {
 	}
 	
 	
-	public void Update(Rodado r) throws Exception{
+	public void Update(Marca m) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="UPDATE rodados SET nombre=?, descripcion=? WHERE id=?";
+		String sql="UPDATE marcas SET nombre=?, descripcion=?, origen=? WHERE id=?";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, r.getNombre()); 
-			stmt.setString(2, r.getDescripcion());
-			stmt.setInt(3, r.getId());
+			stmt.setString(1, m.getNombre()); 
+			stmt.setString(2, m.getDescripcion());
+			stmt.setString(3, m.getOrigen());
+			stmt.setInt(4, m.getId());
 			stmt.execute();
 			
 		} catch(SQLException e){
@@ -117,7 +120,7 @@ public class DataRodado {
 	
 	public void Delete(int id) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="DELETE from rodados where id=?";
+		String sql="DELETE from marcas where id=?";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
@@ -135,4 +138,5 @@ public class DataRodado {
 		}
 	}
 	
+
 }

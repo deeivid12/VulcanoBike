@@ -59,7 +59,7 @@ public class SrvUsuario extends HttpServlet {
 					request.getRequestDispatcher("").forward(request, response);
 				}
 				if(usuario.getTipoUsuario().equals(TiposUsuario.Usuario)) {
-					request.getRequestDispatcher("SrvListarProducto").forward(request, response);
+					request.getRequestDispatcher("SrvListarProductoCarrito").forward(request, response);
 				}
 				
 			}

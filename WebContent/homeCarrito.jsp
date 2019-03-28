@@ -6,6 +6,7 @@
 <%@ page import="com.vulcanobike.app.entities.TipoProducto"%>
 <%@ page import="com.vulcanobike.app.entities.Aplicacion"%>
 <%@ page import="com.vulcanobike.app.entities.Rodado"%>
+<%@ page import="com.vulcanobike.app.entities.Marca"%>
 <%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,40 +105,44 @@
       <%List<TipoProducto> tps = (List<TipoProducto>)request.getAttribute("catTipoProducto"); %>
       <%List<Aplicacion> aplicaciones = (List<Aplicacion>)request.getAttribute("catAplicacion");  %>
       <%List<Rodado> rodados = (List<Rodado>)request.getAttribute("catRodado");  %>
+      <%List<Marca> marcas = (List<Marca>)request.getAttribute("catMarca");  %>
       
         <h1 class="my-4">Productos</h1>
         <h5 class="my-4">Tipo Producto</h5>
         <div class="list-group">
-        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+        	<a href="SrvListarProductoCarrito" class="list-group-item">Todo</a>
        <%if(tps != null){
     	   for(TipoProducto tp:tps){%>
-          <a href="SrvListarProducto?filtro=<%= tp.getNombre() %>" class="list-group-item"><%=tp.getNombre() %></a>
+          <a href="SrvListarProductoCarrito?filtro=<%= tp.getNombre() %>" class="list-group-item"><%=tp.getNombre() %></a>
          <%}} %>
          </div>
         
          <h5 class="my-4">Aplicacion</h5>
         <div class="list-group">
-        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+        	<a href="SrvListarProductoCarrito" class="list-group-item">Todo</a>
        <%if(aplicaciones != null){
     	   for(Aplicacion a:aplicaciones){%>
-          <a href="SrvListarProducto?filtro=<%= a.getNombre() %>" class="list-group-item"><%=a.getNombre() %></a>
+          <a href="SrvListarProductoCarrito?filtro=<%= a.getNombre() %>" class="list-group-item"><%=a.getNombre() %></a>
          <%}} %>
          </div>
         
         <h5 class="my-4">Rodado</h5>
          <div class="list-group">
-        	<a href="SrvListarProducto" class="list-group-item">Todo</a>
+        	<a href="SrvListarProductoCarrito" class="list-group-item">Todo</a>
        <%if(rodados != null){
     	   for(Rodado r:rodados){%>
-          <a href="SrvListarProducto?filtro=<%= r.getNombre() %>" class="list-group-item"><%=r.getNombre() %></a>
+          <a href="SrvListarProductoCarrito?filtro=<%= r.getNombre() %>" class="list-group-item"><%=r.getNombre() %></a>
          <%}} %>
          </div>
         
         <h5 class="my-4">Marca</h5>
          <div class="list-group">
-          <a href="SrvListarTipoProducto" class="list-group-item">Todo</a>
-          <a href="#" class="list-group-item">Category 2</a>
-        </div>
+        	<a href="SrvListarProductoCarrito" class="list-group-item">Todo</a>
+       <%if(marcas != null){
+    	   for(Marca m:marcas){%>
+          <a href="SrvListarProductoCarrito?filtro=<%= m.getNombre() %>" class="list-group-item"><%=m.getNombre() %></a>
+         <%}} %>
+         </div>
 
       </div>
       <!-- /.col-lg-3 -->

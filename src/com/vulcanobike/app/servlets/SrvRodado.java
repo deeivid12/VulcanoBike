@@ -1,7 +1,6 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,32 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.Aplicacion;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Rodado;
 
 /**
- * Servlet implementation class SrvAplicacionBicicleta
+ * Servlet implementation class SrvRodado
  */
-@WebServlet("/SrvAplicacion")
-public class SrvAplicacion extends HttpServlet {
+@WebServlet("/SrvRodado")
+public class SrvRodado extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static Controlador ctrl = new Controlador();
-	
-	
-    
-    public static Controlador getCtrl() {
-		return ctrl;
-	}
-
-	public static void setCtrl(Controlador ctrl) {
-		SrvAplicacion.ctrl = ctrl;
-	}
+	Controlador ctrl = new Controlador();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SrvAplicacion() {
+    public SrvRodado() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -54,9 +42,9 @@ public class SrvAplicacion extends HttpServlet {
 					
 			try {
 				int id = Integer.parseInt(request.getParameter("id"));
-				Aplicacion a = ctrl.getOneAplicacion(id);
-				request.setAttribute("aEncontrado", a);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarAplicacion.jsp");
+				Rodado r = ctrl.getOneRodado(id);
+				request.setAttribute("rEncontrado", r);
+				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarRodado.jsp");
 				view.forward(request, response);
 			} catch (Exception e) {
 				//e.printStackTrace();
@@ -72,8 +60,8 @@ public class SrvAplicacion extends HttpServlet {
 			
 			try {
 				int id = Integer.parseInt(request.getParameter("id"));
-				ctrl.deleteAplicacion(id);
-				response.sendRedirect("SrvListarAplicacion");
+				ctrl.deleteRodado(id);
+				response.sendRedirect("SrvListarRodado");
 
 			} catch (Exception e) {
 				
@@ -83,7 +71,6 @@ public class SrvAplicacion extends HttpServlet {
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
 		}
-		
 		
 	}
 
@@ -99,13 +86,13 @@ public class SrvAplicacion extends HttpServlet {
 		if(accion.equals("editar")) {
 			
 			try {
-				Aplicacion aplicacion = new Aplicacion();
+				Rodado rodado = new Rodado();
 				Integer id = Integer.parseInt(request.getParameter("id"));
-				aplicacion.setId(id);
-				aplicacion.setNombre(request.getParameter("nombre"));
-				aplicacion.setDescripcion(request.getParameter("descripcion"));
-				ctrl.updateAplicacion(aplicacion);
-				response.sendRedirect("SrvListarAplicacion");
+				rodado.setId(id);
+				rodado.setNombre(request.getParameter("nombre"));
+				rodado.setDescripcion(request.getParameter("descripcion"));
+				ctrl.updateRodado(rodado);
+				response.sendRedirect("SrvListarRodado");
 			} catch (Exception e) {
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					
@@ -120,11 +107,11 @@ public class SrvAplicacion extends HttpServlet {
 			//GUARDAR APLICACION
 			
 			try {
-				Aplicacion aplicacion = new Aplicacion();
-				aplicacion.setNombre(request.getParameter("nombre"));
-				aplicacion.setDescripcion(request.getParameter("descripcion"));
-				ctrl.addAplicacion(aplicacion);
-				response.sendRedirect("SrvListarAplicacion"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
+				Rodado rodado = new Rodado();
+				rodado.setNombre(request.getParameter("nombre"));
+				rodado.setDescripcion(request.getParameter("descripcion"));
+				ctrl.addRodado(rodado);
+				response.sendRedirect("SrvListarRodado"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
 			} catch (Exception e) {
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					
@@ -133,4 +120,5 @@ public class SrvAplicacion extends HttpServlet {
 		}
 
 	}
+
 }

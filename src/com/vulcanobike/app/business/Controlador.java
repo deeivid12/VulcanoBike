@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.vulcanobike.app.data.DataAplicacion;
 import com.vulcanobike.app.data.DataItemPedido;
+import com.vulcanobike.app.data.DataMarca;
 import com.vulcanobike.app.data.DataPedido;
 import com.vulcanobike.app.data.DataProducto;
 import com.vulcanobike.app.data.DataRodado;
@@ -22,8 +23,6 @@ import com.vulcanobike.app.entities.Usuario;
 public class Controlador {
 	
 	private List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
-	private List<Marca> catalogoMarca = new ArrayList<Marca>();
-	private List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
 	
 	private DataTipoProducto dataTipoProducto = new DataTipoProducto();
 	private DataProducto dataProducto = new DataProducto();
@@ -32,6 +31,7 @@ public class Controlador {
 	private DataUsuario dataUsuario = new DataUsuario();
 	private DataAplicacion dataAplicacion = new DataAplicacion();
 	private DataRodado dataRodado = new DataRodado();
+	private DataMarca dataMarca = new DataMarca();
 
 	
 	//LOGIN
@@ -52,17 +52,6 @@ public class Controlador {
 	}
 
 	//TIPOPRODUCTO
-	public List<TipoProducto> getCatalogoTipoProducto() {
-		return catalogoTipoProducto;
-	}
-
-	public void setCatalogoTipoProducto(List<TipoProducto> catalogoTipoProducto) {
-		this.catalogoTipoProducto = catalogoTipoProducto;
-	}
-	
-	/*public List<TipoProducto> getAllTipoProducto(){
-		return catalogoTipoProducto;
-	}*/
 	
 	public List<TipoProducto> getAllTipoProducto() throws Exception{
 		return dataTipoProducto.GetAll();
@@ -108,24 +97,6 @@ public class Controlador {
 	}
 
 	
-	//MARCA
-	public List<Marca> getCatalogoMarca() {
-		return catalogoMarca;
-	}
-
-	public void setCatalogoMarca(List<Marca> catalogoMarca) {
-		this.catalogoMarca = catalogoMarca;
-	}
-	
-	public List<Marca> getAllMarca(){
-		return catalogoMarca;
-	}
-	
-	public void addMarca(Marca marca) {
-		catalogoMarca.add(marca);
-	}
-	
-	
 	//APLICACION	
 	
 	public void addAplicacion(Aplicacion aplicacion) throws Exception {
@@ -164,6 +135,14 @@ public class Controlador {
 	
 	public void updateProducto(Producto producto) {
 		dataProducto.Update(producto);
+	}
+	
+	public void addProducto(Producto producto) throws Exception {
+		dataProducto.Insert(producto);
+	}
+	
+	public void deleteProducto(int id) throws Exception {
+		dataProducto.Delete(id);
 	}
 	
 	
@@ -222,4 +201,47 @@ public class Controlador {
 	public List<Rodado> getAllRodado() throws Exception{
 		return dataRodado.GetAll();
 	}
+	
+	public void addRodado(Rodado rodado) throws Exception {
+		dataRodado.Insert(rodado);
+	}
+	
+	
+	public Rodado getOneRodado(int id) throws Exception {
+		return dataRodado.GetOne(id);
+	}
+	
+	
+	public void updateRodado(Rodado rodado) throws Exception {
+		dataRodado.Update(rodado);
+	}
+	
+	public void deleteRodado(int id) throws Exception {
+		dataRodado.Delete(id);
+	}
+	
+	
+	//MARCA
+	public List<Marca> getAllMarca() throws Exception{
+		return dataMarca.GetAll();
+	}
+	
+	public void addMarca(Marca marca) throws Exception {
+		dataMarca.Insert(marca);
+	}
+	
+	
+	public Marca getOneMarca(int id) throws Exception {
+		return dataMarca.GetOne(id);
+	}
+	
+	
+	public void updateMarca(Marca marca) throws Exception {
+		dataMarca.Update(marca);
+	}
+	
+	public void deleteMarca(int id) throws Exception {
+		dataMarca.Delete(id);
+	}
+	
 }

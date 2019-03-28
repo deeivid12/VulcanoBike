@@ -66,7 +66,7 @@ public class SrvCarrito extends HttpServlet {
 				} else {
 					
 					request.setAttribute("error", "Sin stock disponible.");
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProductoCarrito");
 					view.forward(request, response);
 					
 				}
@@ -98,7 +98,7 @@ public class SrvCarrito extends HttpServlet {
 					itemsSesion = new ArrayList<ItemPedido>();
 					itemsSesion.add(itemP);
 					request.getSession().setAttribute("items", itemsSesion);
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProductoCarrito");
 					view.forward(request, response);
 					
 				} else {
@@ -119,7 +119,7 @@ public class SrvCarrito extends HttpServlet {
 					ctrl.updateProducto(p);
 					
 				
-					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProducto");
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/SrvListarProductoCarrito");
 					view.forward(request, response);
 					
 					

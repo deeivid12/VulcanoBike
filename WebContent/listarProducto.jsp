@@ -52,10 +52,16 @@
 					<thead>
 						<tr>
 							<th>Id</th>
+							<th>Imagen</th>
 							<th>Nombre</th>
 							<th>Descripcion</th>
 							<th>Precio</th>
 							<th>Stock</th>
+							<th>Tipo Producto</th>
+							<th>Rodado</th>
+							<th>Aplicacion</th>
+							<th>Marca</th>
+							<th></th>
 							<th></th>
 						</tr>
 					</thead>
@@ -63,21 +69,22 @@
 						<c:forEach items="${catProducto}" var="p">
 							<tr>
 								<td>${p.id}</td>
+								<td class="align"><img src="${p.imagen}" class="img-thumbnail" style="width: 40%"></img></td>
 								<td>${p.nombre}</td>
 								<td>${p.descripcion}</td>
 								<td>${p.precio}</td>
 								<td>${p.stock}</td>
-								<td><a href="SrvCarrito?id=${p.id}&accion=info"
-									class="info">Info</a></td>
+								<td>${p.tipoProducto.nombre}</td>
+								<td>${p.rodado.nombre}</td>
+								<td>${p.aplicacionBicicleta.nombre}</td>
+								<td>${p.marca.nombre}</td>
+								<td><a href="SrvProducto?id=${p.id}&accion=editar"
+									class="editar">Editar</a></td>
+								<td><a href="SrvProducto?id=${p.id}&accion=eliminar"
+								class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
 							</tr>
 							</c:forEach>
-							<tr>
-								<td></td>
-								<td></td>
-								<td><a href="SrvCarrito?accion=ver"
-									class="ver">Ver Carrito</a></td>
-							</tr>
-						
+											
 					</tbody>
 				</table>
 			</div>

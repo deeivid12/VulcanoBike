@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.vulcanobike.app.entities.Aplicacion"%>
+<%@ page import="com.vulcanobike.app.entities.Rodado"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,18 +33,18 @@
 
 
 <div class="container-fluid">
-				<h1 class="mt-4">Editar Aplicacion</h1>
+				<h1 class="mt-4">Editar Rodado</h1>
 
 				<%
-					Aplicacion a = (Aplicacion) request.getAttribute("aEncontrado");
+					Rodado r = (Rodado) request.getAttribute("rEncontrado");
 				%>
 
 
-				<form action="SrvAplicacion" method="post">
+				<form action="SrvRodado" method="post">
 
 					<input type="hidden" name="accion" value="editar"></input>
 					
-					<input type="hidden" name="id" value="<%=a.getId()%>"></input>
+					<input type="hidden" name="id" value="<%=r.getId()%>"></input>
 					
 					
 
@@ -52,7 +52,7 @@
 						<label class="col-sm-2 col-form-label">Nombre</label>
 						<div class="col-sm-4">
 							<input type="text" name="nombre" required="true"
-								value="<%=a.getNombre()%>" class="form-control" />
+								value="<%=r.getNombre()%>" class="form-control" />
 						</div>
 					</div>
 
@@ -60,7 +60,7 @@
 						<label class="col-sm-2 col-form-label">Descripcion</label>
 						<div class="col-sm-4">
 							<input type="text" name="descripcion" required="true"
-								value="<%=a.getDescripcion()%>" class="form-control" />
+								value="<%=r.getDescripcion()%>" class="form-control" />
 						</div>
 					</div>
 

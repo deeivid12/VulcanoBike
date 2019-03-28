@@ -1,7 +1,6 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,15 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.Aplicacion;
-import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Producto;
-import com.vulcanobike.app.entities.Rodado;
-import com.vulcanobike.app.entities.TipoProducto;
-
+import com.vulcanobike.app.entities.Usuario;
+import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
  * Servlet implementation class SrvListarProducto
@@ -25,9 +20,9 @@ import com.vulcanobike.app.entities.TipoProducto;
 @WebServlet("/SrvListarProducto")
 public class SrvListarProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	Controlador ctrl = new Controlador();
 	
+	Controlador ctrl = new Controlador();
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,47 +35,9 @@ public class SrvListarProducto extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String filtro = (String)request.getParameter("filtro");
-		
-		if(filtro != null) {
-			
-			List<Producto> catalogoProducto = new ArrayList<Producto>();
-			List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
-			List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
-			List<Rodado> catalogoRodado = new ArrayList<Rodado>();
-			List<Producto> productosFiltrados = new ArrayList<Producto>();
-			
-			
-			catalogoProducto = ctrl.getAllProducto();
-			try {
-				catalogoTipoProducto = ctrl.getAllTipoProducto();
-				catalogoAplicacion = ctrl.getAllAplicacion();
-				catalogoRodado = ctrl.getAllRodado();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			for(Producto p:catalogoProducto) {
-				if(p.getTipoProducto().getNombre().equals(filtro)) productosFiltrados.add(p);
-				if(p.getAplicacionBicicleta().getNombre().equals(filtro)) productosFiltrados.add(p);
-				if(p.getRodado().getNombre().equals(filtro)) productosFiltrados.add(p);
-				//hacer lo mismo para el resto de caracteristicas
-			}
-			
-			request.setAttribute("catProducto", productosFiltrados);
-			request.setAttribute("catTipoProducto", catalogoTipoProducto);
-			request.setAttribute("catAplicacion", catalogoAplicacion);
-			request.setAttribute("catRodado", catalogoRodado);
-			request.getRequestDispatcher("homeCarrito.jsp").forward(request, response);
-			
-		}else {
-			doPost(request, response);
-		}
-		
-		
-		
+		// TODO Auto-generated method stub
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 	}
 
 	/**
@@ -88,27 +45,42 @@ public class SrvListarProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		Usuario usuario = (Usuario)request.getSession().getAttribute("userSession");
 		
-		List<Producto> catalogoProducto = new ArrayList<Producto>();
-		List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
-		List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
-		List<Rodado> catalogoRodado = new ArrayList<Rodado>();
-		catalogoProducto = ctrl.getAllProducto();
-		try {
-			catalogoTipoProducto = ctrl.getAllTipoProducto();
-			catalogoAplicacion = ctrl.getAllAplicacion();
-			catalogoRodado = ctrl.getAllRodado();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(usuario != null) {
+			if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { //valido que solo puedan acceder administradores!
+				
+				try {
+					List<Producto> catalogoProducto = ctrl.getAllProducto();
+					request.setAttribute("catProducto", catalogoProducto);
+					request.getRequestDispatcher("listarProducto.jsp").forward(request, response);
+					} catch (Exception e) {
+					
+					//setear un atributo con el mensaje de error, setear el status distinto de 200 y hacer redirect o forward a una pagina de erro
+					//opcionalmente volver a la misma pagina y con jsp preguntar si esta el mensaje de error y mostrarlo (y borrar la variable)
+					
+					//response.sendRedirect("error.jsp");
+					//response.sendError(404, e.getMessage());
+					response.setStatus(404);
+					request.setAttribute("error", e.getMessage());					
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+					
+					
+				}
+				
+			}
+			
+			else { //en caso de no ser usuario administrador
+				String error = "No tiene permisos suficientes para ver esta pagina.";
+				request.setAttribute("error", error);
+				request.getRequestDispatcher("error.jsp").forward(request, response); 
+			}
+		} 
+		else { //en caso de no estar logueado
+		
+			request.getRequestDispatcher("login.jsp").forward(request, response); //habria que enviar a pagina de error!			
 		}
-		request.setAttribute("catProducto", catalogoProducto);
-		request.setAttribute("catTipoProducto", catalogoTipoProducto);
-		request.setAttribute("catAplicacion", catalogoAplicacion);
-		request.setAttribute("catRodado", catalogoRodado);
-		request.getRequestDispatcher("homeCarrito.jsp").forward(request, response);
 		
 	}
-		
 
 }

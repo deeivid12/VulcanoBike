@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.Aplicacion;
-import com.vulcanobike.app.entities.TipoProducto;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 

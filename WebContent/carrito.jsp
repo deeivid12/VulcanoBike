@@ -188,7 +188,7 @@ footer a {
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <a href="SrvListarProducto" class="btn btn-block btn-light">Continuar comprando</a>
+                    <a href="SrvListarProductoCarrito" class="btn btn-block btn-light">Continuar comprando</a>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
                     <a href="SrvCarrito?accion=fin" class="ver btn btn-lg btn-block btn-success">Finalizar</a>

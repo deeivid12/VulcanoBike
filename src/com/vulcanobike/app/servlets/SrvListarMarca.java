@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Marca;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class srvListadoTipoProducto
+ * Servlet implementation class SrvListarMarca
  */
-@WebServlet("/srvListarTipoProducto")
-public class srvListarTipoProducto extends HttpServlet {
+@WebServlet("/SrvListarMarca")
+public class SrvListarMarca extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	Controlador ctrl = SrvTipoProducto.getCtrl();
+	Controlador ctrl = new Controlador();
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public srvListarTipoProducto() {
+    public SrvListarMarca() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -44,19 +44,17 @@ public class srvListarTipoProducto extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//doGet(request, response);
+		
 		Usuario usuario = (Usuario)request.getSession().getAttribute("userSession");
 		
 		if(usuario != null) {
 			if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { //valido que solo puedan acceder administradores!
 				
 				try {
-					TipoProducto tpActual = new TipoProducto();
-					List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-					request.setAttribute("catTipoProducto", catalogoTipoProducto);
-					request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
-					}catch (Exception e) {
+					List<Marca> catalogoMarca = ctrl.getAllMarca();
+					request.setAttribute("catMarca", catalogoMarca);
+					request.getRequestDispatcher("listarMarca.jsp").forward(request, response);
+					} catch (Exception e) {
 					
 					//setear un atributo con el mensaje de error, setear el status distinto de 200 y hacer redirect o forward a una pagina de erro
 					//opcionalmente volver a la misma pagina y con jsp preguntar si esta el mensaje de error y mostrarlo (y borrar la variable)
@@ -79,9 +77,9 @@ public class srvListarTipoProducto extends HttpServlet {
 			}
 		} 
 		else { //en caso de no estar logueado
-			request.getRequestDispatcher("login.jsp").forward(request, response);		
-		}
 		
+			request.getRequestDispatcher("login.jsp").forward(request, response); //habria que enviar a pagina de error!			
+		}
 		
 	}
 

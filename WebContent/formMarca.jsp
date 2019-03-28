@@ -19,7 +19,9 @@
 		<h2>Marca</h2>
 		<p></p>
 
-		<form action="srvFormMarca" method="post">
+		<form action="SrvMarca" method="post">
+		
+			<input type="hidden" name="accion" value="alta"></input>
 
 			<div class="form-group row">
 				<label class="col-sm-2 col-form-label">Nombre</label>

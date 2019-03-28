@@ -5,12 +5,13 @@ public class Producto {
 	private int id;
 	private String nombre;
 	private String descripcion;
-	private double precio;
+	private float precio;
 	private int stock;
 	private TipoProducto tipoProducto;
 	private Marca marca;
 	private Rodado rodado;
-	private AplicacionBicicleta aplicacionBicicleta;
+	private Aplicacion aplicacionBicicleta;
+	private String imagen;
 	
 	public int getId() {
 		return id;
@@ -30,10 +31,10 @@ public class Producto {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public double getPrecio() {
+	public float getPrecio() {
 		return precio;
 	}
-	public void setPrecio(double precio) {
+	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
 	public int getStock() {
@@ -60,12 +61,20 @@ public class Producto {
 	public void setRodado(Rodado rodado) {
 		this.rodado = rodado;
 	}
-	public AplicacionBicicleta getAplicacionBicicleta() {
+	public Aplicacion getAplicacionBicicleta() {
 		return aplicacionBicicleta;
 	}
-	public void setAplicacionBicicleta(AplicacionBicicleta aplicacionBicicleta) {
+	public void setAplicacionBicicleta(Aplicacion aplicacionBicicleta) {
 		this.aplicacionBicicleta = aplicacionBicicleta;
 	}
+	public String getImagen() {
+		return imagen;
+	}
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	
 	
 
 

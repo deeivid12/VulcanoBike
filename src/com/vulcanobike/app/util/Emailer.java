@@ -27,6 +27,7 @@ public class Emailer {
 		try {
 			props = new Properties(); //instancio propiedades en donde estaran los datos necesarios p/envio de mails
 			props.load(inputStream); //en props cargo los datos necesarios que fueron seteados en la entrada
+			//props.setProperty("mail.smtp.localhost", "10.100.18.87");
 			
 			/*
 			 * props.put("mail.smtp.auth", "true");
@@ -46,6 +47,7 @@ public class Emailer {
 	public void send(String to, String subject, String body){
 
 		Session session = Session.getInstance(props, //obtengo una sesion de correo funcional 
+
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				//return new PasswordAuthentication(username, password);
@@ -62,6 +64,9 @@ public class Emailer {
 			message.setSubject(subject); //"Testing Subject"//seteo el asunto
 			message.setText(body); //"Dear Mail Crawler,\n\n No spam to my email, please!"//seteo el cuerpo del mensaje.
 
+			
+			//Transport transport = session.getTransport()
+			
 			Transport.send(message);//envio mensaje
 
 		} catch (MessagingException e) {

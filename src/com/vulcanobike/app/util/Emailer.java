@@ -27,7 +27,6 @@ public class Emailer {
 		try {
 			props = new Properties(); //instancio propiedades en donde estaran los datos necesarios p/envio de mails
 			props.load(inputStream); //en props cargo los datos necesarios que fueron seteados en la entrada
-			//props.setProperty("mail.smtp.localhost", "10.100.18.87");
 			
 			/*
 			 * props.put("mail.smtp.auth", "true");

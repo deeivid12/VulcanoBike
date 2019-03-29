@@ -163,6 +163,19 @@ public class Controlador {
 		return pedidos;
 	}
 	
+	public Pedido getOnePedido(int id) throws Exception {
+		
+		Pedido pedido = dataPedido.GetOne(id);
+		List<ItemPedido> items = getAllItemPedidoById(id);
+		for(ItemPedido ip:items) {
+			System.out.println("ITEMS PEDIDOS: " + ip.getProducto().getNombre());
+		}
+		pedido.setItems(items);
+		 
+		
+		return pedido;
+	}
+	
 	public float calcularImportePedido(List<ItemPedido> items) {
 		float importePedido = 0;
 		for(ItemPedido ip : items) { //calculo importe de pedido!
@@ -192,6 +205,11 @@ public class Controlador {
 			ip.setIdPedido(idPedido);
 			dataItemPedido.Insert(ip);
 		}
+	}
+	
+	
+	public List<ItemPedido> getAllItemPedidoById(int id) throws Exception{
+		return dataItemPedido.GetAll(id);
 	}
 	
 

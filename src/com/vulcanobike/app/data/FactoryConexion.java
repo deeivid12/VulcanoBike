@@ -4,16 +4,16 @@ import java.sql.*;
 
 public class FactoryConexion {
 	
-	/*
+	
 	private String dbDriver="com.mysql.cj.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";
 	private String user="root";
 	private String pass="mysql2019";
 	private String db="VulcanoBike_db";
-	*/
 	
 	
+	/*
 	private String dbDriver="com.mysql.cj.jdbc.Driver";
 	private String port="3306";
 	private String db="vulcanobike_db";
@@ -21,7 +21,7 @@ public class FactoryConexion {
 	private String user="root";
 	private String pass="YSBiqt95719";
 	private String host="node30316-vulcanobike.jelastic.saveincloud.net";
-	
+	*/
 	
 	private Connection conn;
 	private int cantCon;
@@ -50,8 +50,8 @@ public class FactoryConexion {
 	public Connection getConn(){
 		try {
 			if(conn==null || conn.isClosed()){
-				//conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+pass+"&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-				conn = DriverManager.getConnection("jdbc:"+dbType+"://"+host+":"+port+"/"+db, user, pass);
+				conn = DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db+"?user="+user+"&password="+pass+"&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+				//conn = DriverManager.getConnection("jdbc:"+dbType+"://"+host+":"+port+"/"+db, user, pass);
 				cantCon++;
 			}
 		} catch (SQLException e) {

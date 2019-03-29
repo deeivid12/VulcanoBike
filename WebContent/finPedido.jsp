@@ -91,7 +91,7 @@ footer a {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>

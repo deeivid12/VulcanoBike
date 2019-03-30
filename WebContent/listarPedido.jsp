@@ -101,6 +101,7 @@
 							<th>Id</th>
 							<th>Fecha Emision</th>
 							<th>Importe</th>
+							<th>Estado</th>
 							<th>Usuario</th>
 							<th>Email</th>
 							<th></th>
@@ -112,6 +113,7 @@
 								<td>${p.id}</td>
 								<td></td>
 								<td>${p.importe}</td>
+								<td>${p.estado}</td>
 								<td>${p.usuario.user}</td>
 								<td>${p.usuario.email}</td>
 								<td><a href="SrvPedido?id=${p.id}&accion=editar"

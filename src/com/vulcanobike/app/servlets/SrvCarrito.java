@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Pedido;
+import com.vulcanobike.app.entities.Pedido.EstadosPedido;
 import com.vulcanobike.app.entities.Producto;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.util.Emailer;
@@ -165,6 +166,7 @@ public class SrvCarrito extends HttpServlet {
 					pedido.setUsuario(uActual);
 					pedido.setItems(itemsSesion);
 					pedido.setImporte(ctrl.calcularImportePedido(itemsSesion)); 
+					pedido.setEstado(EstadosPedido.Pendiente);
 					ctrl.addPedido(pedido);				
 					
 					Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));

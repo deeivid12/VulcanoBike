@@ -44,14 +44,14 @@ public class DataItemPedido {
 	}
 	
 	
-	public ArrayList<ItemPedido> GetAll(int id) throws Exception{
+	public ArrayList<ItemPedido> GetAll(int idPedido) throws Exception{
 		ArrayList<ItemPedido> list = new ArrayList<ItemPedido>();
 		ItemPedido ip = null; ResultSet rs = null; PreparedStatement stmt = null; Producto p;
-		String sql="select * from items_pedidos inner join productos on items_pedidos.id_producto = productos.id where id=?";
+		String sql="select * from items_pedidos inner join productos on items_pedidos.id_producto = productos.id where items_pedidos.id_pedido=?";
 		try{
 			Connection conn = FactoryConexion.getInstancia().getConn();
 			stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setInt(1, idPedido);
 			rs = stmt.executeQuery();
 			while(rs.next() && rs!=null){
 				ip = new ItemPedido();

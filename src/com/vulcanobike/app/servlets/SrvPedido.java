@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Pedido;
+import com.vulcanobike.app.entities.Pedido.EstadosPedido;
 
 /**
  * Servlet implementation class SrvSavePedido
@@ -61,8 +62,9 @@ public class SrvPedido extends HttpServlet {
 				request.setAttribute("pEncontrado", p);
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarPedido.jsp");
 				view.forward(request, response);
+				
 			} catch (Exception e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					
 				request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -91,10 +93,13 @@ public class SrvPedido extends HttpServlet {
 				Pedido pedido = new Pedido();
 				Integer id = Integer.parseInt(request.getParameter("id"));
 				pedido.setId(id);
-				//pedido.setNombre(request.getParameter("nombre"));
-				//pedido.setDescripcion(request.getParameter("descripcion"));
-				//ctrl.updatePedido(pedido);
-				response.sendRedirect("srvListarPedido");
+				switch(Integer.parseInt(request.getParameter("estado"))) {
+				case 1: pedido.setEstado(EstadosPedido.Pendiente); break;
+				case 2: pedido.setEstado(EstadosPedido.En_Proceso); break;
+				case 3: pedido.setEstado(EstadosPedido.Enviado); break;
+				}
+				ctrl.updatePedido(pedido);
+				response.sendRedirect("SrvListarPedido");
 			} catch (Exception e) {
 				response.setStatus(404);
 				request.setAttribute("error", e.getMessage());					

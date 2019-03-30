@@ -6,11 +6,14 @@ import java.util.List;
 
 public class Pedido {
 	
+	public static enum EstadosPedido{Pendiente, En_Proceso, Enviado};
+	
 	private int id;
 	private Date fechaEmision;
 	private float importe;
 	private Usuario usuario;
 	private List<ItemPedido> items = new ArrayList<ItemPedido>();
+	private EstadosPedido estado;
 	
 	
 	public int getId() {
@@ -44,8 +47,12 @@ public class Pedido {
 	public void setItems(List<ItemPedido> items) {
 		this.items = items;
 	}
-	
-	
-	
+	public EstadosPedido getEstado() {
+		return estado;
+	}
+	public void setEstado(EstadosPedido estado) {
+		this.estado = estado;
+	}
+		
 	
 }

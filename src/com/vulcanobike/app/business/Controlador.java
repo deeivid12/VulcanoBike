@@ -163,6 +163,10 @@ public class Controlador {
 		return pedidos;
 	}
 	
+	public void updatePedido(Pedido pedido) throws Exception {
+		dataPedido.Update(pedido);
+	}
+	
 	public Pedido getOnePedido(int id) throws Exception {
 		
 		Pedido pedido = dataPedido.GetOne(id);

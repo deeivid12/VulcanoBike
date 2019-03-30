@@ -202,7 +202,7 @@ footer a {
                             <input type="text" class="form-control" placeholder="Apellido *" name="apellido" required="true"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email *" name="email" required="true"/>
+                            <input type="email" class="form-control" placeholder="Email *" name="email" required="true"/>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Direccion *" name="direccion" required="true"/>

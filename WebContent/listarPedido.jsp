@@ -111,7 +111,7 @@
 						<c:forEach items="${catPedido}" var="p">
 							<tr>
 								<td>${p.id}</td>
-								<td></td>
+								<td>${p.fechaEmision}</td>
 								<td>${p.importe}</td>
 								<td>${p.estado}</td>
 								<td>${p.usuario.user}</td>

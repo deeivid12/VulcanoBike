@@ -1,7 +1,10 @@
 package com.vulcanobike.app.servlets;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -163,10 +166,14 @@ public class SrvCarrito extends HttpServlet {
 				if(!itemsSesion.isEmpty()) { //valido que pedido tenga items
 					
 					Pedido pedido = new Pedido();
+					Date fechaEmision = new Date();
+					DateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
+					
 					pedido.setUsuario(uActual);
 					pedido.setItems(itemsSesion);
 					pedido.setImporte(ctrl.calcularImportePedido(itemsSesion)); 
 					pedido.setEstado(EstadosPedido.Pendiente);
+					pedido.setFechaEmision(formatoFecha.format((fechaEmision)));
 					ctrl.addPedido(pedido);				
 					
 					Emailer.getInstance().send(pedido.getUsuario().getEmail(), "Compra Exitosa", ctrl.generadorMensaje(pedido));

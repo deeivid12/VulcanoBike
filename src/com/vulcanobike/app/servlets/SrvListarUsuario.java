@@ -10,15 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.Rodado;
+import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class SrvListarRodado
+ * Servlet implementation class SrvListarUsuario
  */
-@WebServlet("/SrvListarRodado")
-public class SrvListarRodado extends HttpServlet {
+@WebServlet("/SrvListarUsuario")
+public class SrvListarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	Controlador ctrl = new Controlador();
@@ -26,7 +26,7 @@ public class SrvListarRodado extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SrvListarRodado() {
+    public SrvListarUsuario() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -51,9 +51,9 @@ public class SrvListarRodado extends HttpServlet {
 			if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { //valido que solo puedan acceder administradores!
 				
 				try {
-					List<Rodado> catalogoRodado = ctrl.getAllRodado();
-					request.setAttribute("catRodado", catalogoRodado);
-					request.getRequestDispatcher("listarRodado.jsp").forward(request, response);
+					List<Usuario> catalogoUsuario = ctrl.getAllUsuario();
+					request.setAttribute("catUsuario", catalogoUsuario);
+					request.getRequestDispatcher("listarUsuario.jsp").forward(request, response);
 					
 					} catch (Exception e) {
 					response.setStatus(404);

@@ -9,7 +9,7 @@ public class Pedido {
 	public static enum EstadosPedido{Pendiente, En_Proceso, Enviado};
 	
 	private int id;
-	private Date fechaEmision;
+	private String fechaEmision;
 	private float importe;
 	private Usuario usuario;
 	private List<ItemPedido> items = new ArrayList<ItemPedido>();
@@ -22,10 +22,10 @@ public class Pedido {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getFechaEmision() {
+	public String getFechaEmision() {
 		return fechaEmision;
 	}
-	public void setFechaEmision(Date fechaEmision) {
+	public void setFechaEmision(String fechaEmision) {
 		this.fechaEmision = fechaEmision;
 	}
 	public float getImporte() {

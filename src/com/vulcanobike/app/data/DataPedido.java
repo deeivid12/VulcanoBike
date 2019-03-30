@@ -27,7 +27,7 @@ public class DataPedido {
 				p = new Pedido();
 				u = new Usuario();
 				p.setId(rs.getInt("id"));
-				//p.setFechaEmision
+				p.setFechaEmision(rs.getDate("fecha_emision").toString());
 				p.setImporte(rs.getFloat("importe"));
 				switch(rs.getInt("estado")) {
 				case 1: p.setEstado(EstadosPedido.Pendiente); break;
@@ -74,7 +74,7 @@ public class DataPedido {
 				p = new Pedido();
 				u = new Usuario();
 				p.setId(rs.getInt("id"));
-				//p.setFechaEmision
+				p.setFechaEmision(rs.getDate("fecha_emision").toString());
 				p.setImporte(rs.getFloat("importe"));
 				switch(rs.getInt("estado")) {
 				case 1: p.setEstado(EstadosPedido.Pendiente); break;
@@ -110,7 +110,7 @@ public class DataPedido {
 	
 	public int Insert(Pedido p){
 		ResultSet rs = null; PreparedStatement stmt = null;
-		String sql="insert into pedidos (importe, id_usuario, estado) values (?,?,?)";		
+		String sql="insert into pedidos (importe, id_usuario, estado, fecha_emision) values (?,?,?,?)";		
 		int id = 0;
 		
 		try{
@@ -124,6 +124,7 @@ public class DataPedido {
 			case En_Proceso: stmt.setInt(3, 2); break;
 			case Enviado: stmt.setInt(3, 3);break;
 			}
+			stmt.setString(4, p.getFechaEmision());
 			stmt.execute();
 			rs = stmt.getGeneratedKeys();
 			if(rs.next()) {

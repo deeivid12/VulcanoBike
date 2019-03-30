@@ -56,9 +56,6 @@ public class SrvPedido extends HttpServlet {
 			try {
 				int id = Integer.parseInt(request.getParameter("id"));
 				Pedido p = ctrl.getOnePedido(id);
-				for(ItemPedido ip:p.getItems()) {
-					System.out.println("ITEMS PEDIDOS: " + ip.getProducto().getNombre());
-				}
 				request.setAttribute("pEncontrado", p);
 				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarPedido.jsp");
 				view.forward(request, response);

@@ -131,7 +131,7 @@
 						<label class="col-sm-2 col-form-label">Fecha Emision</label>
 						<div class="col-sm-4">
 							<input type="text" name="fechaEmision" required="true" readonly
-								value="" class="form-control" />
+								value="<%=p.getFechaEmision() %>" class="form-control" />
 						</div>
 					</div>
 

@@ -283,7 +283,7 @@ public class DataUsuario {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			//e.printStackTrace();
+			e.printStackTrace();
 			throw new Exception("Error al eliminar datos.", e);
 		}
 		finally{

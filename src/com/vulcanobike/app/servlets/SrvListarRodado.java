@@ -59,21 +59,20 @@ public class SrvListarRodado extends HttpServlet {
 					response.setStatus(404);
 					request.setAttribute("error", e.getMessage());					
 					request.getRequestDispatcher("error.jsp").forward(request, response);
-					
-					
 				}
 				
 			}
 			
 			else { //en caso de no ser usuario administrador
 				String error = "No tiene permisos suficientes para ver esta pagina.";
+				response.setStatus(403);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response); 
 			}
 		} 
 		else { //en caso de no estar logueado
 		
-			request.getRequestDispatcher("login.jsp").forward(request, response); //habria que enviar a pagina de error!			
+			request.getRequestDispatcher("login.jsp").forward(request, response);			
 		}
 		
 	}

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.vulcanobike.app.business.Controlador;
 import com.vulcanobike.app.entities.ItemPedido;
 import com.vulcanobike.app.entities.Pedido;
+import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Pedido.EstadosPedido;
 
 /**
@@ -21,12 +22,10 @@ import com.vulcanobike.app.entities.Pedido.EstadosPedido;
 @WebServlet("/SrvPedidoUsuario")
 public class SrvPedidoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	private static Controlador ctrl = new Controlador();
-	
-	
-    
-    public static Controlador getCtrl() {
+
+	public static Controlador getCtrl() {
 		return ctrl;
 	}
 
@@ -35,51 +34,56 @@ public class SrvPedidoUsuario extends HttpServlet {
 	}
 
 	/**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SrvPedidoUsuario() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String accion = request.getParameter("accion");
-		
-		
-		//ABM MOSTRAR
-		if(accion.equals("mostrar")) {
-					
-			try {
-				int id = Integer.parseInt(request.getParameter("id"));
-				Pedido p = ctrl.getOnePedido(id);
-				request.setAttribute("pEncontrado", p);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/verPedidoUsuario.jsp");
-				view.forward(request, response);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());					
-				request.getRequestDispatcher("error.jsp").forward(request, response);
-			} 
-			
-		}
-		
-
-		
+	public SrvPedidoUsuario() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
-		
-			
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String accion = request.getParameter("accion");
+		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
+
+		if (usuario != null) {
+
+			// ABM MOSTRAR
+			if (accion.equals("mostrar")) {
+
+				try {
+					int id = Integer.parseInt(request.getParameter("id"));
+					Pedido p = ctrl.getOnePedido(id);
+					request.setAttribute("pEncontrado", p);
+					RequestDispatcher view = getServletContext().getRequestDispatcher("/verPedidoUsuario.jsp");
+					view.forward(request, response);
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.setStatus(404);
+					request.setAttribute("error", e.getMessage());
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+				}
+
+			}
+		} else { // en caso de no estar logueado
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
+
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
 }

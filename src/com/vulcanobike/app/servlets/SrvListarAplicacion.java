@@ -56,11 +56,6 @@ public class SrvListarAplicacion extends HttpServlet {
 					request.getRequestDispatcher("listarAplicacion.jsp").forward(request, response);
 					} catch (Exception e) {
 					
-					//setear un atributo con el mensaje de error, setear el status distinto de 200 y hacer redirect o forward a una pagina de erro
-					//opcionalmente volver a la misma pagina y con jsp preguntar si esta el mensaje de error y mostrarlo (y borrar la variable)
-					
-					//response.sendRedirect("error.jsp");
-					//response.sendError(404, e.getMessage());
 					response.setStatus(404);
 					request.setAttribute("error", e.getMessage());					
 					request.getRequestDispatcher("error.jsp").forward(request, response);
@@ -72,13 +67,14 @@ public class SrvListarAplicacion extends HttpServlet {
 			
 			else { //en caso de no ser usuario administrador
 				String error = "No tiene permisos suficientes para ver esta pagina.";
+				response.setStatus(403);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response); 
 			}
 		} 
 		else { //en caso de no estar logueado
 		
-			request.getRequestDispatcher("login.jsp").forward(request, response); //habria que enviar a pagina de error!			
+			request.getRequestDispatcher("login.jsp").forward(request, response);			
 		}
 		
 	}

@@ -17,7 +17,7 @@ import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 /**
  * Servlet implementation class srvListadoPedido
  */
-@WebServlet("/SrvListarPedidoUsuario")
+@WebServlet("/SrvListarPedido")
 public class SrvListarPedido extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -53,18 +53,26 @@ public class SrvListarPedido extends HttpServlet {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
 
 		if (usuario != null) {
+			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
+																				// administradores!
 
-			try {
-				List<Pedido> catalogoPedido = ctrl.getAllPedidoByIdUsuario(usuario.getId());
-				request.setAttribute("catPedido", catalogoPedido);
-				request.getRequestDispatcher("listarPedidoUsuario.jsp").forward(request, response);
+				try {
+					List<Pedido> catalogoPedido = ctrl.getAllPedido();
+					request.setAttribute("catPedido", catalogoPedido);
+					request.getRequestDispatcher("listarPedido.jsp").forward(request, response);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.setStatus(404);
+					request.setAttribute("error", e.getMessage());
+					request.getRequestDispatcher("error.jsp").forward(request, response);
+
+				}
+			} else { // en caso de no ser usuario administrador
+				String error = "No tiene permisos suficientes para ver esta pagina.";
+				response.setStatus(403);
+				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response);
-
 			}
 
 		}

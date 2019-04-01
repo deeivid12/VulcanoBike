@@ -186,7 +186,7 @@ footer a {
             	<div class="col-md-3"></div>
                 <div class="col-md-6 login-form-1">
                     <h3>Inicio de Sesion</h3>
-                    <form action="SrvUsuario" method="POST">
+                    <form action="SrvLogin" method="POST">
                     	<input type="hidden" name="accion" value="login"></input>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Usuario *" name="usuario" autofocus="true"/>

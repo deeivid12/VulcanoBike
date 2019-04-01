@@ -17,73 +17,58 @@ import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 /**
  * Servlet implementation class srvListadoPedido
  */
-@WebServlet("/SrvListarPedido")
+@WebServlet("/SrvListarPedidoUsuario")
 public class SrvListarPedidoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	Controlador ctrl = new Controlador();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SrvListarPedidoUsuario() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public SrvListarPedidoUsuario() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doGet(request, response);
-		Usuario usuario = (Usuario)request.getSession().getAttribute("userSession");
-		
+		// doGet(request, response);
+		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
+
 		if(usuario != null) {
-			if(usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { //valido que solo puedan acceder administradores!
-				
-				try {
-					List<Pedido> catalogoPedido = ctrl.getAllPedido();
-					request.setAttribute("catPedido", catalogoPedido);
-					request.getRequestDispatcher("listarPedido.jsp").forward(request, response);
-					
-					}catch (Exception e) {
-						e.printStackTrace();
-					
-					//setear un atributo con el mensaje de error, setear el status distinto de 200 y hacer redirect o forward a una pagina de erro
-					//opcionalmente volver a la misma pagina y con jsp preguntar si esta el mensaje de error y mostrarlo (y borrar la variable)
-					
-					//response.sendRedirect("error.jsp");
-					//response.sendError(404, e.getMessage());
-					response.setStatus(404);
-					request.setAttribute("error", e.getMessage());					
-					request.getRequestDispatcher("error.jsp").forward(request, response);
-					
-					
-				}
-				
+
+			try {
+				List<Pedido> catalogoPedido = ctrl.getAllPedidoByIdUsuario(usuario.getId());
+				request.setAttribute("catPedido", catalogoPedido);
+				request.getRequestDispatcher("listarPedidoUsuario.jsp").forward(request, response);
+
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());
+				request.getRequestDispatcher("error.jsp").forward(request, response);
+
 			}
-			
-			else { //en caso de no ser usuario administrador
-				String error = "No tiene permisos suficientes para ver esta pagina.";
-				request.setAttribute("error", error);
-				request.getRequestDispatcher("error.jsp").forward(request, response); 
-			}
-		} 
-		else { //en caso de no estar logueado
-			request.getRequestDispatcher("login.jsp").forward(request, response);		
+		} else {
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
-		
-		
+
 	}
 
 }

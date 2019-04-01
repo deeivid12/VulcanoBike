@@ -122,18 +122,18 @@ public class Controlador {
 	
 	
 	//PRODUCTO
-	public List<Producto> getAllProducto(){
+	public List<Producto> getAllProducto() throws Exception{
 
 		return  dataProducto.GetAll();
 	}
 	
 	
-	public Producto getOneProducto(Integer id) {
+	public Producto getOneProducto(Integer id) throws Exception {
 		Producto Producto = dataProducto.GetOne(id);
 		return Producto;
 	}
 	
-	public void updateProducto(Producto producto) {
+	public void updateProducto(Producto producto) throws Exception {
 		dataProducto.Update(producto);
 	}
 	
@@ -147,7 +147,7 @@ public class Controlador {
 	
 	
 	//PEDIDO
-	public void addPedido(Pedido pedido) {
+	public void addPedido(Pedido pedido) throws Exception {
 		int idPedido = dataPedido.Insert(pedido); //guardo pedido y obtengo id autogenerado
 		addItemPedido(pedido.getItems(), idPedido); //guardo items con el id de pedido correspondiente
 	}
@@ -155,6 +155,10 @@ public class Controlador {
 	public List<Pedido> getAllPedido() throws Exception {
 		List<Pedido> pedidos = dataPedido.GetAll();
 		return pedidos;
+	}
+	
+	public List<Pedido> getAllPedidoByIdUsuario(int idUsuario) throws Exception{
+		return dataPedido.GetAll(idUsuario);
 	}
 	
 	public void updatePedido(Pedido pedido) throws Exception {
@@ -194,7 +198,7 @@ public class Controlador {
 	
 	
 	//ITEMPEDIDO
-	public void addItemPedido(List<ItemPedido> itemsPedido, int idPedido) {
+	public void addItemPedido(List<ItemPedido> itemsPedido, int idPedido) throws Exception {
 		
 		for(ItemPedido ip : itemsPedido) {
 			ip.setIdPedido(idPedido);

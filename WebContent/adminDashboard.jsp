@@ -35,8 +35,8 @@
         <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
         <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
         <a href="SrvListarProducto" class="list-group-item list-group-item-action bg-light">Productos</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Pedidos</a>
+        <a href="SrvListarUsuario" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+		<a href="SrvListarPedido" class="list-group-item list-group-item-action bg-light">Pedidos</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -66,7 +66,10 @@
                 <%=usuario.getUser() %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+              </div> 
             </li>
             <%} %>
             

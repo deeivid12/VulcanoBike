@@ -170,8 +170,6 @@ footer a {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
         </ul>

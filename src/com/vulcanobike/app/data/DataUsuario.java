@@ -41,7 +41,7 @@ public class DataUsuario {
 				}
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		} 
 		finally{
@@ -77,7 +77,7 @@ public class DataUsuario {
 					
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al insertar datos.",e);
 		} 
 		finally{
@@ -114,7 +114,7 @@ public class DataUsuario {
 				}
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{
@@ -151,7 +151,7 @@ public class DataUsuario {
 				}
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{
@@ -190,7 +190,7 @@ public class DataUsuario {
 				list.add(usuario);
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{
@@ -223,7 +223,7 @@ public class DataUsuario {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al actualizar datos.", e);
 
 		}
@@ -261,7 +261,7 @@ public class DataUsuario {
 				}
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{
@@ -283,7 +283,7 @@ public class DataUsuario {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al eliminar datos.", e);
 		}
 		finally{

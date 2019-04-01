@@ -41,13 +41,13 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">VulcanoBike </div>
       <div class="list-group list-group-flush">
-        <a href="srvListarPedido" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
+        <a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
         <a href="SrvListarMarca" class="list-group-item list-group-item-action bg-light">Marcas</a>
         <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
         <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
         <a href="SrvListarProducto" class="list-group-item list-group-item-action bg-light">Productos</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Pedidos</a>
+        <a href="SrvListarUsuario" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+		<a href="SrvListarPedido" class="list-group-item list-group-item-action bg-light">Pedidos</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -76,8 +76,12 @@
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%=usuario.getUser() %>
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+              <div class="dropdown-menu dropdown-menu-right"
+								aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+				                <div class="dropdown-divider"></div>
+				                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+							</div> 
             </li>
             <%} %>
             

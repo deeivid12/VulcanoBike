@@ -16,7 +16,7 @@ import sun.java2d.pipe.ParallelogramPipe;
 
 public class DataItemPedido {
 	
-	public void Insert(ItemPedido ip){
+	public void Insert(ItemPedido ip) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="insert into items_pedidos (id_pedido, id_producto, cantidad, importe) values (?,?,?,?)";		
 		
@@ -33,7 +33,8 @@ public class DataItemPedido {
 					
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al insertar datos.",e);
 		} 
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -69,7 +70,7 @@ public class DataItemPedido {
 				list.add(ip);
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
 			throw new Exception("Error al recuperar datos.",e);
 		}
 		finally{

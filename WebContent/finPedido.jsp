@@ -110,6 +110,8 @@ footer a {
                 <%=usuario.getUser()  %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
               </div>  
                   <%} %>
@@ -119,8 +121,6 @@ footer a {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div> 
               <%} %>
             

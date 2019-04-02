@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class srvListadoTipoProducto
+ * Servlet implementation class SrvListarUsuario
  */
-@WebServlet("/srvListarTipoProducto")
-public class srvListarTipoProducto extends HttpServlet {
+@WebServlet("/SrvListarUsuario")
+public class SrvListarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	Controlador ctrl = SrvTipoProducto.getCtrl();
+	Controlador ctrl = new Controlador();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public srvListarTipoProducto() {
+	public SrvListarUsuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -48,8 +48,7 @@ public class srvListarTipoProducto extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// doGet(request, response);
+
 		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
 
 		if (usuario != null) {
@@ -57,10 +56,10 @@ public class srvListarTipoProducto extends HttpServlet {
 																				// administradores!
 
 				try {
-					TipoProducto tpActual = new TipoProducto();
-					List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-					request.setAttribute("catTipoProducto", catalogoTipoProducto);
-					request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
+					List<Usuario> catalogoUsuario = ctrl.getAllUsuario();
+					request.setAttribute("catUsuario", catalogoUsuario);
+					request.getRequestDispatcher("listarUsuario.jsp").forward(request, response);
+
 				} catch (Exception e) {
 					response.setStatus(404);
 					request.setAttribute("error", e.getMessage());
@@ -76,6 +75,7 @@ public class srvListarTipoProducto extends HttpServlet {
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
 		} else { // en caso de no estar logueado
+
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 

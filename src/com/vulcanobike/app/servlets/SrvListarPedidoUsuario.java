@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class srvListadoTipoProducto
+ * Servlet implementation class srvListadoPedido
  */
-@WebServlet("/srvListarTipoProducto")
-public class srvListarTipoProducto extends HttpServlet {
+@WebServlet("/SrvListarPedidoUsuario")
+public class SrvListarPedidoUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	Controlador ctrl = SrvTipoProducto.getCtrl();
+	Controlador ctrl = new Controlador();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public srvListarTipoProducto() {
+	public SrvListarPedidoUsuario() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -52,30 +52,20 @@ public class srvListarTipoProducto extends HttpServlet {
 		// doGet(request, response);
 		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
 
-		if (usuario != null) {
-			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
-																				// administradores!
+		if(usuario != null) {
 
-				try {
-					TipoProducto tpActual = new TipoProducto();
-					List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-					request.setAttribute("catTipoProducto", catalogoTipoProducto);
-					request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
-				} catch (Exception e) {
-					response.setStatus(404);
-					request.setAttribute("error", e.getMessage());
-					request.getRequestDispatcher("error.jsp").forward(request, response);
-				}
+			try {
+				List<Pedido> catalogoPedido = ctrl.getAllPedidoByIdUsuario(usuario.getId());
+				request.setAttribute("catPedido", catalogoPedido);
+				request.getRequestDispatcher("listarPedidoUsuario.jsp").forward(request, response);
 
-			}
-
-			else { // en caso de no ser usuario administrador
-				String error = "No tiene permisos suficientes para ver esta pagina.";
-				response.setStatus(403);
-				request.setAttribute("error", error);
+			} catch (Exception e) {
+				response.setStatus(404);
+				request.setAttribute("error", e.getMessage());
 				request.getRequestDispatcher("error.jsp").forward(request, response);
+
 			}
-		} else { // en caso de no estar logueado
+		} else {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 

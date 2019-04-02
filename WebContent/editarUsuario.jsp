@@ -1,6 +1,8 @@
+<%@page import="com.vulcanobike.app.entities.Usuario.TiposUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-  pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,55 +89,120 @@
         </div>
       </nav>
 
-      <div class="container-fluid">
-        <h1 class="mt-4">Alta Tipo de Producto</h1>
+			<div class="container-fluid">
+				<h1 class="mt-4">Editar Usuario</h1>
 
-        <form action="SrvTipoProducto" method="post">
-    
-    <input type="hidden" name="accion" value="alta"></input>
+				<%
+					Usuario u = (Usuario) request.getAttribute("uEncontrado");
+				%>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Nombre</label>
-        <div class="col-sm-4">
-          <input type="text" name="nombre" required="true"
-            class="form-control" />
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Descripcion</label>
-        <div class="col-sm-4">
-          <input type="text" name="descripcion" required="true"
-            class="form-control" />
-        </div>
-      </div>
+				<form action="SrvUsuario" method="post">
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-5 text-center">
-          <input type="submit" value="Confirmar" class="btn btn-secondary" />
-        </div>
-      </div>
-    </form>
+					<input type="hidden" name="accion" value="editar"></input>
+					
+					<input type="hidden" name="id" value="<%=u.getId()%>"></input>
+					
+					
 
-      </div>
-    </div>
-    <!-- /#page-content-wrapper -->
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Nombre</label>
+						<div class="col-sm-4">
+							<input type="text" name="nombre" required="true"
+								value="<%=u.getNombre()%>" class="form-control" />
+						</div>
+					</div>
 
-  </div>
-  <!-- /#wrapper -->
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Apellido</label>
+						<div class="col-sm-4">
+							<input type="text" name="apellido" required="true"
+								value="<%=u.getApellido()%>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-4">
+							<input type="text" name="email" required="true" readonly
+								value="<%=u.getEmail()%>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Direccion</label>
+						<div class="col-sm-4">
+							<input type="text" name="direccion" required="true"
+								value="<%=u.getDireccion()%>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Telefono</label>
+						<div class="col-sm-4">
+							<input type="text" name="telefono" required="true"
+								value="<%=u.getTelefono()%>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">User</label>
+						<div class="col-sm-4">
+							<input type="text" name="usuario" required="true" readonly
+								value="<%=u.getUser()%>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Password</label>
+						<div class="col-sm-4">
+							<input type="text" name="password" required="true"
+								value="<%=u.getPassword()%>" class="form-control" />
+						</div>
+					</div>
+								
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Tipo Usuario</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="tipoUsuario">
+							   <option value="1" label="Administrador" <% if (u.getTipoUsuario().equals(TiposUsuario.Administrador)){%>
+							    selected="selected"  <%} %>></option>
+							   <option value="2" label="Usuario" <% if (u.getTipoUsuario().equals(TiposUsuario.Usuario)){%>
+							    selected="selected"  <%} %>></option>
+						   </select>
+						</div>
+					</div>
+					
+					
+					
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label"></label>
+						<div class="col-sm-5 text-center">
+							<input type="submit" value="Guardar" class="btn btn-secondary" />
+						</div>
+					</div>
+				</form>
 
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+	</script>
 
 </body>
 

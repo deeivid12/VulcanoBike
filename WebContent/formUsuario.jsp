@@ -88,35 +88,93 @@
       </nav>
 
       <div class="container-fluid">
-        <h1 class="mt-4">Alta Tipo de Producto</h1>
+      <%if (request.getAttribute("messageError")!=null){ %>
+            <div><h4><font color="#FF0000"> <%=request.getAttribute("messageError") %></font></h4></div>
+            <%} %>
+        <h1 class="mt-4">Alta Usuario</h1>
 
-        <form action="SrvTipoProducto" method="post">
-    
-    <input type="hidden" name="accion" value="alta"></input>
+        <form action="SrvUsuario" method="post">
+		
+			<input type="hidden" name="accion" value="alta"></input>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Nombre</label>
-        <div class="col-sm-4">
-          <input type="text" name="nombre" required="true"
-            class="form-control" />
-        </div>
-      </div>
+			<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Nombre</label>
+						<div class="col-sm-4">
+							<input type="text" name="nombre" required="true"
+								 class="form-control" />
+						</div>
+					</div>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Descripcion</label>
-        <div class="col-sm-4">
-          <input type="text" name="descripcion" required="true"
-            class="form-control" />
-        </div>
-      </div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Apellido</label>
+						<div class="col-sm-4">
+							<input type="text" name="apellido" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-4">
+							<input type="email" name="email" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Direccion</label>
+						<div class="col-sm-4">
+							<input type="text" name="direccion" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Telefono</label>
+						<div class="col-sm-4">
+							<input type="number" name="telefono" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">User</label>
+						<div class="col-sm-4">
+							<input type="text" name="usuario" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Password</label>
+						<div class="col-sm-4">
+							<input type="text" name="password" required="true"
+								 class="form-control" />
+						</div>
+					</div>
+								
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Tipo Usuario</label>
+						<div class="col-sm-4">
+							<select class="form-control" name="tipoUsuario">
+							   <option value="1" label="Administrador"
+							     ></option>
+							   <option value="2" label="Usuario"
+							    selected="selected" >></option>
+						   </select>
+						</div>
+					</div>
+			
+		
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-5 text-center">
-          <input type="submit" value="Confirmar" class="btn btn-secondary" />
-        </div>
-      </div>
-    </form>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label"></label>
+				<div class="col-sm-5 text-center">
+					<input type="submit" value="Confirmar" class="btn btn-secondary" />
+				</div>
+			</div>
+		</form>
 
       </div>
     </div>

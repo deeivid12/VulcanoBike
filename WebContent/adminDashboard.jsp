@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
 
   <meta charset="utf-8">
@@ -20,6 +22,8 @@
 
 <body>
 
+ <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+
   <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
@@ -31,8 +35,8 @@
         <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
         <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
         <a href="SrvListarProducto" class="list-group-item list-group-item-action bg-light">Productos</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Usuarios</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Pedidos</a>
+        <a href="SrvListarUsuario" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+		<a href="SrvListarPedido" class="list-group-item list-group-item-action bg-light">Pedidos</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -53,19 +57,23 @@
               <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Carrito</a>
+              <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
             </li>
+            
+           <%if(usuario != null){%> 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Mi Cuenta
+                <%=usuario.getUser() %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Iniciar Sesion</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
+              </div> 
             </li>
+            <%} %>
+            
+            
           </ul>
         </div>
       </nav>
@@ -94,5 +102,4 @@
   </script>
 
 </body>
-
 </html>

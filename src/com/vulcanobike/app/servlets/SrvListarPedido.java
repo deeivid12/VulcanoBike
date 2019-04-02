@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Usuario;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class srvListadoTipoProducto
+ * Servlet implementation class srvListadoPedido
  */
-@WebServlet("/srvListarTipoProducto")
-public class srvListarTipoProducto extends HttpServlet {
+@WebServlet("/SrvListarPedido")
+public class SrvListarPedido extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	Controlador ctrl = SrvTipoProducto.getCtrl();
+	Controlador ctrl = new Controlador();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public srvListarTipoProducto() {
+	public SrvListarPedido() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -57,25 +57,27 @@ public class srvListarTipoProducto extends HttpServlet {
 																				// administradores!
 
 				try {
-					TipoProducto tpActual = new TipoProducto();
-					List<TipoProducto> catalogoTipoProducto = ctrl.getAllTipoProducto();
-					request.setAttribute("catTipoProducto", catalogoTipoProducto);
-					request.getRequestDispatcher("listarTipoProducto.jsp").forward(request, response);
+					List<Pedido> catalogoPedido = ctrl.getAllPedido();
+					request.setAttribute("catPedido", catalogoPedido);
+					request.getRequestDispatcher("listarPedido.jsp").forward(request, response);
+
 				} catch (Exception e) {
+					e.printStackTrace();
 					response.setStatus(404);
 					request.setAttribute("error", e.getMessage());
 					request.getRequestDispatcher("error.jsp").forward(request, response);
+
 				}
-
-			}
-
-			else { // en caso de no ser usuario administrador
+			} else { // en caso de no ser usuario administrador
 				String error = "No tiene permisos suficientes para ver esta pagina.";
 				response.setStatus(403);
 				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
-		} else { // en caso de no estar logueado
+
+		}
+
+		else { // en caso de no estar logueado
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 

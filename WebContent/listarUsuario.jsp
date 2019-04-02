@@ -108,59 +108,53 @@
 
 
 			<div class="container-fluid">
-				<h1 class="mt-4">Productos</h1>
+				<h1 class="mt-4">Usuarios</h1>
 				<input type="hidden" name="accion" value="listar"></input>
-
-				<div class="row">
+	
+	<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="formProducto.jsp" role="button">Agregar</a>
+							href="formUsuario.jsp" role="button">Agregar</a>
 					</div>
 
 				</div>
 
-
-
-
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Id</th>
-							<th>Imagen</th>
-							<th>Nombre</th>
-							<th>Descripcion</th>
-							<th>Precio</th>
-							<th>Stock</th>
-							<th>Tipo Producto</th>
-							<th>Rodado</th>
-							<th>Aplicacion</th>
-							<th>Marca</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${catProducto}" var="p">
-							<tr>
-								<td>${p.id}</td>
-								<td class="align"><img src="${p.imagen}" class="img-thumbnail" style="width: 80%"></img></td>
-								<td>${p.nombre}</td>
-								<td>${p.descripcion}</td>
-								<td>${p.precio}</td>
-								<td>${p.stock}</td>
-								<td>${p.tipoProducto.nombre}</td>
-								<td>${p.rodado.nombre}</td>
-								<td>${p.aplicacionBicicleta.nombre}</td>
-								<td>${p.marca.nombre}</td>
-								<td><a href="SrvProducto?id=${p.id}&accion=editar"
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>Email</th>
+				<th>Direccion</th>
+				<th>Telefono</th>
+				<th>User</th>
+				<th>Password</th>
+				<th>Tipo Usuario</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${catUsuario}" var="u">
+				<tr>
+					<td>${u.id}</td>
+					<td>${u.nombre}</td>
+					<td>${u.apellido}</td>
+					<td>${u.email}</td>
+					<td>${u.direccion}</td>
+					<td>${u.telefono}</td>
+					<td>${u.user}</td>
+					<td style="-webkit-text-security: disc;">${u.password}</td>
+					<td>${u.tipoUsuario}</td>
+					<td><a href="SrvUsuario?id=${u.id}&accion=editar"
 									class="editar">Editar</a></td>
-								<td><a href="SrvProducto?id=${p.id}&accion=eliminar"
-								class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
-							</tr>
-							</c:forEach>
-											
-					</tbody>
-				</table>
+					<td><a href="SrvUsuario?id=${u.id}&accion=eliminar"
+									class="eliminar" onclick="return confirm('¿Desea eliminar?')">Eliminar</a></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 			</div>
 		</div>
 		<!-- /#page-content-wrapper -->

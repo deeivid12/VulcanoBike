@@ -1,3 +1,4 @@
+<%@page import="com.vulcanobike.app.entities.Usuario.TiposUsuario"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -32,6 +33,7 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 
+ <%Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
 <%List<ItemPedido> itemsPedido = (List<ItemPedido>)request.getSession().getAttribute("items"); %>
 
   <!-- Navigation -->
@@ -43,13 +45,23 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+        
+        <%if (usuario != null && usuario.getTipoUsuario().equals(TiposUsuario.Administrador)){ %>   
+           <li class="nav-item">
+            <a class="btn btn-danger" href="adminDashboard.jsp">Admin Dashboard
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+        <%} %>  
+        
+        
           <li class="nav-item">
             <a class="nav-link" href="#">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -63,7 +75,7 @@
            </a>
           </li>
           
-          <%Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+         
           
            <li class="nav-item dropdown">
            
@@ -73,7 +85,10 @@
                 <%=usuario.getUser()  %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
+              </div> 
                   <%} %>
            <%if (usuario == null){ %>
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -81,8 +96,6 @@
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div> 
               <%} %>
                
@@ -222,7 +235,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white"></p>
     </div>
     <!-- /.container -->
   </footer>

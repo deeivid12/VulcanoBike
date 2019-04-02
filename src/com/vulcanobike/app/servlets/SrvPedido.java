@@ -11,15 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vulcanobike.app.business.Controlador;
-import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.ItemPedido;
+import com.vulcanobike.app.entities.Pedido;
 import com.vulcanobike.app.entities.Usuario;
+import com.vulcanobike.app.entities.Pedido.EstadosPedido;
 import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
- * Servlet implementation class SrvSaveTipoProducto
+ * Servlet implementation class SrvSavePedido
  */
-@WebServlet("/SrvTipoProducto")
-public class SrvTipoProducto extends HttpServlet {
+@WebServlet("/SrvPedido")
+public class SrvPedido extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static Controlador ctrl = new Controlador();
@@ -29,13 +31,13 @@ public class SrvTipoProducto extends HttpServlet {
 	}
 
 	public static void setCtrl(Controlador ctrl) {
-		SrvTipoProducto.ctrl = ctrl;
+		SrvPedido.ctrl = ctrl;
 	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SrvTipoProducto() {
+	public SrvPedido() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -54,39 +56,23 @@ public class SrvTipoProducto extends HttpServlet {
 			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
 																				// administradores!
 
-				// ABM EDITAR
+				// ABM MOSTRAR
 				if (accion.equals("editar")) {
 
 					try {
 						int id = Integer.parseInt(request.getParameter("id"));
-						TipoProducto tp = ctrl.findOneTipoProducto(id);
-						request.setAttribute("tpEncontrado", tp);
-						RequestDispatcher view = getServletContext().getRequestDispatcher("/editarTipoProducto.jsp");
+						Pedido p = ctrl.getOnePedido(id);
+						request.setAttribute("pEncontrado", p);
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/editarPedido.jsp");
 						view.forward(request, response);
+
 					} catch (Exception e) {
-						// e.printStackTrace();
+						e.printStackTrace();
 						response.setStatus(404);
 						request.setAttribute("error", e.getMessage());
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}
 
-				}
-
-				// ABM ELIMINAR
-				if (accion.equals("eliminar")) {
-
-					try {
-						int id = Integer.parseInt(request.getParameter("id"));
-						ctrl.deleteTipoProducto(id);
-						response.sendRedirect("srvListarTipoProducto");
-
-					} catch (Exception e) {
-
-						// e.printStackTrace();
-						response.setStatus(404);
-						request.setAttribute("error", e.getMessage());
-						request.getRequestDispatcher("error.jsp").forward(request, response);
-					}
 				}
 			} else { // en caso de no ser usuario administrador
 				String error = "No tiene permisos suficientes para ver esta pagina.";
@@ -114,36 +100,26 @@ public class SrvTipoProducto extends HttpServlet {
 			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
 																				// administradores!
 
-				// ABM EDITAR
+				// ABM MOSTRAR
 				if (accion.equals("editar")) {
 
 					try {
-						TipoProducto tProducto = new TipoProducto();
+						Pedido pedido = new Pedido();
 						Integer id = Integer.parseInt(request.getParameter("id"));
-						tProducto.setId(id);
-						tProducto.setNombre(request.getParameter("nombre"));
-						tProducto.setDescripcion(request.getParameter("descripcion"));
-						ctrl.updateTipoProducto(tProducto);
-						response.sendRedirect("srvListarTipoProducto");
-					} catch (Exception e) {
-						response.setStatus(404);
-						request.setAttribute("error", e.getMessage());
-						request.getRequestDispatcher("error.jsp").forward(request, response);
-					}
-				}
-
-				// ABM ALTA
-				if (accion.equals("alta")) {
-
-					// GUARDAR TIPO PRODUCTO
-
-					try {
-						TipoProducto tProducto = new TipoProducto();
-						tProducto.setNombre(request.getParameter("nombre"));
-						tProducto.setDescripcion(request.getParameter("descripcion"));
-						ctrl.addTipoProducto(tProducto);
-						response.sendRedirect("srvListarTipoProducto"); // MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL
-																		// LISTADO
+						pedido.setId(id);
+						switch (Integer.parseInt(request.getParameter("estado"))) {
+						case 1:
+							pedido.setEstado(EstadosPedido.Pendiente);
+							break;
+						case 2:
+							pedido.setEstado(EstadosPedido.En_Proceso);
+							break;
+						case 3:
+							pedido.setEstado(EstadosPedido.Enviado);
+							break;
+						}
+						ctrl.updatePedido(pedido);
+						response.sendRedirect("SrvListarPedido");
 					} catch (Exception e) {
 						response.setStatus(404);
 						request.setAttribute("error", e.getMessage());

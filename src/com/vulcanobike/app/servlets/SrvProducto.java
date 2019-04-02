@@ -15,6 +15,8 @@ import com.vulcanobike.app.entities.Marca;
 import com.vulcanobike.app.entities.Producto;
 import com.vulcanobike.app.entities.Rodado;
 import com.vulcanobike.app.entities.TipoProducto;
+import com.vulcanobike.app.entities.Usuario;
+import com.vulcanobike.app.entities.Usuario.TiposUsuario;
 
 /**
  * Servlet implementation class SrvProducto
@@ -22,140 +24,168 @@ import com.vulcanobike.app.entities.TipoProducto;
 @WebServlet("/SrvProducto")
 public class SrvProducto extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	Controlador ctrl = new Controlador();
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SrvProducto() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String accion = request.getParameter("accion");
-		
-		
-		//ABM EDITAR
-		if(accion.equals("editar")) {
-					
-			try {
-				int id = Integer.parseInt(request.getParameter("id"));
-				Producto p = ctrl.getOneProducto(id);
-				request.setAttribute("pEncontrado", p);
-				RequestDispatcher view = getServletContext().getRequestDispatcher("/editarProducto.jsp");
-				view.forward(request, response);
-			} catch (Exception e) {
-				//e.printStackTrace();
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());					
-				request.getRequestDispatcher("error.jsp").forward(request, response);
-			} 
-			
-		}
-		
-		//ABM ELIMINAR
-		if(accion.equals("eliminar")) {
-			
-			try {
-				int id = Integer.parseInt(request.getParameter("id"));
-				ctrl.deleteProducto(id);
-				response.sendRedirect("SrvListarProducto");
+	public SrvProducto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
-			} catch (Exception e) {
-				
-				//e.printStackTrace();
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());					
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String accion = request.getParameter("accion");
+		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
+
+		if (usuario != null) {
+			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
+																				// administradores!
+				// ABM EDITAR
+				if (accion.equals("editar")) {
+
+					try {
+						int id = Integer.parseInt(request.getParameter("id"));
+						Producto p = ctrl.getOneProducto(id);
+						request.setAttribute("pEncontrado", p);
+						RequestDispatcher view = getServletContext().getRequestDispatcher("/editarProducto.jsp");
+						view.forward(request, response);
+					} catch (Exception e) {
+						// e.printStackTrace();
+						response.setStatus(404);
+						request.setAttribute("error", e.getMessage());
+						request.getRequestDispatcher("error.jsp").forward(request, response);
+					}
+
+				}
+
+				// ABM ELIMINAR
+				if (accion.equals("eliminar")) {
+
+					try {
+						int id = Integer.parseInt(request.getParameter("id"));
+						ctrl.deleteProducto(id);
+						response.sendRedirect("SrvListarProducto");
+
+					} catch (Exception e) {
+
+						// e.printStackTrace();
+						response.setStatus(404);
+						request.setAttribute("error", e.getMessage());
+						request.getRequestDispatcher("error.jsp").forward(request, response);
+					}
+				}
+			} else { // en caso de no ser usuario administrador
+				String error = "No tiene permisos suficientes para ver esta pagina.";
+				response.setStatus(403);
+				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
+		} else { // en caso de no estar logueado
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String accion = request.getParameter("accion");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		
-		//ABM EDITAR
-		if(accion.equals("editar")) {
-			
-			try {
-				Producto producto = new Producto();
-				TipoProducto tp = new TipoProducto();
-				Aplicacion a = new Aplicacion();
-				Marca m = new Marca();
-				Rodado r = new Rodado();
-				
-				Integer id = Integer.parseInt(request.getParameter("id"));
-				producto.setId(id);
-				producto.setNombre(request.getParameter("nombre"));
-				producto.setDescripcion(request.getParameter("descripcion"));
-				producto.setPrecio(Float.parseFloat(request.getParameter("precio")));
-				producto.setStock(Integer.parseInt(request.getParameter("stock")));
-				producto.setImagen(request.getParameter("imagen"));
-				tp = ctrl.findOneTipoProducto(Integer.parseInt(request.getParameter("tipoProducto")));
-				a = ctrl.getOneAplicacion(Integer.parseInt(request.getParameter("aplicacion")));
-				m = ctrl.getOneMarca(Integer.parseInt(request.getParameter("marca")));
-				r = ctrl.getOneRodado(Integer.parseInt(request.getParameter("rodado")));
-				producto.setTipoProducto(tp);
-				producto.setAplicacionBicicleta(a);
-				producto.setMarca(m);
-				producto.setRodado(r);
-				
-				ctrl.updateProducto(producto);
-				response.sendRedirect("SrvListarProducto");
-			} catch (Exception e) {
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());					
+		String accion = request.getParameter("accion");
+		Usuario usuario = (Usuario) request.getSession().getAttribute("userSession");
+
+		if (usuario != null) {
+			if (usuario.getTipoUsuario().equals(TiposUsuario.Administrador)) { // valido que solo puedan acceder
+																				// administradores!
+
+				// ABM EDITAR
+				if (accion.equals("editar")) {
+
+					try {
+						Producto producto = new Producto();
+						TipoProducto tp = new TipoProducto();
+						Aplicacion a = new Aplicacion();
+						Marca m = new Marca();
+						Rodado r = new Rodado();
+
+						Integer id = Integer.parseInt(request.getParameter("id"));
+						producto.setId(id);
+						producto.setNombre(request.getParameter("nombre"));
+						producto.setDescripcion(request.getParameter("descripcion"));
+						producto.setPrecio(Float.parseFloat(request.getParameter("precio")));
+						producto.setStock(Integer.parseInt(request.getParameter("stock")));
+						producto.setImagen(request.getParameter("imagen"));
+						tp = ctrl.findOneTipoProducto(Integer.parseInt(request.getParameter("tipoProducto")));
+						a = ctrl.getOneAplicacion(Integer.parseInt(request.getParameter("aplicacion")));
+						m = ctrl.getOneMarca(Integer.parseInt(request.getParameter("marca")));
+						r = ctrl.getOneRodado(Integer.parseInt(request.getParameter("rodado")));
+						producto.setTipoProducto(tp);
+						producto.setAplicacionBicicleta(a);
+						producto.setMarca(m);
+						producto.setRodado(r);
+
+						ctrl.updateProducto(producto);
+						response.sendRedirect("SrvListarProducto");
+					} catch (Exception e) {
+						response.setStatus(404);
+						request.setAttribute("error", e.getMessage());
+						request.getRequestDispatcher("error.jsp").forward(request, response);
+					}
+				}
+
+				// ABM ALTA
+				if (accion.equals("alta")) {
+
+					// GUARDAR APLICACION
+
+					TipoProducto tp = new TipoProducto();
+					Aplicacion a = new Aplicacion();
+					Marca m = new Marca();
+					Rodado r = new Rodado();
+
+					try {
+						Producto producto = new Producto();
+						producto.setNombre(request.getParameter("nombre"));
+						producto.setDescripcion(request.getParameter("descripcion"));
+						producto.setPrecio(Float.parseFloat(request.getParameter("precio")));
+						producto.setStock(Integer.parseInt(request.getParameter("stock")));
+						producto.setImagen(request.getParameter("imagen"));
+						tp = ctrl.findOneTipoProducto(Integer.parseInt(request.getParameter("tipoProducto")));
+						a = ctrl.getOneAplicacion(Integer.parseInt(request.getParameter("aplicacion")));
+						m = ctrl.getOneMarca(Integer.parseInt(request.getParameter("marca")));
+						r = ctrl.getOneRodado(Integer.parseInt(request.getParameter("rodado")));
+						producto.setTipoProducto(tp);
+						producto.setAplicacionBicicleta(a);
+						producto.setMarca(m);
+						producto.setRodado(r);
+						ctrl.addProducto(producto);
+						response.sendRedirect("SrvListarProducto"); // MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL
+																	// LISTADO
+					} catch (Exception e) {
+						response.setStatus(404);
+						request.setAttribute("error", e.getMessage());
+						request.getRequestDispatcher("error.jsp").forward(request, response);
+					}
+				}
+			} else { // en caso de no ser usuario administrador
+				String error = "No tiene permisos suficientes para ver esta pagina.";
+				response.setStatus(403);
+				request.setAttribute("error", error);
 				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
-		}
-		
-		
-		//ABM ALTA
-		if(accion.equals("alta")) {
-			
-			//GUARDAR APLICACION
-			
-			TipoProducto tp = new TipoProducto();
-			Aplicacion a = new Aplicacion();
-			Marca m = new Marca();
-			Rodado r = new Rodado();
-			
-			try {
-				Producto producto = new Producto();
-				producto.setNombre(request.getParameter("nombre"));
-				producto.setDescripcion(request.getParameter("descripcion"));
-				producto.setPrecio(Float.parseFloat(request.getParameter("precio")));
-				producto.setStock(Integer.parseInt(request.getParameter("stock")));
-				producto.setImagen(request.getParameter("imagen"));
-				tp = ctrl.findOneTipoProducto(Integer.parseInt(request.getParameter("tipoProducto")));
-				a = ctrl.getOneAplicacion(Integer.parseInt(request.getParameter("aplicacion")));
-				m = ctrl.getOneMarca(Integer.parseInt(request.getParameter("marca")));
-				r = ctrl.getOneRodado(Integer.parseInt(request.getParameter("rodado")));
-				producto.setTipoProducto(tp);
-				producto.setAplicacionBicicleta(a);
-				producto.setMarca(m);
-				producto.setRodado(r);
-				ctrl.addProducto(producto);
-				response.sendRedirect("SrvListarProducto"); //MANDO DIRECTAMENTE AL SERVLET QUE RESUELVE EL LISTADO	
-			} catch (Exception e) {
-				response.setStatus(404);
-				request.setAttribute("error", e.getMessage());					
-				request.getRequestDispatcher("error.jsp").forward(request, response);
-			}
+		} else { // en caso de no estar logueado
+			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}
 
 	}
-
 
 }

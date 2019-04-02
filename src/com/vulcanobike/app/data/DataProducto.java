@@ -14,7 +14,7 @@ import com.vulcanobike.app.entities.TipoProducto;
 
 public class DataProducto {
 
-	public ArrayList<Producto> GetAll(){
+	public ArrayList<Producto> GetAll() throws Exception{
 		ArrayList<Producto> list = new ArrayList<Producto>();
 		Producto p = null; ResultSet rs = null; PreparedStatement stmt = null; TipoProducto tp = null;
 		Aplicacion a = null; Rodado r = null; Marca m =null;
@@ -58,7 +58,8 @@ public class DataProducto {
 				list.add(p);
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al recuperar datos",e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -69,7 +70,7 @@ public class DataProducto {
 	}
 	
 	
-	public Producto GetOne(Integer id){
+	public Producto GetOne(Integer id) throws Exception{
 		Producto p = null; ResultSet rs = null; PreparedStatement stmt = null; TipoProducto tp = null;
 		Aplicacion a = null; Rodado r = null; Marca m =null;
 		String sql="select * from productos left join tipo_producto on productos.id_tipo_producto = tipo_producto.id"
@@ -114,7 +115,8 @@ public class DataProducto {
 				//completar lo que falta
 			}
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al recuperar datos",e);
 		}
 		finally{
 			FactoryConexion.getInstancia().releaseConn();
@@ -125,7 +127,7 @@ public class DataProducto {
 	}
 	
 	
-	public void Update(Producto p){
+	public void Update(Producto p) throws Exception{
 		ResultSet rs = null; PreparedStatement stmt = null;
 		String sql="UPDATE productos SET nombre=?, descripcion=?, precio=?, stock=?, id_tipo_producto=?, id_rodado=?, id_aplicacion=?, id_marca=? WHERE id=?";
 		try{
@@ -143,7 +145,8 @@ public class DataProducto {
 			stmt.execute();
 			
 		} catch(SQLException e){
-			e.printStackTrace();
+			//e.printStackTrace();
+			throw new Exception("Error al actualizar datos",e);
 
 		}
 		finally{

@@ -13,7 +13,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Shop Item - Start Bootstrap Template</title>
+  <title>VulcanoBike - Software de eCommerce</title>
 
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +28,8 @@
 
 
 <body>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 	<%
 					Producto p = (Producto) request.getAttribute("pEncontrado");
@@ -65,7 +67,7 @@ $(document).ready(function() {
             </a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -89,7 +91,10 @@ $(document).ready(function() {
                 <%=usuario.getUser()  %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
+              </div> 
                   <%} %>
            <%if (usuario == null){ %>
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,8 +102,6 @@ $(document).ready(function() {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
               </div> 
               <%} %>
                
@@ -135,6 +138,10 @@ $(document).ready(function() {
             <h3 class="card-title"><%=p.getNombre()%></h3>
             <h4>$<%=p.getPrecio() %></h4>
             <p class="card-text"><%=p.getDescripcion()%></p>
+            <p class="card-text">Tipo Producto: <%=p.getTipoProducto().getNombre() %></p>
+            <p class="card-text">Aplicacion: <%=p.getAplicacionBicicleta().getDescripcion() %></p>
+            <p class="card-text">Marca: <%=p.getMarca().getNombre() %></p>
+            <p class="card-text">Rodado: <%=p.getRodado().getNombre() %></p>
           </div>
         </div>
         <!-- /.card -->
@@ -169,7 +176,7 @@ $(document).ready(function() {
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      <p class="m-0 text-center text-white"></p>
     </div>
     <!-- /.container -->
   </footer>

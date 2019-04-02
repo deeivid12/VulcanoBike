@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,58 +33,62 @@
 
 <body>
 
-	<div class="d-flex" id="wrapper">
+	 <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
 
-		<!-- Sidebar -->
-		<div class="bg-light border-right" id="sidebar-wrapper">
-			<div class="sidebar-heading">VulcanoBike</div>
-			<div class="list-group list-group-flush">
-				<a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipo Producto</a>
-				<a href="#"
-					class="list-group-item list-group-item-action bg-light">Marca</a> <a
-					href="#" class="list-group-item list-group-item-action bg-light">Rodado</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">Aplicacion</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">Producto</a>
-				<a href="#" class="list-group-item list-group-item-action bg-light">Cliente</a>
-			</div>
-		</div>
-		<!-- /#sidebar-wrapper -->
+  <div class="d-flex" id="wrapper">
 
-		<!-- Page Content -->
-		<div id="page-content-wrapper">
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">VulcanoBike </div>
+      <div class="list-group list-group-flush">
+        <a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
+        <a href="SrvListarMarca" class="list-group-item list-group-item-action bg-light">Marcas</a>
+        <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
+        <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
+        <a href="SrvListarProducto" class="list-group-item list-group-item-action bg-light">Productos</a>
+        <a href="SrvListarUsuario" class="list-group-item list-group-item-action bg-light">Usuarios</a>
+		<a href="SrvListarPedido" class="list-group-item list-group-item-action bg-light">Pedidos</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
 
-			<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-				<button class="btn btn-primary" id="menu-toggle">Ocultar Menu</button>
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Ocultar Menu</button>
 
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-						<li class="nav-item active"><a class="nav-link" href="#">Inicio
-								<span class="sr-only">(current)</span>
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Carrito</a>
-						</li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> Mi Cuenta </a>
-							<div class="dropdown-menu dropdown-menu-right"
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
+            </li>
+            
+           <%if(usuario != null){%> 
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%=usuario.getUser() %>
+              </a>
+             	 <div class="dropdown-menu dropdown-menu-right"
 								aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Iniciar Sesion</a> <a
-									class="dropdown-item" href="#">Registrarse</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Something else here</a>
-							</div></li>
-					</ul>
-				</div>
-			</nav>
+								<a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+				                <div class="dropdown-divider"></div>
+				                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
+							</div> 
+            </li>
+            <%} %>
+            
+            
+          </ul>
+        </div>
+      </nav>
 
 			<div class="container-fluid">
 				<h1 class="mt-4">Tipos de Productos</h1>
@@ -92,7 +97,7 @@
 				<div class="row">
 					<div class="col">
 						<a class="btn btn-secondary"
-							href="/VulcanoBike/formTipoProducto.jsp" role="button">Agregar</a>
+							href="formTipoProducto.jsp" role="button">Agregar</a>
 					</div>
 
 				</div>

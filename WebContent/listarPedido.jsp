@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-  pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
 <!DOCTYPE html>
@@ -7,30 +7,33 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-  <title>VulcanoBike - Software de eCommerce</title>
+<title>VulcanoBike - Software de eCommerce</title>
 
-  <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link href="css/simple-sidebar.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="css/simple-sidebar.css" rel="stylesheet">
 
-  <link rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
 
 </head>
 
 <body>
 
- <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+	 <% Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
 
   <div class="d-flex" id="wrapper">
 
@@ -38,7 +41,7 @@
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">VulcanoBike </div>
       <div class="list-group list-group-flush">
-        <a href="srvListarTipoProducto" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
+        <a href="srvListarPedido" class="list-group-item list-group-item-action bg-light">Tipos Productos</a>
         <a href="SrvListarMarca" class="list-group-item list-group-item-action bg-light">Marcas</a>
         <a href="SrvListarRodado" class="list-group-item list-group-item-action bg-light">Rodados</a>
         <a href="SrvListarAplicacion" class="list-group-item list-group-item-action bg-light">Aplicaciones</a>
@@ -78,7 +81,7 @@
 								<a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
 				                <div class="dropdown-divider"></div>
 				                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
-							</div> 
+			</div> 
             </li>
             <%} %>
             
@@ -87,55 +90,60 @@
         </div>
       </nav>
 
-      <div class="container-fluid">
-        <h1 class="mt-4">Alta Tipo de Producto</h1>
+			<div class="container-fluid">
+				<h1 class="mt-4">Pedidos</h1>
 
-        <form action="SrvTipoProducto" method="post">
-    
-    <input type="hidden" name="accion" value="alta"></input>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Nombre</label>
-        <div class="col-sm-4">
-          <input type="text" name="nombre" required="true"
-            class="form-control" />
-        </div>
-      </div>
+				
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Descripcion</label>
-        <div class="col-sm-4">
-          <input type="text" name="descripcion" required="true"
-            class="form-control" />
-        </div>
-      </div>
 
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label"></label>
-        <div class="col-sm-5 text-center">
-          <input type="submit" value="Confirmar" class="btn btn-secondary" />
-        </div>
-      </div>
-    </form>
 
-      </div>
-    </div>
-    <!-- /#page-content-wrapper -->
 
-  </div>
-  <!-- /#wrapper -->
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Fecha Emision</th>
+							<th>Importe</th>
+							<th>Estado</th>
+							<th>Usuario</th>
+							<th>Email</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${catPedido}" var="p">
+							<tr>
+								<td>${p.id}</td>
+								<td>${p.fechaEmision}</td>
+								<td>${p.importe}</td>
+								<td>${p.estado}</td>
+								<td>${p.usuario.user}</td>
+								<td>${p.usuario.email}</td>
+								<td><a href="SrvPedido?id=${p.id}&accion=editar"
+									class="editar">Mostrar</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- /#page-content-wrapper -->
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</div>
+	<!-- /#wrapper -->
 
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+		$("#menu-toggle").click(function(e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+	</script>
 
 </body>
 

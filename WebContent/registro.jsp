@@ -152,7 +152,7 @@ footer a {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -168,10 +168,8 @@ footer a {
                 Mi Cuenta
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Iniciar Sesion</a>
-                <a class="dropdown-item" href="#">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
+                <a class="dropdown-item" href="registro.jsp">Registrarse</a>
               </div>
             </li>
         </ul>
@@ -187,7 +185,7 @@ footer a {
             	<div class="col-md-3"></div>
                 <div class="col-md-6 login-form-1">
                     <h3>Registro</h3>
-                    <form action="SrvUsuario" method="POST">
+                    <form action="SrvLogin" method="POST">
                     	<input type="hidden" name="accion" value="registro"></input>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Usuario *" name="usuario" required="true" />
@@ -202,7 +200,7 @@ footer a {
                             <input type="text" class="form-control" placeholder="Apellido *" name="apellido" required="true"/>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Email *" name="email" required="true"/>
+                            <input type="email" class="form-control" placeholder="Email *" name="email" required="true"/>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Direccion *" name="direccion" required="true"/>

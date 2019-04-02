@@ -1,8 +1,10 @@
+<%@page import="com.vulcanobike.app.entities.Pedido.EstadosPedido"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.vulcanobike.app.entities.TipoProducto"%>
+<%@ page import="com.vulcanobike.app.entities.Pedido"%>
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
+<%@ page import="com.vulcanobike.app.entities.ItemPedido"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,36 +91,155 @@
       </nav>
 
 			<div class="container-fluid">
-				<h1 class="mt-4">Editar Tipo de Producto</h1>
+				<h1 class="mt-4">Editar Pedido</h1>
 
 				<%
-					TipoProducto tp = (TipoProducto) request.getAttribute("tpEncontrado");
+					Pedido p = (Pedido) request.getAttribute("pEncontrado");
 				%>
+				
 
 
-				<form action="SrvTipoProducto" method="post">
+				<form action="SrvPedido" method="post">
 
 					<input type="hidden" name="accion" value="editar"></input>
 					
-					<input type="hidden" name="id" value="<%=tp.getId()%>"></input>
+					<input type="hidden" name="id" value="<%=p.getId()%>"></input>
+					
+			
 					
 					
-
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Nombre</label>
+						<label class="col-sm-2 col-form-label">Estado</label>
 						<div class="col-sm-4">
-							<input type="text" name="nombre" required="true"
-								value="<%=tp.getNombre()%>" class="form-control" />
+							<select class="form-control" name="estado">
+							   <option value="1" label="Pendiente" <% if (p.getEstado().equals(EstadosPedido.Pendiente)){%>
+							    selected="selected"  <%} %>></option>
+							   <option value="2" label="En Proceso" <% if (p.getEstado().equals(EstadosPedido.En_Proceso)){%>
+							    selected="selected"  <%} %>></option>
+							   <option value="3" label="Enviado" <% if (p.getEstado().equals(EstadosPedido.Enviado)){%>
+							    selected="selected"  <%} %>></option>
+						   </select>
+						</div>
+					</div>
+					
+					
+					
+					
+					
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Fecha Emision</label>
+						<div class="col-sm-4">
+							<input type="text" name="fechaEmision" required="true" readonly
+								value="<%=p.getFechaEmision() %>" class="form-control" />
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Descripcion</label>
+						<label class="col-sm-2 col-form-label">Importe</label>
 						<div class="col-sm-4">
-							<input type="text" name="descripcion" required="true"
-								value="<%=tp.getDescripcion()%>" class="form-control" />
+							<input type="text" name="importe" required="true" readonly
+								value="<%=p.getImporte() %>" class="form-control" />
 						</div>
 					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Usuario</label>
+						<div class="col-sm-4">
+							<input type="text" name="usuario" required="true" readonly
+								value="<%=p.getUsuario().getUser() %>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Nombre Cliente</label>
+						<div class="col-sm-4">
+							<input type="text" name="nombre" required="true" readonly
+								value="<%=p.getUsuario().getNombre() %>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Apellido Cliente</label>
+						<div class="col-sm-4">
+							<input type="text" name="apellido" required="true" readonly
+								value="<%=p.getUsuario().getApellido() %>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-4">
+							<input type="text" name="email" required="true" readonly
+								value="<%=p.getUsuario().getEmail() %>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Direccion</label>
+						<div class="col-sm-4">
+							<input type="text" name="direccion" required="true" readonly
+								value="<%=p.getUsuario().getDireccion() %>" class="form-control" />
+						</div>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Telefono</label>
+						<div class="col-sm-4">
+							<input type="text" name="direccion" required="true" readonly
+								value="<%=p.getUsuario().getTelefono() %>" class="form-control" />
+						</div>
+					</div>
+					
+					
+					<div class="form-group row">
+					
+					
+					
+						<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nombre</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th></th>
+							<th>Importe</th>
+						</tr>
+					</thead>
+					
+					
+					<tbody>
+						<% for(ItemPedido ip : p.getItems()){ %>
+							<tr>
+								<td><%= ip.getProducto().getId() %></td>
+								<td><%= ip.getProducto().getNombre() %></td>
+								<td>$<%= ip.getProducto().getPrecio() %></td>
+								<td><%= ip.getCantidad() %></td>
+								<td></td>
+								<td>$<%= ip.getImporte() %></td>
+							</tr>	
+						<%} %>		
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>Total: </td>
+								<td>$<%= p.getImporte() %></td>
+							</tr>									
+					</tbody>
+				</table>
+					
+					
+					
+					
+					
+					
+					
+					</div>
+					
+					
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label"></label>

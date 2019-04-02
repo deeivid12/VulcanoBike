@@ -22,8 +22,6 @@ import com.vulcanobike.app.entities.Usuario;
 
 public class Controlador {
 	
-	private List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
-	
 	private DataTipoProducto dataTipoProducto = new DataTipoProducto();
 	private DataProducto dataProducto = new DataProducto();
 	private DataPedido dataPedido = new DataPedido();
@@ -35,21 +33,41 @@ public class Controlador {
 
 	
 	//LOGIN
-	public Usuario login(String user, String pass) {
+	public Usuario login(String user, String pass) throws Exception {
 		return dataUsuario.login(user, pass);
 	}
 	
-	public void registro(Usuario usuario) {
+	public void registro(Usuario usuario) throws Exception {
 		dataUsuario.Insert(usuario);
 	}
 	
-	public Usuario getOneUsuarioByUser(String user) {//para buscar por correo o por user
+	public Usuario getOneUsuarioByUser(String user) throws Exception {//para buscar por correo o por user
 		return dataUsuario.GetOneByUser(user);
 	}
 	
-	public Usuario getOneUsuarioByEmail(String email) {//para buscar por correo o por user
+	public Usuario getOneUsuarioByEmail(String email) throws Exception {//para buscar por correo o por user
 		return dataUsuario.GetOneByEmail(email);
 	}
+	
+	
+	//USUARIO
+	
+	public List<Usuario> getAllUsuario() throws Exception{
+		return dataUsuario.GetAll();
+	}
+	
+	public Usuario getOneUsuario(int id) throws Exception {
+		return dataUsuario.GetOne(id);
+	}
+	
+	public void deleteUsuario(int id) throws Exception {
+		dataUsuario.Delete(id);
+	}
+	
+	public void updateUsuario(Usuario usuario) throws Exception {
+		dataUsuario.Update(usuario);
+	}
+	
 
 	//TIPOPRODUCTO
 	
@@ -59,32 +77,14 @@ public class Controlador {
 	
 	public void addTipoProducto(TipoProducto tProducto) throws Exception{
 		dataTipoProducto.Insert(tProducto);
-		//catalogoTipoProducto.add(tProducto);
 	}
 	
-	/*public TipoProducto findOneTipoProducto(String nombre) { //DESPUES CAMBIAR POR ID!!
-		TipoProducto tProducto = null;
-		for(TipoProducto tp : catalogoTipoProducto) {
-			if(tp.getNombre().equals(nombre)) tProducto=tp;
-		}
-		return tProducto;
-	}*/
 	
 	
 	public TipoProducto findOneTipoProducto(Integer id) throws Exception{
 		TipoProducto tProducto = dataTipoProducto.GetOne(id);
 		return tProducto;
 	}
-	
-	/* public void updateTipoProducto(TipoProducto tipoProducto) {
-		
-		for(TipoProducto tp : catalogoTipoProducto) {
-			if(tp.getNombre().equals(tipoProducto.getNombre())){
-				tp.setNombre(tipoProducto.getNombre());
-				tp.setDescripcion(tipoProducto.getDescripcion());
-			}
-		}
-	}*/
 	
 	
 	public void updateTipoProducto(TipoProducto tipoProducto) throws Exception{
@@ -122,18 +122,18 @@ public class Controlador {
 	
 	
 	//PRODUCTO
-	public List<Producto> getAllProducto(){
+	public List<Producto> getAllProducto() throws Exception{
 
 		return  dataProducto.GetAll();
 	}
 	
 	
-	public Producto getOneProducto(Integer id) {
+	public Producto getOneProducto(Integer id) throws Exception {
 		Producto Producto = dataProducto.GetOne(id);
 		return Producto;
 	}
 	
-	public void updateProducto(Producto producto) {
+	public void updateProducto(Producto producto) throws Exception {
 		dataProducto.Update(producto);
 	}
 	
@@ -147,20 +147,32 @@ public class Controlador {
 	
 	
 	//PEDIDO
-	public void addPedido(Pedido pedido) {
+	public void addPedido(Pedido pedido) throws Exception {
 		int idPedido = dataPedido.Insert(pedido); //guardo pedido y obtengo id autogenerado
 		addItemPedido(pedido.getItems(), idPedido); //guardo items con el id de pedido correspondiente
 	}
 	
 	public List<Pedido> getAllPedido() throws Exception {
 		List<Pedido> pedidos = dataPedido.GetAll();
-		//for(Pedido p:pedidos) {
-			//Usuario u = dataUsuario.GetOneById(p.getUsuario().getId());
-			//List<ItemPedido> items = dataItemPedido.GetAllByIdPedido(p.getId());
-			//p.setUsuario(u);
-			//p.setItems(items);
-		//	}
 		return pedidos;
+	}
+	
+	public List<Pedido> getAllPedidoByIdUsuario(int idUsuario) throws Exception{
+		return dataPedido.GetAll(idUsuario);
+	}
+	
+	public void updatePedido(Pedido pedido) throws Exception {
+		dataPedido.Update(pedido);
+	}
+	
+	public Pedido getOnePedido(int id) throws Exception {
+		
+		Pedido pedido = dataPedido.GetOne(id);
+		List<ItemPedido> items = getAllItemPedidoById(id);
+		pedido.setItems(items);
+		 
+		
+		return pedido;
 	}
 	
 	public float calcularImportePedido(List<ItemPedido> items) {
@@ -186,12 +198,17 @@ public class Controlador {
 	
 	
 	//ITEMPEDIDO
-	public void addItemPedido(List<ItemPedido> itemsPedido, int idPedido) {
+	public void addItemPedido(List<ItemPedido> itemsPedido, int idPedido) throws Exception {
 		
 		for(ItemPedido ip : itemsPedido) {
 			ip.setIdPedido(idPedido);
 			dataItemPedido.Insert(ip);
 		}
+	}
+	
+	
+	public List<ItemPedido> getAllItemPedidoById(int id) throws Exception{
+		return dataItemPedido.GetAll(id);
 	}
 	
 

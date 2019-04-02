@@ -102,8 +102,9 @@ public class SrvListarProductoCarrito extends HttpServlet {
 		List<Rodado> catalogoRodado = new ArrayList<Rodado>();
 		List<Marca> catalogoMarca = new ArrayList<Marca>();
 		
-		catalogoProducto = ctrl.getAllProducto();
+		
 		try {
+			catalogoProducto = ctrl.getAllProducto();
 			catalogoTipoProducto = ctrl.getAllTipoProducto();
 			catalogoAplicacion = ctrl.getAllAplicacion();
 			catalogoRodado = ctrl.getAllRodado();

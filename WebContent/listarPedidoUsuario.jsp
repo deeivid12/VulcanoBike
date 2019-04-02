@@ -1,13 +1,15 @@
 <%@ page import="com.vulcanobike.app.entities.Usuario"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
+  
     <title>VulcanoBike - Software de eCommerce</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+
 
 .bloc_left_price {
     color: #c01508;
@@ -71,10 +73,9 @@ footer a {
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-<%Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
-
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ <%Usuario usuario = (Usuario)request.getSession().getAttribute("userSession"); %>
+
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -104,6 +105,8 @@ footer a {
           </li>
           
           
+            <li class="nav-item dropdown">
+           
            <%if (usuario != null){ %>
            
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,7 +116,7 @@ footer a {
                 <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
-              </div>  
+              </div> 
                   <%} %>
            <%if (usuario == null){ %>
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -121,9 +124,8 @@ footer a {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-              </div> 
+                </div>
               <%} %>
-            
             
             
         </ul>
@@ -133,14 +135,41 @@ footer a {
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Compra Exitosa</h1>
+        <h1 class="jumbotron-heading">Pedidos de <%=usuario.getUser() %></h1>
      </div>
 </section>
 
-	<div class="container">
-        <h4 class="jumbotron-heading">Gracias por su compra.</h4>
-        <h6 class="jumbotron-heading">El resumen de su compra ha sido enviado a su correo electronico.</h6>
-     </div>
+	<div class="container-fluid">
+				<h1 class="mt-4">Listado Pedidos</h1>
+
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Fecha Emision</th>
+							<th>Importe</th>
+							<th>Estado</th>
+							<th>Usuario</th>
+							<th>Email</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${catPedido}" var="p">
+							<tr>
+								<td>${p.id}</td>
+								<td>${p.fechaEmision}</td>
+								<td>${p.importe}</td>
+								<td>${p.estado}</td>
+								<td>${p.usuario.user}</td>
+								<td>${p.usuario.email}</td>
+								<td><a href="SrvPedidoUsuario?id=${p.id}&accion=mostrar"
+									class="mostrar">Mostrar</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 
 
 

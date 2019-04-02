@@ -46,6 +46,7 @@ public class Emailer {
 	public void send(String to, String subject, String body){
 
 		Session session = Session.getInstance(props, //obtengo una sesion de correo funcional 
+
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				//return new PasswordAuthentication(username, password);
@@ -62,6 +63,9 @@ public class Emailer {
 			message.setSubject(subject); //"Testing Subject"//seteo el asunto
 			message.setText(body); //"Dear Mail Crawler,\n\n No spam to my email, please!"//seteo el cuerpo del mensaje.
 
+			
+			//Transport transport = session.getTransport()
+			
 			Transport.send(message);//envio mensaje
 
 		} catch (MessagingException e) {

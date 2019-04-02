@@ -6,15 +6,13 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+
     <title>VulcanoBike - Software de eCommerce</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
         /*
-** Style Simple Ecommerce Theme for Bootstrap 4
-** Created by T-PHP https://t-php.fr/43-theme-ecommerce-bootstrap-4.html
-*/
+
 .bloc_left_price {
     color: #c01508;
     text-align: center;
@@ -98,7 +96,7 @@ footer a {
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Productos</a>
+            <a class="nav-link" href="SrvListarProductoCarrito">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contacto</a>
@@ -119,7 +117,10 @@ footer a {
                 <%=usuario.getUser()  %>
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+                <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
+              </div> 
                   <%} %>
            <%if (usuario == null){ %>
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,9 +128,6 @@ footer a {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="login.jsp">Iniciar Sesion</a>
                 <a class="dropdown-item" href="registro.jsp">Registrarse</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div> 
               <%} %>
                
                
@@ -199,6 +197,11 @@ footer a {
 </div>
 
 
+
+
 <script type="text/javascript">
 
 </script>
+
+</body>
+</html>

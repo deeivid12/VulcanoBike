@@ -93,7 +93,7 @@ $(document).ready(function() {
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="SrvListarPedidoUsuario">Mis Pedidos</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="SrvUsuario?accion=logoff">Cerrar Sesion</a>
+                <a class="dropdown-item" href="SrvLogin?accion=logoff">Cerrar Sesion</a>
               </div> 
                   <%} %>
            <%if (usuario == null){ %>

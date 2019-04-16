@@ -42,6 +42,8 @@ public class SrvListarProductoCarrito extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//Listado filtrado
+
 		String filtro = (String)request.getParameter("filtro");
 		
 		if(filtro != null) {
@@ -95,7 +97,8 @@ public class SrvListarProductoCarrito extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		
+		//Listado general
+
 		List<Producto> catalogoProducto = new ArrayList<Producto>();
 		List<TipoProducto> catalogoTipoProducto = new ArrayList<TipoProducto>();
 		List<Aplicacion> catalogoAplicacion = new ArrayList<Aplicacion>();
